@@ -6,7 +6,7 @@
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:53 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/12 18:42:34 by arthur           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:48:27 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,27 +17,18 @@ void	ft_echo(t_cmd *cmd, t_envp *env)
 	(void)env;
 	int	i;
 
-	i = 0;
-	if (ft_strcmp(cmd->prms[0].opt, "-n"))
+	i = -1;
+	while (++i < cmd->nb_prms)
 	{
-		if (cmd->nb_prms > 1)
+		if (cmd->prms[i].opt != NULL)
 		{
-			if (cmd->prms[0].value != NULL);
-				printf ("%s ", cmd->prms[0].value);
-			while (++i <= cmd->nb_prms)
-				printf("%s %s", cmd->prms[i].opt, cmd->prms[i].value);
-			return ;
+			if (i != 0 && ft_strcmp(cmd->prms[0].opt, "-n") == 0)
+			printf("%s ", cmd->prms[i].opt);
 		}
-		printf("%s", cmd->prms[0].value);
-		return ;
+		if (cmd->prms[i].value != NULL)
+			printf("%s ", cmd->prms[i].value);
 	}
-	if (cmd->nb_prms > 1)
-	{
-		if (cmd->prms[0].value != NULL);
-			printf ("%s ", cmd->prms[0].value);
-		while (++i <= cmd->nb_prms)
-			printf("%s %s", cmd->prms[i].opt, cmd->prms[i].value);
-		return ;
-	}
+	if (cmd->nb_prms > 0 && !(cmd->prms[0].opt && ft_strcmp(cmd->prms[0].opt, "-n")))
+		printf("\n");
 	return ;
 }

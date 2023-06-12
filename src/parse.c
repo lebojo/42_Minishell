@@ -6,19 +6,19 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:57:48 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 19:43:14 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 21:03:59 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-void	parse(t_cmd *cmd, char *input)
+void    parse(t_cmd *cmd, char *input)
 {
-	char	**split;
-	int		i;
+    char    **split;
+    int        i;
 
-	split = ft_split(input, ' ');
-	i = 0;
+    split = ft_split(input, ' ');
+    i = 0;
 	while (split[i++])
 		;
 	cmd->nb_prms = 0;

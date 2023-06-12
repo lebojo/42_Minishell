@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 20:49:58 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 21:03:31 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ int main(int ac, char **av, char **envp)
 	char	*tmp;
 	t_envp  env;
 	t_cmd	cmd;
+    int     i;
 
 	(void)ac;
 	tmp = find_path(envp, "PATH", 4);
