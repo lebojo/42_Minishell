@@ -3,22 +3,33 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/07 15:22:48 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 17:24:34 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-int main() {
-    char* input;  // Déclarer un pointeur de chaîne de caractères pour stocker l'entrée utilisateur
+int main(int ac, char **av, char **envp) 
+{
+    char    *input;  // Déclarer un pointeur de chaîne de caractères pour stocker l'entrée utilisateur$
+    char    *tmp;
+    t_envp  env;
+
     
+    (void)ac;
+    (void)av;   
+    tmp = find_path(envp, "PATH", 4);
+    env.pwd = find_path(envp, "PWD", 3);
+    env.bin_path = ft_split(tmp, ':');
+    printf("%s\n", env.bin_path[0]);
+    printf("%s\n", env.pwd);
     while (1) {
-        input = readline("Entrez une valeur (ou 'q' pour quitter) : ");  // Afficher le prompt et lire l'entrée de l'utilisateur
+        input = readline("?> : ");  // Afficher le prompt et lire l'entrée de l'utilisateur
         
-        if (ft_strncmp(input, "q", 2) == 0) {
+        if (ft_strcmp(input, "q") == 1) {
             free(input);  // Libérer la mémoire allouée par readline()
             break;
         }
@@ -27,6 +38,6 @@ int main() {
         
         free(input);  // Libérer la mémoire allouée par readline()
     }
-    
+        
     return 0;
 }
