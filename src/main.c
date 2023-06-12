@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 19:02:33 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 20:19:42 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,7 @@ int main(int ac, char **av, char **envp)
     char    *tmp;
     t_envp  env;
 	t_cmd	cmd;
+    int     i;
 
     
     (void)ac;
@@ -30,13 +31,22 @@ int main(int ac, char **av, char **envp)
     while (1) {
         input = readline("?> : ");  // Afficher le prompt et lire l'entrée de l'utilisateur
         parse(&cmd, input);
-        if (ft_strcmp(input, "q") == 1) {
+        //printf("cmd.name = %s | cmd.nb_prms = %d\n", cmd.name, cmd.nb_prms);
+        select_cmd(&env, &cmd);
+        if (ft_strcmp(input, "q") == 1) 
+        {
             free(input);  // Libérer la mémoire allouée par readline()
             break;
         }
-        
-        printf("Vous avez saisi : %s\n", input);  // Afficher l'entrée utilisateur
-        
+        i = -1;
+        while (++i < cmd.nb_prms)
+        {
+            printf("cmd.prms[%d].opt = %s | cmd.prms[%d].value = %s\n", i, cmd.prms[i].opt, i, cmd.prms[i].value);
+            free(cmd.prms[i].opt);
+            free(cmd.prms[i].value);
+        }
+        free(cmd.prms);
+        free(cmd.name); 
         free(input);  // Libérer la mémoire allouée par readline()
     }
         
