@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:22:16 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 18:49:16 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 18:49:48 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,4 +32,5 @@ typedef struct s_cmd
     t_prms    *prms;
 }    t_cmd;
 
+#endif
 #endif
