@@ -6,7 +6,7 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/12 18:52:28 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/12 18:53:14 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ ENAME	=	minishell
 NAME	=	minishell.a
 CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g 
 AR		=	ar -rsc
-FILES	=	main.c exec/get_env.c \
-	builtins/cd.c builtins/echo.c builtins/env.c \
-	builtins/exit.c builtins/export.c builtins/unset.c \
+FILES	=	main.c parse.c exec/get_env.c \
+			builtins/cd.c builtins/echo.c builtins/env.c \
+			builtins/exit.c builtins/export.c builtins/unset.c \
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/
