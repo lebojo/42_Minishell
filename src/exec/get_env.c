@@ -1,39 +1,20 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/29 03:45:24 by jchapell          #+#    #+#             */
-/*   Updated: 2023/06/12 17:12:24 by arthur           ###   ########.fr       */
+/*   Created: 2023/06/12 15:50:37 by arthur            #+#    #+#             */
+/*   Updated: 2023/06/12 17:30:49 by arthur           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+# include "../../inc/proto.h"
 
-int	ft_strncmp(const char *s1, const char *s2, size_t n)
+char	*find_path(char **envp, char *s, int x)
 {
-	size_t	i;
-	
-	i = 0;
-	while (i < n && (s1[i] || s2[i]))
-	{
-		if (s1[i] != s2[i])
-			return (((unsigned char *)s1)[i] - ((unsigned char *)s2)[i]);
-		i++;
-	}
-	return (0);
-}
-
-int	ft_strcmp(const char *s1, const char *s2)
-{
-	while (*s1 && *s2 && *s1 == *s2)
-	{
-		s1++;
-		s2++;
-	}
-	if (*s1 || *s2)
-		return (0);
-	return (1);
+	while (ft_strncmp(s, *envp, x))
+		envp++;
+	return (*envp + (x + 1));
 }

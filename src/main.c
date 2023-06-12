@@ -6,20 +6,38 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 17:42:21 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 18:51:36 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-int	main(void)
+int main(int ac, char **av, char **envp) 
 {
-	t_cmd	cmd;
-	char	*tmp;
+    char    *input;  // Déclarer un pointeur de chaîne de caractères pour stocker l'entrée utilisateur$
+    char    *tmp;
+    t_envp  env;
 
-	tmp = ft_strdup("git checkout -b test");
-	parse(&cmd, tmp);
-	printf("cmd: %s, subcommand: %s, opt: %s, value: %s\n", cmd.name,
-		cmd.prms[0].value, cmd.prms[1].opt, cmd.prms[1].value);
-	return (0);
+    
+    (void)ac;
+    (void)av;   
+    tmp = find_path(envp, "PATH", 4);
+    env.pwd = find_path(envp, "PWD", 3);
+    env.bin_path = ft_split(tmp, ':');
+    printf("%s\n", env.bin_path[0]);
+    printf("%s\n", env.pwd);
+    while (1) {
+        input = readline("?> : ");  // Afficher le prompt et lire l'entrée de l'utilisateur
+        
+        if (ft_strcmp(input, "q") == 1) {
+            free(input);  // Libérer la mémoire allouée par readline()
+            break;
+        }
+        
+        printf("Vous avez saisi : %s\n", input);  // Afficher l'entrée utilisateur
+        
+        free(input);  // Libérer la mémoire allouée par readline()
+    }
+        
+    return 0;
 }

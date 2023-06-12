@@ -6,16 +6,18 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/12 17:24:52 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/12 18:52:28 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Executable Name
 ENAME	=	minishell
 NAME	=	minishell.a
-CFLAGS	=	-g
+CFLAGS	=	-Wall -Wextra -Werror -fsanitize=address -g 
 AR		=	ar -rsc
-FILES	=	main.c parse.c
+FILES	=	main.c exec/get_env.c \
+	builtins/cd.c builtins/echo.c builtins/env.c \
+	builtins/exit.c builtins/export.c builtins/unset.c \
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/
@@ -42,7 +44,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 $(NAME): $(OBJ)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
-	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)/libft.a -lreadline -o $(ENAME)
 
 # Clean all the object files and the binary
 clean:   
