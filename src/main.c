@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 18:51:36 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 19:02:33 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ int main(int ac, char **av, char **envp)
     char    *input;  // Déclarer un pointeur de chaîne de caractères pour stocker l'entrée utilisateur$
     char    *tmp;
     t_envp  env;
+	t_cmd	cmd;
 
     
     (void)ac;
@@ -28,7 +29,7 @@ int main(int ac, char **av, char **envp)
     printf("%s\n", env.pwd);
     while (1) {
         input = readline("?> : ");  // Afficher le prompt et lire l'entrée de l'utilisateur
-        
+        parse(&cmd, input);
         if (ft_strcmp(input, "q") == 1) {
             free(input);  // Libérer la mémoire allouée par readline()
             break;
