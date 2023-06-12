@@ -6,16 +6,16 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/12 14:21:21 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/12 17:24:52 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Executable Name
 ENAME	=	minishell
 NAME	=	minishell.a
-CFLAGS	=	-Wall -Wextra -Werror -g
+CFLAGS	=	-g
 AR		=	ar -rsc
-FILES	=	main.c
+FILES	=	main.c parse.c
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/
@@ -42,7 +42,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 $(NAME): $(OBJ)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
-	$(CC) $(CFLAGS) $(NAME) -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -o $(ENAME)
 
 # Clean all the object files and the binary
 clean:   
