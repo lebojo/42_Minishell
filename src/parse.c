@@ -6,13 +6,13 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:57:48 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 17:39:37 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 18:34:54 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-int	parse(t_cmd *cmd, char *input)
+void	parse(t_cmd *cmd, char *input)
 {
 	char	**split;
 	int		i;
@@ -21,6 +21,7 @@ int	parse(t_cmd *cmd, char *input)
 	i = 0;
 	while (split[i++])
 		;
+	cmd->nb_prms = i - 1;
 	cmd->prms = malloc(sizeof(t_prms) * i);
 	i = 0;
 	while (split[i + 1] && split[i][0] != '|')
@@ -33,7 +34,12 @@ int	parse(t_cmd *cmd, char *input)
 			{
 				cmd->prms[i - 1].opt = ft_strdup(split[i]);
 				if (split[i + 1] && split[i + 1][0] != '-')
+				{
 					cmd->prms[i - 1].value = ft_strdup(split[i + 1]);
+					i++;
+				}
+				else
+					cmd->prms[i - 1].value = NULL;
 			}
 			else
 			{
@@ -43,5 +49,4 @@ int	parse(t_cmd *cmd, char *input)
 		}
 		i++;
 	}
-	return (0);
 }
