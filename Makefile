@@ -6,7 +6,7 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/07 15:28:47 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/12 14:21:21 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ENAME	=	minishell
 NAME	=	minishell.a
 CFLAGS	=	-Wall -Wextra -Werror -g
 AR		=	ar -rsc
-FILES	=	
+FILES	=	main.c
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/

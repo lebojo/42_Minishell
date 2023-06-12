@@ -6,8 +6,14 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/07 15:22:48 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/12 14:21:31 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
+
+int	main(void)
+{
+	printf("Hello World!\n");
+	return (0);
+}
