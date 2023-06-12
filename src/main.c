@@ -12,7 +12,21 @@
 
 #include "../inc/proto.h"
 
-int main(int ac, char **av, char **envp)
-{
+int main() {
+    char* input;  // Déclarer un pointeur de chaîne de caractères pour stocker l'entrée utilisateur
     
+    while (1) {
+        input = readline("Entrez une valeur (ou 'q' pour quitter) : ");  // Afficher le prompt et lire l'entrée de l'utilisateur
+        
+        if (ft_strncmp(input, "q", 2) == 0) {
+            free(input);  // Libérer la mémoire allouée par readline()
+            break;
+        }
+        
+        printf("Vous avez saisi : %s\n", input);  // Afficher l'entrée utilisateur
+        
+        free(input);  // Libérer la mémoire allouée par readline()
+    }
+    
+    return 0;
 }

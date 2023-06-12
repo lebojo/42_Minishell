@@ -13,9 +13,9 @@
 # Executable Name
 ENAME	=	minishell
 NAME	=	minishell.a
-CFLAGS	=	-Wall -Wextra -Werror -g
+CFLAGS	=	-Wall -Wextra -Werror -g 
 AR		=	ar -rsc
-FILES	=	
+FILES	=	main.c
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/
@@ -42,7 +42,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 $(NAME): $(OBJ)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
-	$(CC) $(CFLAGS) $(NAME) -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)/libft.a -lreadline -o $(ENAME)
 
 # Clean all the object files and the binary
 clean:   
