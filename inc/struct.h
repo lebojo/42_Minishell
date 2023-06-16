@@ -3,33 +3,50 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:22:16 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 18:53:57 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 04:10:06 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef STRUCT_H
 # define STRUCT_H
 
-typedef struct s_envp
+enum e_sep
 {
-    char    *pwd;
-    char    **bin_path;
-}   t_envp;
+    Pipe,    // == |
+    S_left,    // == <
+    S_right,// == >
+    D_left,    // == <<
+    D_right    // == >>
+};
 
-typedef struct s_prms
+typedef struct s_exec
 {
-    char    *opt;
-    char    *value;
-}    t_prms;
+    int     tube[2];
+    int     fd_in;
+    int     fd_out;
+    pid_t   pid1;
+    pid_t   pid2;
+    char    *env_p;
+    char    *cmd;
+    char    **cmd_p;
+    char    **cmd_a;
+}    t_exec;
 
-typedef struct s_cmd
+typedef struct  s_cmd
 {
     char    *name;
-    int     nb_prms;
-    t_prms    *prms;
+    char    *arg;
 }    t_cmd;
+
+typedef struct  s_cmds
+{
+    int             nb_cmd;
+    int             nb_pipe;
+    t_cmd           *cmd;
+    enum e_sep      *sep;
+}    t_cmds;
 
 #endif

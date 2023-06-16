@@ -1,33 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 04:03:57 by abourgue         ###   ########.fr       */
+/*   Created: 2023/06/16 03:46:49 by abourgue          #+#    #+#             */
+/*   Updated: 2023/06/16 04:20:37 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-int main(int ac, char **av, char **envp) 
+void free_cmds(t_cmds *cmds) 
 {
-	char	*input;
-	t_cmds	cmds;
-
-	(void)ac;
-	(void)av;
-	while (1) {
-		input = readline("?> : ");
-		// parse(&cmds, input);
-		if (ft_strcmp(input, "q") == 1) {
-			free(input);
-			break;
-		}
-		select_cmd(&cmds, envp);
-		free(input);
-	}
-	return 0;
+    if (cmds == NULL)
+        return;
+    int i = 0;
+    while (i < cmds->nb_cmd) {
+        if (cmds->cmd[i].name != NULL) {
+            free(cmds->cmd[i].name);
+        }
+        if (cmds->cmd[i].arg != NULL) {
+            free(cmds->cmd[i].arg);
+        }
+        i++;
+    }
+    free(cmds->cmd);
+    if (cmds->sep != NULL) {
+        free(cmds->sep);
+    }
 }
