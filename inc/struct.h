@@ -22,15 +22,6 @@ enum e_sep
 	D_right	// == >>
 };
 
-typedef struct	s_envp
-{
-    Pipe,    // == |
-    S_left,    // == <
-    S_right,// == >
-    D_left,    // == <<
-    D_right    // == >>
-};
-
 typedef struct s_exec
 {
     int     tube[2];
