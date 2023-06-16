@@ -3,21 +3,19 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/16 04:04:45 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/16 22:43:46 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-int	is_builtins(t_cmd *cmd, char **env)
+int	is_builtins(t_cmd *cmd, char **envp)
 {
-	(void)cmd;
-	(void)env;
-	// if (ft_strcmp("echo",cmd->name) == 1)
-	// 	ft_echo(cmd, env);
+	if (ft_strcmp("echo", cmd->name))
+		ft_echo(cmd);
 	// else if (ft_strcmp("cd",cmd->name) == 1)
 	// 	ft_cd(cmd, env);
 	// else if (ft_strcmp("pwd",cmd->name) == 1)
@@ -35,12 +33,9 @@ int	is_builtins(t_cmd *cmd, char **env)
 	return (1);
 }
 
-void	select_cmd(t_cmds *cmds, char **env)
+void	select_cmd(t_cmd *cmd, char **envp)
 {
-	// if (is_builtins(cmd, env))
-	// 	return ;
-	// if (has_pipe(cmd) > 0)
-	// 	pipe_cmd(cmd, env);
-	// else
-	simple_cmd(cmds, env);
+	if (is_builtins(cmd, envp))
+		return ;
+	
 }
