@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 22:46:51 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 23:26:43 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	ft_echo(t_cmd *cmd);
 // void	ft_env(t_cmd *cmd, t_envp *env);
 
 // /*	EXIT			*/
-// void	ft_exit(t_cmd *cmd, t_envp *env);
+void	ft_exit(void);
 
 // /*	EXPORT			*/
 // void	ft_export(t_cmd *cmd, t_envp *env);
