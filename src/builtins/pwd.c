@@ -3,12 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   pwd.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:33:51 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/12 18:08:44 by arthur           ###   ########.fr       */
+/*   Updated: 2023/06/17 00:17:33 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
+void	ft_pwd(void)
+{
+	char	pwd[4096];
+
+	if (getcwd(pwd, 4096))
+	{
+		printf("%s\n", pwd);
+		return ;
+	}
+	printf("ERROR\n");
+}

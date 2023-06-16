@@ -6,7 +6,7 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/16 22:37:52 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/17 00:17:06 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS	=	-g
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c\
 			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
-			builtins/cd.c builtins/echo.c builtins/env.c \
+			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
 			builtins/exit.c builtins/export.c builtins/unset.c \
 
 # Path for .c , .h and .o Files 
