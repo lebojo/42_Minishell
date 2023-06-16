@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/12 19:13:26 by arthur           ###   ########.fr       */
+/*   Updated: 2023/06/16 01:04:24 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,6 @@ void	ft_echo(t_cmd *cmd, t_envp *env);
 // /*	UNSET			*/
 // void	ft_unset(t_cmd *cmd, t_envp *env);
 
-void	parse(t_cmd *cmd, char *input);
+void	parse(t_cmds *cmds, char *input);
 
 #endif
