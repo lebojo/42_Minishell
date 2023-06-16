@@ -3,19 +3,21 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: arthur <arthur@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/12 19:13:50 by arthur           ###   ########.fr       */
+/*   Updated: 2023/06/16 04:04:45 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-int	is_builtins(t_cmd *cmd, t_envp *env)
+int	is_builtins(t_cmd *cmd, char **env)
 {
-	if (ft_strcmp("echo",cmd->name) == 1)
-		ft_echo(cmd, env);
+	(void)cmd;
+	(void)env;
+	// if (ft_strcmp("echo",cmd->name) == 1)
+	// 	ft_echo(cmd, env);
 	// else if (ft_strcmp("cd",cmd->name) == 1)
 	// 	ft_cd(cmd, env);
 	// else if (ft_strcmp("pwd",cmd->name) == 1)
@@ -28,14 +30,17 @@ int	is_builtins(t_cmd *cmd, t_envp *env)
 	// 	ft_env(cmd, env);
 	// else if (ft_strcmp("exit",cmd->name) == 1)
 	// 	ft_exit(cmd, env);
-	else
-		return (0);
+	// else
+	// 	return (0);
 	return (1);
 }
 
-void	select_cmd(t_envp *env, t_cmd *cmd)
+void	select_cmd(t_cmds *cmds, char **env)
 {
-	if (is_builtins(cmd, env))
-		return ;
-	
+	// if (is_builtins(cmd, env))
+	// 	return ;
+	// if (has_pipe(cmd) > 0)
+	// 	pipe_cmd(cmd, env);
+	// else
+	simple_cmd(cmds, env);
 }

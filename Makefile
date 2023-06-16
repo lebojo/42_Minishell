@@ -6,7 +6,7 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/16 01:23:16 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/16 22:37:52 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,8 @@ ENAME	=	minishell
 NAME	=	minishell.a
 CFLAGS	=	-g 
 AR		=	ar -rsc
-FILES	=	main.c parse.c exec/get_env.c exec/get_cmd.c \
+FILES	=	main.c parse.c free.c\
+			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
 			builtins/cd.c builtins/echo.c builtins/env.c \
 			builtins/exit.c builtins/export.c builtins/unset.c \
 

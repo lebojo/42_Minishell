@@ -3,7 +3,7 @@
 /*                                                        :::      ::::::::   */
 /*   struct.h                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:22:16 by jordan            #+#    #+#             */
 /*   Updated: 2023/06/16 00:59:11 by jordan           ###   ########.fr       */
@@ -24,11 +24,27 @@ enum e_sep
 
 typedef struct	s_envp
 {
-    char    *pwd;
-    char    **bin_path;
-}   t_envp;
+    Pipe,    // == |
+    S_left,    // == <
+    S_right,// == >
+    D_left,    // == <<
+    D_right    // == >>
+};
 
-typedef struct	s_cmd
+typedef struct s_exec
+{
+    int     tube[2];
+    int     fd_in;
+    int     fd_out;
+    pid_t   pid1;
+    pid_t   pid2;
+    char    *env_p;
+    char    *cmd;
+    char    **cmd_p;
+    char    **cmd_a;
+}    t_exec;
+
+typedef struct  s_cmd
 {
     char    *name;
     char    *arg;
