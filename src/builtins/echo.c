@@ -6,30 +6,20 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:53 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/16 01:22:09 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:23:30 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	ft_echo(t_cmd *cmd, t_envp *env)
+void	ft_echo(t_cmd *cmd)
 {
-	(void)env;
-	(void)cmd;
-	// int	i;
-
-	// i = -1;
-	// while (++i < cmd->nb_prms)
-	// {
-	// 	if (cmd->prms[i].opt != NULL)
-	// 	{
-	// 		if (i != 0 && ft_strcmp(cmd->prms[0].opt, "-n") == 0)
-	// 		printf("%s ", cmd->prms[i].opt);
-	// 	}
-	// 	if (cmd->prms[i].value != NULL)
-	// 		printf("%s ", cmd->prms[i].value);
-	// }
-	// if (cmd->nb_prms > 0 && !(cmd->prms[0].opt && ft_strcmp(cmd->prms[0].opt, "-n")))
-	// 	printf("\n");
-	return ;
+	if(cmd->arg[0] == '-' && cmd->arg[1] == 'n' && cmd->arg[2] == ' ')
+	{
+		cmd->arg += 3;
+		printf("%s", cmd->arg);
+		cmd->arg -= 3;
+	}
+	else
+		printf("%s\n", cmd->arg);
 }

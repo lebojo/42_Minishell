@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 01:04:24 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:16:22 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@
 char	*find_path(char **envp, char *s, int x);
 
 /*	GET_CMD			*/
-void	select_cmd(t_envp *env, t_cmd *cmd);
+void	select_cmd(t_cmd *cmd, char **envp);
 
 /*=====BUILTINS=====*/
 
@@ -36,7 +36,7 @@ void	select_cmd(t_envp *env, t_cmd *cmd);
 // void	ft_cd(t_cmd *cmd, t_envp *env);
 
 /*	ECHO			*/
-void	ft_echo(t_cmd *cmd, t_envp *env);
+void	ft_echo(t_cmd *cmd);
 
 // /*	ENV				*/
 // void	ft_env(t_cmd *cmd, t_envp *env);

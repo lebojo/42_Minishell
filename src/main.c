@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 04:17:49 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:24:59 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,26 @@ char	*get_cmd(char **paths, char *cmd)
 		paths++;
 	}
 	return (NULL);
+}
+
+int main(int ac, char **av, char **envp) 
+{
+    char    *input;
+    t_cmds    cmds;
+
+    (void)ac;
+    (void)av;
+    while (1) {
+        input = readline("💻> : ");
+        parse(&cmds, input);
+        if (ft_strcmp(input, "q") == 1) {
+            free(input);
+            break;
+        }
+        select_cmd(&cmds.cmd[0], envp);
+        free(input);
+    }
+    return 0;
 }
 
 /*MAIN POUR TESTER LE PARSING:
