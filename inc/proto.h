@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 22:42:46 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:46:51 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@
 
 /*===================================SOURCES====================================*/
 
-void	parse(t_cmd *cmd, char *input);
+void	parse(t_cmds *cmds, char *input);
 void	free_cmds(t_cmds *cmds);
 
 /*=======EXEC=======*/
@@ -66,7 +66,5 @@ void	ft_echo(t_cmd *cmd);
 
 // /*	UNSET			*/
 // void	ft_unset(t_cmd *cmd, t_envp *env);
-
-void	parse(t_cmds *cmds, char *input);
 
 #endif

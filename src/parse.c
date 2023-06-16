@@ -6,11 +6,11 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:57:48 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 22:41:12 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/16 22:48:24 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-// #include "../inc/proto.h"
+#include "../inc/proto.h"
 
 void	sep_counter(t_cmds *cmds, char *input)
 {
