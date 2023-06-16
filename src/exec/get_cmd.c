@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/17 00:16:31 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/17 00:50:22 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ int	is_builtins(t_cmd *cmd, char **envp)
 {
 	if (ft_strcmp("echo", cmd->name))
 		ft_echo(cmd);
-	// else if (ft_strcmp("cd",cmd->name))
-	// 	ft_cd(cmd, env);
+	else if (ft_strcmp("cd", cmd->name))
+		ft_cd(cmd->arg, envp);
 	else if (ft_strcmp("pwd",cmd->name))
 		ft_pwd();
 	// else if (ft_strcmp("export",cmd->name))

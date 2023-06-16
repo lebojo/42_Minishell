@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:33:51 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/17 00:17:33 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/17 00:18:47 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	ft_pwd(void)
 
 	if (getcwd(pwd, 4096))
 	{
-		printf("%s\n", pwd);
+		printf("%s\n", pwd); 
 		return ;
 	}
 	printf("ERROR\n");
