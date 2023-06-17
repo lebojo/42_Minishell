@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
+#    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/16 22:37:52 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/17 02:33:30 by abourgue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ CFLAGS	=	-g
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c\
 			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
+			exec/cmd_sep.c \
 			builtins/cd.c builtins/echo.c builtins/env.c \
 			builtins/exit.c builtins/export.c builtins/unset.c \
 
@@ -45,7 +46,7 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 $(NAME): $(OBJ)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
-	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -fsanitize=address -o $(ENAME)
 
 # Clean all the object files and the binary
 clean:   
@@ -59,6 +60,6 @@ fclean: clean
 re: fclean all
 
 san: all
-	$(CC) $(CFLAGS) $(NAME) -fsanitize=address -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) -fsanitize=address -g -o $(ENAME)
 
 .PHONY : clean fclean re
