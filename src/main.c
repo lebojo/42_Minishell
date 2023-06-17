@@ -6,21 +6,29 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 23:45:31 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/17 02:03:38 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
+void	create_prompt(char **prompt)
+{
+	*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", actual_folder(), 2);
+	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
+}
+
 int main(int ac, char **av, char **envp) 
 {
 	char	*input;
+	char	*prompt;
 	t_cmds	cmds;
 
 	(void)ac;
 	(void)av;
 	while (1) {
-		input = readline("💻> : ");
+		create_prompt(&prompt);
+		input = readline(prompt);
 		if (input)
 		{
 			parse(&cmds, input);

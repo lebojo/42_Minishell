@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/17 00:48:32 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/17 02:01:33 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	ft_exit(void);
 
 // /*	PWD				*/
 void	ft_pwd(void);
+char	*actual_folder(void);
 
 // /*	UNSET			*/
 // void	ft_unset(t_cmd *cmd, t_envp *env);
