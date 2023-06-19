@@ -6,13 +6,13 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:43 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/17 01:08:11 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/19 14:47:23 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	ft_cd(char *new_path, char **env)
+void	ft_cd(char *new_path)
 {
 	char	pwd[4096];
 
