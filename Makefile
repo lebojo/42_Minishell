@@ -6,7 +6,7 @@
 #    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/17 00:17:06 by jordan           ###   ########.fr        #
+#    Updated: 2023/06/21 19:22:34 by jordan           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,7 @@ AR		=	ar -rsc
 FILES	=	main.c parse.c free.c\
 			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
 			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
-			builtins/exit.c builtins/export.c builtins/unset.c \
+			builtins/exit.c builtins/export.c builtins/unset.c builtins/hashmap.c \
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/

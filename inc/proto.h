@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/19 17:19:30 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/21 17:03:25 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,7 +42,7 @@ char	*find_path(char **envp, char *s, int x);
 char	*get_cmd(char **paths, char *cmd);
 
 /*	GET_CMD			*/
-void	select_cmd(t_cmd *cmd, char **envp);
+void	select_cmd(t_cmd *cmd, char ***envp);
 
 /*=====BUILTINS=====*/
 
@@ -50,7 +50,7 @@ void	select_cmd(t_cmd *cmd, char **envp);
 void	ft_cd(char *new_path);
 
 /*	ECHO			*/
-void	ft_echo(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd, char ***envp);
 
 // /*	ENV				*/
 void	ft_env(char **env);
@@ -59,7 +59,10 @@ void	ft_env(char **env);
 void	ft_exit(void);
 
 /*	EXPORT			*/
-void	ft_export(t_cmd *cmd, char **env);
+void	ft_export(t_cmd *cmd, char ***env);
+
+/*	HASHMAP			*/
+char	*hm_get_value(char **map, char *key);
 
 // /*	PWD				*/
 void	ft_pwd(void);

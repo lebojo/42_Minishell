@@ -6,16 +6,16 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/19 17:30:49 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/21 00:50:19 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-int	is_builtins(t_cmd *cmd, char **envp)
+int	is_builtins(t_cmd *cmd, char ***envp)
 {
 	if (ft_strcmp("echo", cmd->name))
-		ft_echo(cmd);
+		ft_echo(cmd, envp);
 	else if (ft_strcmp("cd", cmd->name))
 		ft_cd(cmd->arg);
 	else if (ft_strcmp("pwd",cmd->name))
@@ -25,7 +25,7 @@ int	is_builtins(t_cmd *cmd, char **envp)
 	// else if (ft_strcmp("unset",cmd->name))
 	// 	ft_unset(cmd, env);
 	else if (ft_strcmp("env",cmd->name))
-		ft_env(envp);
+		ft_env(*envp);
 	else if (ft_strcmp("exit", cmd->name))
 		ft_exit();
 	else
@@ -33,7 +33,7 @@ int	is_builtins(t_cmd *cmd, char **envp)
 	return (1);
 }
 
-void	select_cmd(t_cmd *cmd, char **envp)
+void	select_cmd(t_cmd *cmd, char ***envp)
 {
 	if (is_builtins(cmd, envp))
 		return ;

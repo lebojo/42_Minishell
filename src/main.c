@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/19 14:54:09 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/21 00:47:11 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int main(int ac, char **av, char **envp)
 		{
 			parse(&cmds, input);
 			if (cmds.cmd[0].name)
-				select_cmd(&cmds.cmd[0], envp);
+				select_cmd(&cmds.cmd[0], &envp);
 			free(input);
 		}
 	}
