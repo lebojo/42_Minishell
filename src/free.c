@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 03:46:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/17 03:57:53 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/19 19:12:17 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,10 +32,23 @@ void free_cmds(t_cmds *cmds)
     }
 }
 
-void    close_pipe(t_exec *exec)
+void    free_tube(t_exec *exec)
 {
-    close(exec->tube1[0]);
-	close(exec->tube1[1]);
-	close(exec->tube2[0]);
-	close(exec->tube2[1]);
+    int i;
+
+    i = -1;
+    while(++i < exec->s_tube)
+        free(exec->tube[i]);
+}
+
+void    close_pipe(t_exec *exec, int x)
+{
+    int i;
+
+    i = -1;
+    while(++i < x && i < exec->s_tube)
+    {
+        close(exec->tube[i][0]);
+        close(exec->tube[i][1]);
+    }
 }

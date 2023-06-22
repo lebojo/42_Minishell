@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:14 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/17 03:46:18 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/22 02:06:56 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,9 +19,23 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+		cmds.cmd = malloc(sizeof(t_cmd) * 2);
+		cmds.cmd[0].name = ft_strjoin("","test.txt");
+		cmds.cmd[0].arg = ft_strjoin("","");
+		cmds.cmd[1].name = ft_strjoin("","grep");
+		cmds.cmd[1].arg = ft_strjoin("","je");
+		// cmds.cmd[2].name = ft_strjoin("","cat");
+		// cmds.cmd[2].arg = ft_strjoin("","-e");
+		cmds.nb_cmd = 2;
+		cmds.nb_pipe = 1;
+		cmds.sep = malloc(sizeof(enum e_sep) * 1);
+		cmds.sep[0] = S_left;
+		// cmds.sep[1] = Pipe;
+		// cmds.sep[2] = Pipe;
 	while (1) {
 		input = readline("💻> : ");
-		parse(&cmds, input);
+		add_history(input);
+		// parse(&cmds, input);
 		exec_line(&cmds, envp);
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:59:41 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/17 00:36:11 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/19 18:06:04 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,5 +49,6 @@ void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env)
 	exec->cmd_a = ft_split(temp, ' ');
 	exec->cmd_a[count + 1] = NULL;
 	execve(exec->cmd, exec->cmd_a, env);
+	exit(1);
 	free(temp);
 }

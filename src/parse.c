@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:57:48 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/17 02:47:26 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/17 20:03:41 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,8 @@ void	parse(t_cmds *cmds, char *input)
 	int		i;
 	int		j;
 
+	if (!*input)
+		return ;
 	split = ft_split(input, ' ');
 	i = 0;
 	j = 0;

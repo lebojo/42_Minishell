@@ -6,7 +6,7 @@
 #    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/17 02:33:30 by abourgue         ###   ########.fr        #
+#    Updated: 2023/06/20 13:29:13 by abourgue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,7 +17,7 @@ CFLAGS	=	-g
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c\
 			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
-			exec/cmd_sep.c \
+			exec/cmd_pipe.c exec/cmd_rdr.c \
 			builtins/cd.c builtins/echo.c builtins/env.c \
 			builtins/exit.c builtins/export.c builtins/unset.c \
 

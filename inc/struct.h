@@ -24,12 +24,11 @@ enum e_sep
 
 typedef struct s_exec
 {
-    int     tube1[2];
-    int     tube2[2];
+    int     **tube;
+    int     s_tube;
     int     fd_in;
     int     fd_out;
-    pid_t   pid1;
-    pid_t   pid2;
+    pid_t   *pid;
     char    *env_p;
     char    *cmd;
     char    **cmd_p;
@@ -48,6 +47,7 @@ typedef struct	s_cmds
 {
 	int			nb_cmd;
 	int			nb_pipe;
+    int         test;
 	t_cmd		*cmd;
 	enum e_sep	*sep;
 }	t_cmds;
