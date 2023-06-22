@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:53 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/21 19:23:53 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/22 02:06:17 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,10 +26,9 @@ void	print_echo(char *arg, char ***envp)
 		{
 			tmp = hm_get_value(*envp, ++split_arg[i]);
 			if (tmp)
-			{
 				printf("%s ", tmp);
-				continue ;
-			}
+			free(tmp);
+			continue ;
 		}
 		printf("%s ", split_arg[i]);
 	}
@@ -37,7 +36,6 @@ void	print_echo(char *arg, char ***envp)
 
 void	ft_echo(t_cmd *cmd, char ***envp)
 {
-	//Il faut mettre le envp pour pouvoir print les variables d'environnements
 	if (!cmd->arg)
 		return ;
 	if(cmd->arg[0] == '-' && cmd->arg[1] == 'n' && cmd->arg[2] == ' ')

@@ -6,7 +6,7 @@
 /*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/21 00:24:36 by jordan           ###   ########.fr       */
+/*   Updated: 2023/06/22 02:43:12 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,11 @@ void	print_sorted_env(char **env)
 	free(env);
 }
 
-void	ft_export(t_cmd *cmd, char ***env)
+void	add_env(char *arg, char ***env)
 {
+	int	i;
 	char	**new_env;
-	int		i;
 
-	if (!cmd->arg)
-		return (print_sorted_env(copy_tab(*env)));
 	i = 0;
 	while ((*env)[i++])
 		;
@@ -76,6 +74,40 @@ void	ft_export(t_cmd *cmd, char ***env)
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = ft_strdup((*env)[i]);
-	new_env[i] = ft_strdup(cmd->arg);
+	new_env[i] = ft_strdup(arg);
 	*env = new_env;
 }
+
+void	update_env(char *key, char *arg, char *new_env, char ***env)
+{
+	int		i;
+	char	**s_env;
+
+	i = -1;
+	while ((*env)[++i])
+	{
+		s_env = ft_split((*env)[i], '=');
+		if (ft_strcmp(s_env[0], key))
+			break ;
+	}
+	free((*env)[i]);
+	(*env)[i] = ft_strdup(new_env);
+}
+
+void	ft_export(t_cmd *cmd, char ***env)
+{
+	char	**s_arg;
+
+	if (!cmd->arg)
+		return (print_sorted_env(copy_tab(*env)));
+	s_arg = ft_split(cmd->arg, '=');
+	if (hm_get_value(*env, s_arg[0]))
+		update_env(s_arg[0], s_arg[1], cmd->arg, env);
+	else
+		add_env(cmd->arg, env);
+}
+
+/*
+TODO:
+1. check si la var existe déjà sinon l'ajouter
+*/
