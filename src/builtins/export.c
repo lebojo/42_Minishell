@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/22 02:43:12 by jordan           ###   ########.fr       */
+/*   Updated: 2023/07/05 16:38:31 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int		strdiff(const char *s1, const char *s2)
 	size_t	i;
 
 	i = 0;
+	if (!s1[i] || !s2[i])
+		return (0);
 	while (s1[i] == s2[i])
 	{
 		if (s1[i] == '\0' && s2[i] == '\0')
@@ -62,9 +64,29 @@ void	print_sorted_env(char **env)
 	free(env);
 }
 
+char *parsed_arg(char *arg)
+{
+	char	*res;
+	char	type;
+	int		i;
+
+	i = 0;
+	while (arg[i] || arg[i] != '=')
+		i++;
+	if (arg[i] != '=')
+		return (add_str(arg, "=''", 0));
+	else if (!arg[i + 1])
+		return (add_str(arg, "''", 0));
+	else
+		type = arg[++i];
+	if (type == '\'')
+		printf("caca");
+	return (res);
+}
+
 void	add_env(char *arg, char ***env)
 {
-	int	i;
+	int		i;
 	char	**new_env;
 
 	i = 0;
@@ -74,7 +96,7 @@ void	add_env(char *arg, char ***env)
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = ft_strdup((*env)[i]);
-	new_env[i] = ft_strdup(arg);
+	new_env[i] = parsed_arg(arg);
 	*env = new_env;
 }
 
@@ -106,8 +128,3 @@ void	ft_export(t_cmd *cmd, char ***env)
 	else
 		add_env(cmd->arg, env);
 }
-
-/*
-TODO:
-1. check si la var existe déjà sinon l'ajouter
-*/
