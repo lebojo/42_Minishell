@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/22 02:43:12 by jordan           ###   ########.fr       */
+/*   Updated: 2023/07/05 11:44:37 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,8 +106,3 @@ void	ft_export(t_cmd *cmd, char ***env)
 	else
 		add_env(cmd->arg, env);
 }
-
-/*
-TODO:
-1. check si la var existe déjà sinon l'ajouter
-*/
