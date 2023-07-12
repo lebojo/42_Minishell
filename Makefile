@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jordan <jordan@student.42.fr>              +#+  +:+       +#+         #
+#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/21 19:22:34 by jordan           ###   ########.fr        #
+#    Updated: 2023/07/12 14:14:23 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,10 +27,6 @@ LIBFT_PATH := ./inc/libft/
 
 all : $(LIBFT) $(NAME)
 
-$(LIBFT) :
-	@echo [INFO] Compliling libft
-	@make -C $(LIBFT_PATH)
-
 # Files to compile
 OBJ1 := $(FILES:.c=.o)
 OBJ := $(patsubst %,$(OBJ_PATH)%,$(OBJ1))
@@ -43,6 +39,8 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 # Build final Binary
 $(NAME): $(OBJ)
+	@echo [INFO] Compliling libft
+	@make -C $(LIBFT_PATH)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
 	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -o $(ENAME)
