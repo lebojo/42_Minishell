@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/22 02:02:06 by jordan           ###   ########.fr       */
+/*   Updated: 2023/07/15 15:15:33 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	ft_exit(void);
 
 /*	EXPORT			*/
 void	ft_export(t_cmd *cmd, char ***env);
+char	**copy_tab(char **tab);
 
 /*	HASHMAP			*/
 char	*hm_get_value(char **map, char *key);
