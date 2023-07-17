@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/26 15:03:21 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/07/18 01:57:56 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,29 +56,35 @@ char	*find_path(char **envp, char *s, int x);
 char	*get_cmd(char **paths, char *cmd);
 
 /*	GET_CMD			*/
-void	exec_line(t_cmds *cmds, char **envp);
+void	select_cmd(t_cmd *cmd, char ***envp);
 
 /*=====BUILTINS=====*/
 
 // /*	CD				*/
-// void	ft_cd(t_cmd *cmd, t_envp *env);
+void	ft_cd(char *new_path);
 
 /*	ECHO			*/
-void	ft_echo(t_cmd *cmd);
+void	ft_echo(t_cmd *cmd, char ***envp);
 
 // /*	ENV				*/
-// void	ft_env(t_cmd *cmd, t_envp *env);
+void	ft_env(char **env);
 
 // /*	EXIT			*/
-// void	ft_exit(t_cmd *cmd, t_envp *env);
+void	ft_exit(void);
 
-// /*	EXPORT			*/
-// void	ft_export(t_cmd *cmd, t_envp *env);
+/*	EXPORT			*/
+void	ft_export(t_cmd *cmd, char ***env);
+char	**copy_tab(char **tab);
+int		strdiff(const char *s1, const char *s2);
 
-// /*	PWD				*/
-// void	ft_pwd(t_cmd *cmd, t_envp *env);
+/*	HASHMAP			*/
+char	*hm_get_value(char **map, char *key);
 
-// /*	UNSET			*/
-// void	ft_unset(t_cmd *cmd, t_envp *env);
+/*	PWD				*/
+void	ft_pwd(void);
+char	*actual_folder(void);
+
+/*	UNSET			*/
+void	ft_unset(t_cmd *cmd, char ***env);
 
 #endif

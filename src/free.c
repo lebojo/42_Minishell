@@ -1,5 +1,5 @@
 /* ************************************************************************** */
-/*                                                                            */
+/*			                                                                */
 /*                                                        :::      ::::::::   */
 /*   free.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
@@ -14,22 +14,22 @@
 
 void free_cmds(t_cmds *cmds) 
 {
-    if (cmds == NULL)
-        return;
-    int i = 0;
-    while (i < cmds->nb_cmd) {
-        if (cmds->cmd[i].name != NULL) {
-            free(cmds->cmd[i].name);
-        }
-        if (cmds->cmd[i].arg != NULL) {
-            free(cmds->cmd[i].arg);
-        }
-        i++;
-    }
-    free(cmds->cmd);
-    if (cmds->sep != NULL) {
-        free(cmds->sep);
-    }
+	if (cmds == NULL)
+		return;
+	int i = 0;
+	while (i < cmds->nb_cmd) {
+		if (cmds->cmd[i].name != NULL) {
+			free(cmds->cmd[i].name);
+		}
+		if (cmds->cmd[i].arg != NULL) {
+			free(cmds->cmd[i].arg);
+		}
+		i++;
+	}
+	free(cmds->cmd);
+	if (cmds->sep != NULL) {
+		free(cmds->sep);
+	}
 }
 
 void    free_tube(t_exec *exec)

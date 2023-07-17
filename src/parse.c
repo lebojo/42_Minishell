@@ -3,12 +3,13 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 15:57:48 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/17 20:03:41 by abourgue         ###   ########.fr       */
+/*   Created: Invalid date        by                   #+#    #+#             */
+/*   Updated: 2023/07/18 01:56:02 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
+
 
 #include "../inc/proto.h"
 
@@ -82,19 +83,30 @@ void	parse(t_cmds *cmds, char *input)
 	if (!*input)
 		return ;
 	split = ft_split(input, ' ');
+	if (!split[0])
+		return ;
 	i = 0;
 	j = 0;
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd + 1));
 	cmds->cmd[0].name = ft_strdup(split[i++]);
-	cmds->cmd[0].arg = ft_strdup(split[i++]);
+	cmds->cmd[0].arg = NULL;
+	if (split[i])
+		cmds->cmd[0].arg = ft_strdup(split[i++]);
+	if (!split[i])
+		return ;
 	while (split[i])
 	{
 		if (split[i][0] == '|')
 		{
 			j++;
-			cmds->cmd[j].name = split[++i];
-			cmds->cmd[j].arg = split[++i];
+			if (!split[++i])
+				break ;
+			cmds->cmd[j].name = split[i];
+			cmds->cmd[j].arg = NULL;
+			if (!split[++i])
+				break ;
+			cmds->cmd[j].arg = split[i];
 			i++;
 			continue ;
 		}

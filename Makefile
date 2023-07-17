@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
+#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/06/24 20:10:52 by abourgue         ###   ########.fr        #
+#    Updated: 2023/07/18 01:56:33 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,8 +18,8 @@ AR		=	ar -rsc
 FILES	=	main.c parse.c free.c\
 			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
 			exec/cmd_pipe.c exec/cmd_rdr.c exec/cmd_rdr_d.c \
-			builtins/cd.c builtins/echo.c builtins/env.c \
-			builtins/exit.c builtins/export.c builtins/unset.c \
+			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
+			builtins/exit.c builtins/export.c builtins/unset.c builtins/hashmap.c \
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/
@@ -27,10 +27,6 @@ OBJ_PATH := ./src/OBJ/
 LIBFT_PATH := ./inc/libft/
 
 all : $(LIBFT) $(NAME)
-
-$(LIBFT) :
-	@echo [INFO] Compliling libft
-	@make -C $(LIBFT_PATH)
 
 # Files to compile
 OBJ1 := $(FILES:.c=.o)
@@ -44,6 +40,8 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 # Build final Binary
 $(NAME): $(OBJ)
+	@echo [INFO] Compliling libft
+	@make -C $(LIBFT_PATH)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
 	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -fsanitize=address -o $(ENAME)
