@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/20 13:29:50 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:03:21 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,16 +34,19 @@ void	parse(t_cmds *cmds, char *input);
 void	free_cmds(t_cmds *cmds);
 void	free_tube(t_exec *exec);
 void	close_pipe(t_exec *exec, int i);
+void    close_fd(t_exec *exec);
 
 /*=======EXEC=======*/
 
 /*	CMD_PIPE				*/
-void	cmd_pipe(t_cmds *cmds, t_exec *exec, char **envp, int x);
+void	cmd_pipe(t_cmd *cmd, t_exec *exec, char **envp, int x);
 
 /*	CMD_RDR*/
+void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char **envp, int x);
+void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char **envp, int x);
 void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char **envp, int x);
+void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char **envp, int x);
 void	exec_rdr(t_cmd *cmd, t_exec *exec, char **env, int x);
-// void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char **envp, int x);
 
 /*	EXEC_CMD			*/
 void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env);

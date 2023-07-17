@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/22 02:03:16 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/26 15:34:53 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,52 +78,29 @@ void exec_multiple(t_cmds *cmds, t_exec *exec, char **envp)
         if (pipe(exec->tube[x]) == -1)
             return;
     }
-    x = 0;
-    i = 0;
-    while (i < cmds->nb_cmd)
+    i = -1;
+    while (++i < cmds->nb_cmd)
     {
-        if (cmds->sep[x] == Pipe)
-            cmd_pipe(cmds, exec, envp, i);
-		if (cmds->sep[x] == S_left)
-            cmd_rdr_l(cmds, exec, envp, i);
-		close_pipe(exec, i + 1);
+        if (cmds->sep[i] == Pipe)
+			cmd_pipe(&cmds->cmd[i], exec, envp, i);
+		if (cmds->sep[i] == S_left)
+		{
+			cmd_rdr_l(cmds, exec, envp, i);
+			i += 1;
+		}
+		if (cmds->sep[i] == S_right)
+		{
+			cmd_rdr_r(cmds, exec, envp, i);
+			i += 1;
+		}
+		if (cmds->sep[i] == D_right)
+			cmd_rdr_d_r(cmds, exec, envp, ++i);
+		if (cmds->sep[i] == D_left)
+			cmd_rdr_d_l(cmds, exec, envp, ++i);
+	
+		close_pipe(exec, i);
         waitpid(exec->pid[i], NULL, 0);
-		if (i + 1 <= cmds->nb_cmd && cmds->sep[x] == Pipe)
-			waitpid(exec->pid[i + 1], NULL, 0);		
-        x += 1;
-        i += 2;
     }
-    // close_pipe(exec, cmds->nb_cmd - 4); // Fermer les descripteurs de fichiers du tube ici, après avoir attendu les processus enfants
     free(exec->pid);
     free_tube(exec);
 }
-// void	exec_multiple(t_cmds *cmds, t_exec *exec, char **envp)
-// {
-// 	int i;
-// 	int	x;
-// 	x = -1;
-// 	exec->tube = malloc(sizeof(int *) * (cmds->nb_cmd - 1));
-// 	exec->s_tube = cmds->nb_cmd - 1;
-// 	exec->pid = malloc(sizeof(pid_t) * cmds->nb_cmd);
-// 	while (++x < cmds->nb_cmd - 1)
-// 	{
-// 		exec->tube[x] = malloc(sizeof(int) * 2);
-// 		if (pipe(exec->tube[x]) == -1)
-// 			return ;
-// 	}
-// 	x = 0;
-// 	i = 0;
-// 	while (i < cmds->nb_cmd)
-// 	{
-// 		if (cmds->sep[x] == Pipe)
-// 			cmd_pipe(cmds, exec, envp, i);
-// 		close_pipe(exec);
-// 		waitpid(exec->pid[i], NULL, 0);
-// 		if (i + 1 <= cmds->nb_cmd - 1)
-// 			waitpid(exec->pid[i + 1], NULL, 0);
-// 		x += 1;
-// 		i += 2;
-// 	}
-// 	free(exec->pid);
-// 	free_tube(exec);
-// }

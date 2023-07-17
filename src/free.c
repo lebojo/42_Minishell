@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 03:46:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/19 19:12:17 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/06/22 16:59:21 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,6 +39,14 @@ void    free_tube(t_exec *exec)
     i = -1;
     while(++i < exec->s_tube)
         free(exec->tube[i]);
+}
+
+void    close_fd(t_exec *exec)
+{
+    if (exec->fd_in > 0)
+        close(exec->fd_in);
+    if (exec->fd_out > 0)
+        close(exec->fd_out);
 }
 
 void    close_pipe(t_exec *exec, int x)
