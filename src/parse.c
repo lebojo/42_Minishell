@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 15:57:48 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/16 23:32:28 by jordan           ###   ########.fr       */
+/*   Updated: 2023/07/18 01:31:30 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,7 @@ void	parse(t_cmds *cmds, char *input)
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd + 1));
 	cmds->cmd[0].name = ft_strdup(split[i++]);
+	cmds->cmd[0].arg = NULL;
 	if (split[i])
 		cmds->cmd[0].arg = ft_strdup(split[i++]);
 	if (!split[i])
@@ -99,6 +100,7 @@ void	parse(t_cmds *cmds, char *input)
 			if (!split[++i])
 				break ;
 			cmds->cmd[j].name = split[i];
+			cmds->cmd[j].arg = NULL;
 			if (!split[++i])
 				break ;
 			cmds->cmd[j].arg = split[i];

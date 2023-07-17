@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/07/15 15:12:07 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/07/18 01:29:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,27 +64,7 @@ void	print_sorted_env(char **env)
 	free(env);
 }
 
-char *parsed_arg(char *arg)
-{
-	char	*res;
-	char	type;
-	int		i;
-
-	i = 0;
-	while (arg[i] || arg[i] != '=')
-		i++;
-	if (arg[i] != '=')
-		return (add_str(arg, "=''", 0));
-	else if (!arg[i + 1])
-		return (add_str(arg, "''", 0));
-	else
-		type = arg[++i];
-	if (type == '\'')
-		printf("caca");
-	return (res);
-}
-
-void	add_env(char *arg, char ***env)
+void	add_env(char **arg, char ***env)
 {
 	int		i;
 	char	**new_env;
@@ -96,7 +76,8 @@ void	add_env(char *arg, char ***env)
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = ft_strdup((*env)[i]);
-	new_env[i] = parsed_arg(arg);
+	new_env[i] = add_str(arg[0], "=", 1);
+	new_env[i] = add_str(new_env[i], arg[1], 3);
 	*env = new_env;
 }
 
@@ -116,15 +97,28 @@ void	update_env(char *key, char *arg, char *new_env, char ***env)
 	(*env)[i] = ft_strdup(new_env);
 }
 
+char	**emptyEnv(char *s)
+{
+	char	**res;
+
+	res = malloc(sizeof(char *) * 2);
+	res[0] = ft_strdup(s);
+	res[1] = ft_strdup("''");
+	return (res);
+}
+
 void	ft_export(t_cmd *cmd, char ***env)
 {
 	char	**s_arg;
 
 	if (!cmd->arg)
 		return (print_sorted_env(copy_tab(*env)));
-	s_arg = ft_split(cmd->arg, '=');
+	if (ft_strchr(cmd->arg, '='))
+		s_arg = ft_split(cmd->arg, '=');
+	else
+		s_arg = emptyEnv(cmd->arg);
 	if (hm_get_value(*env, s_arg[0]))
 		update_env(s_arg[0], s_arg[1], cmd->arg, env);
 	else
-		add_env(cmd->arg, env);
+		add_env(s_arg, env);
 }
