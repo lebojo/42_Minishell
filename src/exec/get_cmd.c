@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/22 02:03:36 by jordan           ###   ########.fr       */
+/*   Updated: 2023/07/18 00:49:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ int	is_builtins(t_cmd *cmd, char ***envp)
 		ft_pwd();
 	else if (ft_strcmp("export",cmd->name))
 		ft_export(cmd, envp);
-	// else if (ft_strcmp("unset",cmd->name))
-	// 	ft_unset(cmd, env);
+	else if (ft_strcmp("unset",cmd->name))
+		ft_unset(cmd, envp);
 	else if (ft_strcmp("env",cmd->name))
 		ft_env(*envp);
 	else if (ft_strcmp("exit", cmd->name))

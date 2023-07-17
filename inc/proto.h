@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/07/15 15:15:33 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/07/18 00:48:03 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,15 +61,16 @@ void	ft_exit(void);
 /*	EXPORT			*/
 void	ft_export(t_cmd *cmd, char ***env);
 char	**copy_tab(char **tab);
+int		strdiff(const char *s1, const char *s2);
 
 /*	HASHMAP			*/
 char	*hm_get_value(char **map, char *key);
 
-// /*	PWD				*/
+/*	PWD				*/
 void	ft_pwd(void);
 char	*actual_folder(void);
 
-// /*	UNSET			*/
-// void	ft_unset(t_cmd *cmd, t_envp *env);
+/*	UNSET			*/
+void	ft_unset(t_cmd *cmd, char ***env);
 
 #endif
