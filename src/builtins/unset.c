@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/15 15:11:59 by lebojo            #+#    #+#             */
-/*   Updated: 2023/07/18 01:18:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/07/18 01:39:46 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,5 @@ void	ft_unset(t_cmd *cmd, char ***env)
 			new_env[++j] = ft_strdup((*env)[i]);
 	}
 	new_env[++j] = NULL;
-	free(*env);
 	(*env) = new_env;
 }
