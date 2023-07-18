@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/07/18 01:57:56 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:48:18 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,8 @@ char	*find_path(char **envp, char *s, int x);
 char	*get_cmd(char **paths, char *cmd);
 
 /*	GET_CMD			*/
-void	select_cmd(t_cmd *cmd, char ***envp);
+void	select_cmd(t_cmd *cmd, t_exec *exec, char ***envp);
+void	 exec_line(t_cmds *cmds, char ***envp);
 
 /*=====BUILTINS=====*/
 

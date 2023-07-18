@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/07/18 01:57:23 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:51:07 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	exec_multiple(t_cmds *cmds, t_exec *exec, char **envp);
 
-int	is_builtins(t_cmd *cmd, char **envp)
+int	is_builtins(t_cmd *cmd, char ***envp)
 {
 	if (ft_strcmp("echo", cmd->name))
 		ft_echo(cmd, envp);
@@ -40,11 +40,11 @@ void	select_cmd(t_cmd *cmd, t_exec *exec, char ***envp)
 	if (is_builtins(cmd, envp))
 		return ;
 	else
-		exec_cmd(cmd, exec, envp);
+		exec_cmd(cmd, exec, *envp);
 	return ;	
 }
 
-void	 exec_line(t_cmds *cmds, char **envp)
+void	 exec_line(t_cmds *cmds, char ***envp)
 {
 	t_exec	exec;
 	
@@ -60,7 +60,7 @@ void	 exec_line(t_cmds *cmds, char **envp)
 		free(exec.pid);
 		return ;
 	}
-	exec_multiple(cmds, &exec, envp);
+	exec_multiple(cmds, &exec, *envp);
 }
 
 void exec_multiple(t_cmds *cmds, t_exec *exec, char **envp)

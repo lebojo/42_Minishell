@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/18 01:54:39 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/07/18 03:50:11 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int ac, char **av, char **envp)
 		{
 			parse(&cmds, input);
 			if (cmds.cmd[0].name)
-				select_cmd(&cmds.cmd[0], &envp);
+				exec_line(&cmds, &envp);
 			else
 				printf("unknown error");
 			free(input);
