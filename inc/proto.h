@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/07/18 03:48:18 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/07/23 17:13:13 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,6 +58,9 @@ char	*get_cmd(char **paths, char *cmd);
 /*	GET_CMD			*/
 void	select_cmd(t_cmd *cmd, t_exec *exec, char ***envp);
 void	 exec_line(t_cmds *cmds, char ***envp);
+
+/* UTILS			*/
+int	char_in_str(char c, char *str);
 
 /*=====BUILTINS=====*/
 

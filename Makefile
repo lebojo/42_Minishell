@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
+#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/07/18 01:56:33 by jchapell         ###   ########.fr        #
+#    Updated: 2023/07/23 17:18:52 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,7 @@ ENAME	=	minishell
 NAME	=	minishell.a
 CFLAGS	=	-g 
 AR		=	ar -rsc
-FILES	=	main.c parse.c free.c\
+FILES	=	main.c parse.c free.c utils.c\
 			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
 			exec/cmd_pipe.c exec/cmd_rdr.c exec/cmd_rdr_d.c \
 			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \

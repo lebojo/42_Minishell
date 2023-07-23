@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/18 01:56:02 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/07/23 17:19:45 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -97,7 +97,7 @@ void	parse(t_cmds *cmds, char *input)
 		return ;
 	while (split[i])
 	{
-		if (split[i][0] == '|')
+		if (char_in_str(split[i][0], "|<>"))
 		{
 			j++;
 			if (!split[++i])
