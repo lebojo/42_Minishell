@@ -6,7 +6,7 @@
 #    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/07/23 17:25:28 by lebojo           ###   ########.fr        #
+#    Updated: 2023/07/25 16:14:40 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,7 +40,6 @@ $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 
 # Build final Binary
 $(NAME): $(OBJ)
-	@echo [INFO] Compliling libft
 	@make -C $(LIBFT_PATH)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
@@ -58,6 +57,9 @@ fclean: clean
 re: fclean all
 
 san: all
-	$(CC) $(CFLAGS) $(NAME) -fsanitize=address -g -o $(ENAME)
+	@make -C $(LIBFT_PATH)
+	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
+	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -fsanitize=address -o $(ENAME)
 
 .PHONY : clean fclean re
