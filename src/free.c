@@ -18,16 +18,15 @@ void free_cmds(t_cmds *cmds)
 		return;
 	int i = 0;
 	while (i < cmds->nb_cmd) {
-		if (cmds->cmd[i].name != NULL) {
+		if (cmds->cmd[i].name != NULL)
 			free(cmds->cmd[i].name);
-		}
-		if (cmds->cmd[i].arg != NULL) {
+		if (cmds->cmd[i].arg != NULL)
 			free(cmds->cmd[i].arg);
-		}
 		i++;
 	}
 	free(cmds->cmd);
-	if (cmds->sep != NULL) {
+
+	if (cmds->nb_cmd > 1) {
 		free(cmds->sep);
 	}
 }

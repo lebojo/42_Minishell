@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/23 17:20:14 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:27:28 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(int ac, char **av, char **envp)
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
-		if (input)
+		if (input[0] != '\0')
 		{
 			parse(&cmds, input);
 			//print_cmds(cmds);
@@ -51,7 +51,9 @@ int main(int ac, char **av, char **envp)
 				exec_line(&cmds, &envp);
 			else
 				printf("unknown error");
+			add_history(input);
 			free(input);
+			free_cmds(&cmds);
 		}
 	}
 	return 0;
