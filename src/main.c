@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/25 15:31:45 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:49:34 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(int ac, char **av, char **envp)
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
-		if (input[0] != '\0')
+		if (input[0])
 		{
 			parse(&cmds, input);
 			print_cmds(cmds);
@@ -58,3 +58,4 @@ int main(int ac, char **av, char **envp)
 	}
 	return 0;
 }
+
