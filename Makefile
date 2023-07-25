@@ -6,7 +6,7 @@
 #    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/07/23 17:18:52 by lebojo           ###   ########.fr        #
+#    Updated: 2023/07/23 17:25:28 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,7 +44,7 @@ $(NAME): $(OBJ)
 	@make -C $(LIBFT_PATH)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
-	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -fsanitize=address -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -o $(ENAME)
 
 # Clean all the object files and the binary
 clean:   

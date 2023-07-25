@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/23 17:20:14 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/07/25 15:23:18 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int ac, char **av, char **envp)
 		if (input)
 		{
 			parse(&cmds, input);
-			//print_cmds(cmds);
+			print_cmds(cmds);
 			if (cmds.cmd[0].name)
 				exec_line(&cmds, &envp);
 			else
