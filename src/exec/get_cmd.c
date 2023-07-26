@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/07/25 15:25:02 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:37:41 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,7 +84,7 @@ void exec_multiple(t_cmds *cmds, t_exec *exec, char **envp)
         if (cmds->sep[i] == Pipe)
 			cmd_pipe(&cmds->cmd[i], exec, envp, i);
 		if (cmds->sep[i] == S_left)
-			cmd_rdr_l(cmds, exec, envp, ++i);
+			cmd_rdr_l(cmds, exec, envp, i);
 		if (cmds->sep[i] == S_right)
 			cmd_rdr_r(cmds, exec, envp, ++i);
 		if (cmds->sep[i] == D_right)

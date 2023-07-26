@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:10:05 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/26 15:13:57 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:55:59 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@ void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char **envp, int x)
 
 	i = 0;
 	z = 1;
-	exec->pid[x + 1] = fork();
-	if (exec->pid[x + 1] == 0)
+	exec->pid[x - 1] = fork();
+	if (exec->pid[x - 1] == 0)
 	{
 		if (x > 0)
 		{
@@ -31,16 +31,14 @@ void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char **envp, int x)
 				return ;
 			close(exec->tube[x - 1][1]);
 		}
-		exec->fd_out = open(cmds->cmd[x + 1].name, O_WRONLY | O_CREAT | O_APPEND, 0666);
+		exec->fd_out = open(cmds->cmd[x].name, O_WRONLY | O_CREAT | O_APPEND, 0666);
 		if (exec->fd_out == -1)
 			return ;
 		if (dup2(exec->fd_out, STDOUT_FILENO) == -1)
 			return ;
-		exec_cmd(&cmds->cmd[x], exec, envp);
-		printf("SALUT\n");
+		exec_cmd(&cmds->cmd[x - 1], exec, envp);
 		close(exec->fd_out);
 		exit (1);
-		return ;
 	}
 }
 
@@ -51,13 +49,13 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char **envp, int x)
 	char	*tmp;
 
 	res = ft_strdup("");
-	printf("%s\n\n", cmds->cmd[x].name);
+	printf("%s\n", cmds->cmd[x - 1].arg);
 	while (1)
 	{
 		heredoc = readline("heredoc>");
-		if (!heredoc)
+		if (heredoc[0] == '\0')
 			heredoc = ft_strdup("\n");
-		if (ft_strcmp(heredoc, cmds->cmd[x].name))
+		if (ft_strcmp(heredoc, cmds->cmd[x - 1].arg) == 1)
 			break ;
 		heredoc = ft_strjoin(heredoc,"\n");
 		res = ft_strjoin(res, heredoc);
@@ -65,8 +63,11 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char **envp, int x)
 	}
 	exec->pid[x] = fork();
 	if (exec->pid[x] == 0)
-		push_to_fd(exec ,res, x);
-	exit (1);
+	{
+		if (res != NULL)
+			push_to_fd(exec ,res, x);
+	}
+	return ;
 }
 
 void	push_to_fd(t_exec *exec ,char *res,int x)

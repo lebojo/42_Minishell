@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/25 15:27:28 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/07/26 12:47:40 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ int main(int ac, char **av, char **envp)
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
-		if (input[0] != '\0')
+		if (input && input[0] != '\0')
 		{
 			parse(&cmds, input);
 			//print_cmds(cmds);
@@ -52,9 +52,9 @@ int main(int ac, char **av, char **envp)
 			else
 				printf("unknown error");
 			add_history(input);
-			free(input);
-			free_cmds(&cmds);
+			// free_cmds(&cmds);
 		}
+		free(input);
 	}
 	return 0;
 }
