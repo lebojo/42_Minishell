@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/25 19:27:04 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/07/26 12:46:17 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,8 +38,10 @@ int arg_counter(char *s)
 	int res;
 
 	i = -1;
-	res = 2;
-	while (s[++i])
+	if (!s)
+		return (2);
+	res = 3;
+	while (s && s[++i])
 	{
 		if (s[i] == ' ' )
 			res++;
@@ -47,18 +49,25 @@ int arg_counter(char *s)
 		{
 			while (s[++i] && s[i] != '"')
 				;
-			if (!s[i])
+			if (!s[i] && s[i - 1] != '"')
 				return (-1);
 		}
 		else if (s[i] == '\'')
 		{
 			while (s[++i] && s[i] != '\'')
 				;
-			if (!s[i])
+			if (!s[i] && s[i - 1] != '\'')
 				return (-1);
 		}
 	}
 	return (res);
+}
+
+int	strlen_to_char(char *s, int i, char c)
+{
+	while (s[i] && s[i] != c)
+		i++;
+	return (i);
 }
 
 char	*str_extractor(char *s)
@@ -87,46 +96,58 @@ char	*str_extractor(char *s)
 
 char **split_cmd(t_cmd cmd)
 {
-	char **res;
-	int i;
-	int j;
-	int k;
-	
-	i = -1;
+	char	**res;
+	int		i;
+	int		j;
+	int		k;
+	int		nb_arg;
+
+	i = 0;
 	j = 0;
 	k = 0;
-	res = ft_calloc(arg_counter(cmd.arg) + 1, sizeof(char *));
-	while (cmd.arg[++i])
+	nb_arg = arg_counter(cmd.arg);
+	res = ft_calloc(nb_arg + 1, sizeof(char *));
+	res[i++] = ft_strdup(cmd.name);
+	printf("nb d'args: %i\n", nb_arg);
+	if (!cmd.arg)
+		return (res);
+	while (--nb_arg - 1)
 	{
-		if (cmd.arg[i] == ' ')
+		k = 0;
+		if (cmd.arg[j] == '"')
 		{
-			res[j++] = ft_substr(cmd.arg, k, i - k);
-			k = i + 1;
+			res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '"') + 1, sizeof(char));
+			j++;
+			while (cmd.arg[j] && cmd.arg[j] != '"')
+				res[i][k++] = cmd.arg[j++];
 		}
-		if (cmd.arg[i] == '"')
+		else if (cmd.arg[j] == '\'')
 		{
-			if (!(res[j++] = str_extractor(&cmd.arg[i])))
-				return (NULL);
-			while (cmd.arg[++i] && cmd.arg[i] != '"')
-				;
-			if (!cmd.arg[i])
-				return (NULL);
-			k = i + 1;
+			res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '\'') + 1, sizeof(char));
+			j++;
+			while (cmd.arg[j] && cmd.arg[j] != '\'')
+				res[i][k++] = cmd.arg[j++];
 		}
-		else if (cmd.arg[i] == '\'')
+		else
 		{
-			if (!(res[j++] = str_extractor(&cmd.arg[i])))
-				return (NULL);
-			while (cmd.arg[++i] && cmd.arg[i] != '\'')
-				;
-			if (!cmd.arg[i])
-				return (NULL);
-			k = i + 1;
+			res[i] = ft_calloc(strlen_to_char(cmd.arg, j, ' ') + 1, sizeof(char));
+			while (cmd.arg[j] && cmd.arg[j] != ' ')
+				res[i][k++] = cmd.arg[j++];
 		}
+		i++;
+		j++;
 	}
 	return (res);
 }
 
+void omg(t_cmd cmd)
+{
+	int i = 0, as = arg_counter(cmd.arg);
+	char **r = split_cmd(cmd);
+
+	while (i < arg_counter(cmd.arg))
+		printf("%s\n", r[i++]);
+}
 
 int main(int ac, char **av, char **envp) 
 {
@@ -142,14 +163,15 @@ int main(int ac, char **av, char **envp)
 		if (input[0])
 		{
 			parse(&cmds, input);
-			//print_cmds(cmds);
-			if (cmds.cmd[0].name)
-				exec_line(&cmds, &envp);
-			else
-				printf("unknown error");
-			add_history(input);
-			free(input);
-			free_cmds(&cmds);
+			omg(cmds.cmd[0]);
+			// //print_cmds(cmds);
+			// if (cmds.cmd[0].name)
+			// 	exec_line(&cmds, &envp);
+			// else
+			// 	printf("unknown error");
+			// add_history(input);
+			// free(input);
+			// free_cmds(&cmds);
 		}
 	}
 	return 0;
