@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/26 12:47:40 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:20:28 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void	create_prompt(char **prompt)
 	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
 }
 
-void print_cmds(t_cmds cmds)
+void	print_cmds(t_cmds cmds)
 {
 	int i = 0;
 	int j = 0;
@@ -32,7 +32,7 @@ void print_cmds(t_cmds cmds)
 	}	
 }
 
-int main(int ac, char **av, char **envp) 
+int	main(int ac, char **av, char **envp)
 {
 	char	*input;
 	char	*prompt;
@@ -46,7 +46,7 @@ int main(int ac, char **av, char **envp)
 		if (input && input[0] != '\0')
 		{
 			parse(&cmds, input);
-			//print_cmds(cmds);
+			print_cmds(cmds);
 			if (cmds.cmd[0].name)
 				exec_line(&cmds, &envp);
 			else

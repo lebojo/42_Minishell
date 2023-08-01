@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:59:41 by abourgue          #+#    #+#             */
-/*   Updated: 2023/07/26 12:47:14 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:40:34 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,51 @@ void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env)
 	exec->cmd_a = split_cmd(*cmd);
 	execve(exec->cmd, exec->cmd_a, env);
 	exit(1);
+}
+
+char **split_cmd(t_cmd cmd)
+{
+    char    **res;
+    int     i;
+    int     j;
+    int     k;
+    int     nb_arg;
+
+    i = 0;
+    j = 0;
+    k = 0;
+    nb_arg = arg_counter(cmd.arg);
+    res = ft_calloc(nb_arg + 1, sizeof(char *));
+    res[i++] = ft_strdup(cmd.name);
+    if (!cmd.arg)
+        return (res);
+    while (--nb_arg - 1)
+    {
+        k = 0;
+        if (cmd.arg[j] == '"')
+        {
+            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '"') + 1, sizeof(char));
+            j++;
+            while (cmd.arg[j] && cmd.arg[j] != '"')
+                res[i][k++] = cmd.arg[j++];
+        }
+        else if (cmd.arg[j] == '\'')
+        {
+            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '\'') + 1, sizeof(char));
+            j++;
+            while (cmd.arg[j] && cmd.arg[j] != '\'')
+                res[i][k++] = cmd.arg[j++];
+        }
+        else
+        {
+            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, ' ') + 1, sizeof(char));
+            while (cmd.arg[j] && cmd.arg[j] != ' ')
+                res[i][k++] = cmd.arg[j++];
+        }
+        i++;
+        j++;
+    }
+    return (res);
 }
 
 int arg_counter(char *s)
@@ -93,51 +138,6 @@ char    *str_extractor(char *s)
             res[i - 1] = s[i];
         if (!s[i])
             return (NULL);
-    }
-    return (res);
-}
-
-char **split_cmd(t_cmd cmd)
-{
-    char    **res;
-    int        i;
-    int        j;
-    int        k;
-    int        nb_arg;
-
-    i = 0;
-    j = 0;
-    k = 0;
-    nb_arg = arg_counter(cmd.arg);
-    res = ft_calloc(nb_arg + 1, sizeof(char *));
-    res[i++] = ft_strdup(cmd.name);
-    if (!cmd.arg)
-        return (res);
-    while (--nb_arg - 1)
-    {
-        k = 0;
-        if (cmd.arg[j] == '"')
-        {
-            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '"') + 1, sizeof(char));
-            j++;
-            while (cmd.arg[j] && cmd.arg[j] != '"')
-                res[i][k++] = cmd.arg[j++];
-        }
-        else if (cmd.arg[j] == '\'')
-        {
-            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '\'') + 1, sizeof(char));
-            j++;
-            while (cmd.arg[j] && cmd.arg[j] != '\'')
-                res[i][k++] = cmd.arg[j++];
-        }
-        else
-        {
-            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, ' ') + 1, sizeof(char));
-            while (cmd.arg[j] && cmd.arg[j] != ' ')
-                res[i][k++] = cmd.arg[j++];
-        }
-        i++;
-        j++;
     }
     return (res);
 }

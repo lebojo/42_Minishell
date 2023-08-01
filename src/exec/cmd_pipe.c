@@ -6,13 +6,13 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/17 00:16:53 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/22 17:00:09 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/01 14:31:08 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	cmd_pipe(t_cmd *cmd, t_exec *exec, char **envp, int x)
+void	cmd_pipe(t_cmd *cmd, t_exec *exec, char ***envp, int x)
 {
 	exec->pid[x] = fork();
 	if (exec->pid[x] == 0)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/07/23 17:13:13 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/08/01 16:44:35 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,63 +30,92 @@
 
 /*===================================SOURCES====================================*/
 
-void	parse(t_cmds *cmds, char *input);
+/*	MAIN					*/
+void	create_prompt(char **prompt);
+void 	print_cmds(t_cmds cmds);
+int 	main(int ac, char **av, char **envp);
+
+/*	FREE					*/
 void	free_cmds(t_cmds *cmds);
 void	free_tube(t_exec *exec);
-void	close_pipe(t_exec *exec, int i);
 void    close_fd(t_exec *exec);
+void	close_pipe(t_exec *exec, int i);
 
-/*=======EXEC=======*/
+/*	PARSE					*/
+void	sep_counter(t_cmds *cmds, char *input);
+void	sep_parse(t_cmds *cmds, char *input);
+void	parse(t_cmds *cmds, char *input);
+
+/*	UTILS					*/
+int		char_in_str(char c, char *str);
+
+/*---------------------EXEC---------------------*/
 
 /*	CMD_PIPE				*/
-void	cmd_pipe(t_cmd *cmd, t_exec *exec, char **envp, int x);
+void	cmd_pipe(t_cmd *cmd, t_exec *exec, char ***envp, int x);
 
-/*	CMD_RDR*/
-void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char **envp, int x);
-void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char **envp, int x);
-void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char **envp, int x);
-void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char **envp, int x);
-void	exec_rdr(t_cmd *cmd, t_exec *exec, char **env, int x);
+/*	CMD_RDR_D				*/
+void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char ***envp, int x);
+void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x);
+void	push_to_fd(t_exec *exec ,char *res,int x);
 
-/*	EXEC_CMD			*/
+/*	CMD_RDR					*/
+void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x);
+void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char ***envp, int x);
+void	exec_rdr(t_cmd *cmd, t_exec *exec, char ***envp, int x);
+
+/*	EXEC_CMD				*/
 void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env);
+char	**split_cmd(t_cmd cmd);
+int		arg_counter(char *s);
+int		strlen_to_char(char *s, int i, char c);
+char    *str_extractor(char *s);
 
-/*	UTILS_EXEC			*/
+/*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
 char	*get_cmd(char **paths, char *cmd);
 
-/*	GET_CMD			*/
-void	select_cmd(t_cmd *cmd, t_exec *exec, char ***envp);
-void	 exec_line(t_cmds *cmds, char ***envp);
+/*	GET_CMD					*/
+int		is_builtins(t_cmd *cmd, char ***envp);
+void	exec_line(t_cmds *cmds, char ***envp);
+void	select_cmd_type(t_cmd *cmd, t_exec *exec, char ***envp);
+void	exec_multiple(t_cmds *cmds, t_exec *exec, char ***envp);
+void	setup_exec_var(t_cmds *cmds, t_exec *exec);
 
-/* UTILS			*/
-int	char_in_str(char c, char *str);
+/*	UTILS_EXEC				*/
+char	*find_path(char **envp, char *s, int x);
+char	*get_cmd(char **paths, char *cmd);
 
-/*=====BUILTINS=====*/
+/*---------------------BUILTINS---------------------*/
 
-// /*	CD				*/
+/*	CD				*/
 void	ft_cd(char *new_path);
 
 /*	ECHO			*/
+void	print_echo(char *arg, char ***envp);
 void	ft_echo(t_cmd *cmd, char ***envp);
 
-// /*	ENV				*/
+/*	ENV				*/
 void	ft_env(char **env);
 
-// /*	EXIT			*/
+/*	EXIT			*/
 void	ft_exit(void);
 
 /*	EXPORT			*/
-void	ft_export(t_cmd *cmd, char ***env);
-char	**copy_tab(char **tab);
 int		strdiff(const char *s1, const char *s2);
+char	**copy_tab(char **tab);
+void	print_sorted_env(char **env);
+void	add_env(char **arg, char ***env);
+void	update_env(char *key, char *arg, char *new_env, char ***env);
+char	**emptyEnv(char *s);
+void	ft_export(t_cmd *cmd, char ***env);
 
 /*	HASHMAP			*/
 char	*hm_get_value(char **map, char *key);
 
 /*	PWD				*/
-void	ft_pwd(void);
 char	*actual_folder(void);
+void	ft_pwd(void);
 
 /*	UNSET			*/
 void	ft_unset(t_cmd *cmd, char ***env);
