@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/28 14:53:04 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/08/28 15:50:47 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int main(int ac, char **av, char **envp)
 			free(input);
 			free_cmds(&cmds);
 		}
+		free(prompt);
 	}
 	return 0;
 }

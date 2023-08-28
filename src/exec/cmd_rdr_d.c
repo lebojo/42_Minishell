@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_rdr_d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:10:05 by abourgue          #+#    #+#             */
-/*   Updated: 2023/08/01 16:35:20 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/28 16:08:24 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 		heredoc = readline("heredoc>");
 		if (heredoc[0] == '\0')
 			heredoc = ft_strdup("\n");
-		if (ft_strcmp(heredoc, cmds->cmd[x - 1].arg) == 1)
+		if (ft_strcmp(heredoc, cmds->cmd[x].arg) == 1)
 			break ;
 		heredoc = ft_strjoin(heredoc,"\n");
 		res = ft_strjoin(res, heredoc);
@@ -63,6 +63,7 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 	{
 		if (res != NULL)
 			push_to_fd(exec ,res, x);
+		exit(1);
 	}
 	return ;
 }
