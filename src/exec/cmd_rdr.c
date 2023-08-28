@@ -6,15 +6,15 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:02:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/26 15:06:49 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/01 15:49:39 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char **envp, int x)
+void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
-	exec->pid[x + 1] = fork();
+	exec->pid[x + 1] = fork(); 
 	if (exec->pid[x + 1] == 0)
 	{
 		if (x > 0)
@@ -28,13 +28,13 @@ void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char **envp, int x)
 			return ;
 		if (dup2(exec->fd_out, STDOUT_FILENO) == -1)
 			return ;
-		exec_cmd(&cmds->cmd[x], exec, envp);
+		exec_cmd(&cmds->cmd[x], exec, *envp);
 		close(exec->fd_out);
 		return ;
 	}
 }
 
-void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char **envp, int x)
+void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
 	exec->pid[x + 1] = fork();
 	if (exec->pid[x + 1] == 0)
@@ -50,18 +50,18 @@ void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char **envp, int x)
 }
 
 
-void	exec_rdr(t_cmd *cmd, t_exec *exec, char **env, int x)
+void	exec_rdr(t_cmd *cmd, t_exec *exec, char ***envp, int x)
 {
 	if (x == exec->s_tube)
     {
 		if (dup2(1, STDOUT_FILENO) == -1)
         	return;
-		exec_cmd(cmd, exec, env);
+		select_cmd_type(cmd, exec, envp);
         return;
     }
 	if (dup2(exec->tube[x][1], STDOUT_FILENO) == -1)
 		return;
 	close(exec->tube[x][0]);
-	exec_cmd(cmd, exec, env);
+	select_cmd_type(cmd, exec, envp);
 	return ;
 }

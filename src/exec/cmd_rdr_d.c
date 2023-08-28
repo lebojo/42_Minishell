@@ -6,15 +6,13 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:10:05 by abourgue          #+#    #+#             */
-/*   Updated: 2023/06/26 15:13:57 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:35:20 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	push_to_fd(t_exec *exec ,char *res ,int x);
-
-void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char **envp, int x)
+void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
 	int		i;
 	int 	z;
@@ -36,28 +34,25 @@ void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char **envp, int x)
 			return ;
 		if (dup2(exec->fd_out, STDOUT_FILENO) == -1)
 			return ;
-		exec_cmd(&cmds->cmd[x], exec, envp);
-		printf("SALUT\n");
+		exec_cmd(&cmds->cmd[x], exec, *envp);
 		close(exec->fd_out);
 		exit (1);
-		return ;
 	}
 }
 
-void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char **envp, int x)
+void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
 	char	*heredoc;
 	char	*res;
 	char	*tmp;
 
 	res = ft_strdup("");
-	printf("%s\n\n", cmds->cmd[x].name);
 	while (1)
 	{
 		heredoc = readline("heredoc>");
-		if (!heredoc)
+		if (heredoc[0] == '\0')
 			heredoc = ft_strdup("\n");
-		if (ft_strcmp(heredoc, cmds->cmd[x].name))
+		if (ft_strcmp(heredoc, cmds->cmd[x - 1].arg) == 1)
 			break ;
 		heredoc = ft_strjoin(heredoc,"\n");
 		res = ft_strjoin(res, heredoc);
@@ -65,8 +60,11 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char **envp, int x)
 	}
 	exec->pid[x] = fork();
 	if (exec->pid[x] == 0)
-		push_to_fd(exec ,res, x);
-	exit (1);
+	{
+		if (res != NULL)
+			push_to_fd(exec ,res, x);
+	}
+	return ;
 }
 
 void	push_to_fd(t_exec *exec ,char *res,int x)

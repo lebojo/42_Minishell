@@ -6,14 +6,13 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/16 01:59:41 by abourgue          #+#    #+#             */
-/*   Updated: 2023/07/18 01:47:10 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/01 16:40:34 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	create_tbl_exec(t_cmd *cmd, t_exec *exec);
-char	**ft_split_cmd(char const *s, char c, char d, int count);
+char **split_cmd(t_cmd cmd);
 
 void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env)
 {
@@ -31,94 +30,114 @@ void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env)
 		printf("command not found: %s\n", cmd->name);
 		exit (1);
 	}
-	create_tbl_exec(cmd, exec);
+	exec->cmd_a = split_cmd(*cmd);
 	execve(exec->cmd, exec->cmd_a, env);
 	exit(1);
 }
 
-void	create_tbl_exec(t_cmd *cmd, t_exec *exec)
+char **split_cmd(t_cmd cmd)
 {
-	int		x;
-	int		count;
-	char	*tmp;
-	
-	count = 1;
-	if (cmd->arg)
-	{	
-		x = -1;
-		while (cmd->arg[++x])
-		{
-			if (cmd->arg[x] == '"')
-			{
-				x++;
-				count++;
-				while (cmd->arg[x] != '"' && cmd->arg[x])
-					x++;
-			}
-			x++;
-			if (cmd->arg[x] == ' ' || cmd->arg[x + 1] == '\0')
-			{
-				if (cmd->arg[x - 1] != ' ')
-					count++;
-			}
-		}
-	}
-	exec->cmd_a = malloc(sizeof(char *) * (count + 1));
-	if (cmd->arg)
-	{
-		tmp = add_str(cmd->name, " ", 0);
-		tmp = add_str(tmp, cmd->arg, 1);
-	}
-	exec->cmd_a = ft_split_cmd(tmp,' ','"', count);
-	exec->cmd_a[count] = NULL;
-	free(tmp);
+    char    **res;
+    int     i;
+    int     j;
+    int     k;
+    int     nb_arg;
+
+    i = 0;
+    j = 0;
+    k = 0;
+    nb_arg = arg_counter(cmd.arg);
+    res = ft_calloc(nb_arg + 1, sizeof(char *));
+    res[i++] = ft_strdup(cmd.name);
+    if (!cmd.arg)
+        return (res);
+    while (--nb_arg - 1)
+    {
+        k = 0;
+        if (cmd.arg[j] == '"')
+        {
+            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '"') + 1, sizeof(char));
+            j++;
+            while (cmd.arg[j] && cmd.arg[j] != '"')
+                res[i][k++] = cmd.arg[j++];
+        }
+        else if (cmd.arg[j] == '\'')
+        {
+            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '\'') + 1, sizeof(char));
+            j++;
+            while (cmd.arg[j] && cmd.arg[j] != '\'')
+                res[i][k++] = cmd.arg[j++];
+        }
+        else
+        {
+            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, ' ') + 1, sizeof(char));
+            while (cmd.arg[j] && cmd.arg[j] != ' ')
+                res[i][k++] = cmd.arg[j++];
+        }
+        i++;
+        j++;
+    }
+    return (res);
 }
 
-static char	*word_dup(const char *str, int start, int finish)
+int arg_counter(char *s)
 {
-	char	*word;
-	int		i;
+    int i;
+    int res;
 
-	i = 0;
-	word = malloc((finish - start + 1) * sizeof(char));
-	while (start < finish)
-		word[i++] = str[start++];
-	word[i] = '\0';
-	return (word);
+    i = -1;
+    if (!s)
+        return (2);
+    res = 3;
+    while (s && s[++i])
+    {
+        if (s[i] == ' ' )
+            res++;
+        if (s[i] == '"')
+        {
+            while (s[++i] && s[i] != '"')
+                ;
+            if (!s[i] && s[i - 1] != '"')
+                return (-1);
+        }
+        else if (s[i] == '\'')
+        {
+            while (s[++i] && s[i] != '\'')
+                ;
+            if (!s[i] && s[i - 1] != '\'')
+                return (-1);
+        }
+    }
+    return (res);
 }
 
-char	**ft_split_cmd(char const *s, char c, char d, int count)
+int    strlen_to_char(char *s, int i, char c)
 {
-	int	i;
-	int	j;
-	int		index;
-	char	**res;
+    while (s[i] && s[i] != c)
+        i++;
+    return (i);
+}
 
-	res = malloc((count + 1) * sizeof(char *));
-	if (!s || !res)
-		return (0);
-	i = 0;
-	j = 0;
-	index = -1;
-	while (i <= ft_strlen(s))
-	{
-		if (s[i] != c && s[i] != d && index < 0)
-			index = i;
-		else if ((s[i] == d) && index >= 0)
-		{
-			index = ++i;
-			while (s[i] != d)
-				i++;
-			res[j++] = word_dup(s, index, i);
-			index = ++i;
-		}
-		else if (((s[i] == c && s[i - 1] != d) || s[i] == '\0') && index >= 0)
-		{
-			res[j++] = word_dup(s, index, i);
-			index = ++i;
-		}
-		i++;
-	}
-	res[j] = 0;
-	return (res);
+char    *str_extractor(char *s)
+{
+    int i;
+    char *res;
+
+    i = 0;
+    res = ft_calloc(ft_strlen(s) - 2, sizeof(char));
+    if (s[i] == '"')
+    {
+        while (s[++i] && s[i] != '"')
+            res[i - 1] = s[i];
+        if (!s[i])
+            return (NULL);
+    }
+    else if (s[i] == '\'')
+    {
+        while (s[++i] && s[i] != '\'')
+            res[i - 1] = s[i];
+        if (!s[i])
+            return (NULL);
+    }
+    return (res);
 }
