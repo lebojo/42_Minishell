@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/28 14:53:04 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/08/28 15:29:36 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ int main(int ac, char **av, char **envp)
 		if (input && input[0] != '\0')
 		{
 			parse(&cmds, input);
-			//print_cmds(cmds);
+			print_cmds(cmds);
 			if (cmds.cmd[0].name)
 				exec_line(&cmds, &envp);
 			else

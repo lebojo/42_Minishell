@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/08/01 15:56:26 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:50:29 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,18 +71,20 @@ void	exec_multiple(t_cmds *cmds, t_exec *exec, char ***envp)
 
     i = -1;
 	setup_exec_var(cmds, exec);
-    while (++i < cmds->nb_cmd)
+	printf("s_tube: %d\n", exec->s_tube);
+    while (++i < cmds->nb_cmd - 1)
     {
+		printf("i: %d\n", i);
         if (cmds->sep[i] == Pipe)
-			cmd_pipe(&cmds->cmd[i], exec, envp, i); // execute uniquement la commande i puis passe a la ligne 99
+			cmd_pipe(&cmds->cmd[i], exec, envp, i);
 		else if (cmds->sep[i] == S_left)
-			cmd_rdr_l(cmds, exec, envp, i++); // i++ car execution de la redirection depuis i puis execution de la commande i + 1
+			cmd_rdr_l(cmds, exec, envp, i);
 		else if (cmds->sep[i] == S_right)
-			cmd_rdr_r(cmds, exec, envp, i++);
+			cmd_rdr_r(cmds, exec, envp, ++i);
 		else if (cmds->sep[i] == D_right)
 			cmd_rdr_d_r(cmds, exec, envp, i++);
 		else if (cmds->sep[i] == D_left)
-			cmd_rdr_d_l(cmds, exec, envp, ++i);
+			cmd_rdr_d_l(cmds, exec, envp, i);
 		close_pipe(exec, i);
         waitpid(exec->pid[i], NULL, 0);
     }

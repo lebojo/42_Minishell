@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:02:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/08/01 15:49:39 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:26:54 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,8 @@
 
 void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
-	exec->pid[x + 1] = fork(); 
-	if (exec->pid[x + 1] == 0)
+	exec->pid[x] = fork(); 
+	if (exec->pid[x] == 0)
 	{
 		if (x > 0)
 		{
@@ -23,28 +23,30 @@ void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 				return ;
 			close(exec->tube[x - 1][1]);
 		}
-		exec->fd_out = open(cmds->cmd[x + 1].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		exec->fd_out = open(cmds->cmd[x].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (exec->fd_out == -1)
 			return ;
 		if (dup2(exec->fd_out, STDOUT_FILENO) == -1)
 			return ;
-		exec_cmd(&cmds->cmd[x], exec, *envp);
+		close(exec->tube[x][0]);
+		printf("%s", exec->res);
 		close(exec->fd_out);
-		return ;
+		free(exec->res);
+		exit (1);
 	}
 }
 
 void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
-	exec->pid[x + 1] = fork();
-	if (exec->pid[x + 1] == 0)
+	exec->pid[x] = fork();
+	if (exec->pid[x] == 0)
 	{
-		exec->fd_in = open(cmds->cmd[x].name, O_RDONLY);
+		exec->fd_in = open(cmds->cmd[x + 1].name, O_RDONLY);
 		if (exec->fd_in == -1)
 			return ;
 		if (dup2(exec->fd_in, STDIN_FILENO) == -1)
 			return ;
-		exec_rdr(&cmds->cmd[x + 1], exec, envp, x + 1);
+		exec_rdr(&cmds->cmd[x], exec, envp, x + 1);
 		close(exec->fd_in);
 	}
 }

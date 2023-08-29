@@ -33,7 +33,7 @@ typedef struct s_exec
     char    *cmd;
     char    **cmd_p;
     char    **cmd_a;
-    char    res[4096];
+    char    *res;
     int     bytes;
 }    t_exec;
 

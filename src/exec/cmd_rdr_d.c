@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:10:05 by abourgue          #+#    #+#             */
-/*   Updated: 2023/08/01 16:35:20 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/28 17:08:27 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,26 +43,26 @@ void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
 	char	*heredoc;
-	char	*res;
 	char	*tmp;
 
-	res = ft_strdup("");
+	exec->res = ft_strdup("");
 	while (1)
 	{
 		heredoc = readline("heredoc>");
 		if (heredoc[0] == '\0')
 			heredoc = ft_strdup("\n");
-		if (ft_strcmp(heredoc, cmds->cmd[x - 1].arg) == 1)
+		if (ft_strcmp(heredoc, cmds->cmd[x].arg) == 1)
 			break ;
 		heredoc = ft_strjoin(heredoc,"\n");
-		res = ft_strjoin(res, heredoc);
+		exec->res = ft_strjoin(exec->res, heredoc);
 		free(heredoc);
 	}
 	exec->pid[x] = fork();
 	if (exec->pid[x] == 0)
 	{
-		if (res != NULL)
-			push_to_fd(exec ,res, x);
+		if (exec->res != NULL)
+			push_to_fd(exec ,exec->res, x);
+		exit (1);
 	}
 	return ;
 }
