@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:02:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/08/29 17:33:17 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/29 21:58:56 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 
 void	exec_rdr(t_cmd *cmd, t_exec *exec, char ***envp, int x)
 {
-	if (x == exec->s_tube)
+	if (x + 1 == exec->s_tube)
     {
 		if (dup2(1, STDOUT_FILENO) == -1)
         	return;

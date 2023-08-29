@@ -51,7 +51,7 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 		heredoc = readline("heredoc>");
 		if (heredoc[0] == '\0')
 			heredoc = ft_strdup("\n");
-		if (ft_strcmp(heredoc, cmds->cmd[x].arg) == 1)
+		if (ft_strcmp(heredoc, cmds->cmd[x].name) == 1)
 			break ;
 		heredoc = ft_strjoin(heredoc,"\n");
 		exec->res = ft_strjoin(exec->res, heredoc);
