@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/07/23 17:19:45 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/08/29 17:4135 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,9 +89,15 @@ void	parse(t_cmds *cmds, char *input)
 	j = 0;
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd + 1));
-	cmds->cmd[0].name = ft_strdup(split[i++]);
+	if (!char_in_str(split[i][0], "|<>"))
+		cmds->cmd[0].name = ft_strdup(split[i++]);
+	else
+	{
+		cmds->cmd[0].name = ft_strdup(split[++i]);
+		i++;
+	}
 	cmds->cmd[0].arg = NULL;
-	if (split[i])
+	if (split[i] && !char_in_str(split[i][0], "|<>"))
 		cmds->cmd[0].arg = ft_strdup(split[i++]);
 	if (!split[i])
 		return ;
@@ -106,13 +112,15 @@ void	parse(t_cmds *cmds, char *input)
 			cmds->cmd[j].arg = NULL;
 			if (!split[++i])
 				break ;
+			if (char_in_str(split[i][0], "|<>"))
+				continue ;
 			cmds->cmd[j].arg = split[i];
 			i++;
 			continue ;
 		}
 		else
 		{
-			if (cmds->cmd[j].arg[0])
+			if (cmds->cmd[j].arg && cmds->cmd[j].arg[0])
 			{
 				cmds->cmd[j].arg = add_str(cmds->cmd[j].arg, " ", 1);
 				cmds->cmd[j].arg = add_str(cmds->cmd[j].arg, split[i], 3);

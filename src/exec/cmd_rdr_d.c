@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cmd_rdr_d.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/24 20:10:05 by abourgue          #+#    #+#             */
-/*   Updated: 2023/08/29 16:48:39 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:58:554 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 
 void	push_to_fd(t_exec *exec ,char *res,int x)
 {
-	if (x == exec->s_tube)
+	if (x + 1 == exec->s_tube)
 	{
 		if (dup2(1, STDOUT_FILENO) == -1)
 			return ;
