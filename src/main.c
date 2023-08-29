@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/28 15:29:36 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/08/29 16:47:52 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,7 @@ int main(int ac, char **av, char **envp)
 			free(input);
 			free_cmds(&cmds);
 		}
+		free(prompt);
 	}
 	return 0;
 }
