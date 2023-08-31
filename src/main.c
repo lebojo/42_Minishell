@@ -34,6 +34,15 @@ void	print_cmds(t_cmds cmds)
 	printf("=======END=======\n");
 }
 
+void sigint_handler(int sig)
+{
+	char *prompt;
+
+	(void)sig;
+	create_prompt(&prompt);
+	printf("\n%s", prompt);
+}
+
 int main(int ac, char **av, char **envp) 
 {
 	char	*input;
@@ -42,12 +51,17 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	signal(SIGINT, sigint_handler); //Pour que le CTRL+C ne quitte pas le programme
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
+		if (input == NULL) // C'est pour le CTRL+D
+			ft_exit();
 		if (input && input[0] != '\0')
 		{
 			parse(&cmds, input);
+			if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
+				ft_exit();
 			print_cmds(cmds);
 			if (cmds.cmd[0].name)
 				exec_line(&cmds, &envp);

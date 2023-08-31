@@ -15,5 +15,6 @@
 void	ft_exit(void)
 {
 	printf("Exiting Minishell 2...\n");
-	exit(0);
+	exit(1);
+	printf("Eheheheh en fait non\n - Arthur\n");
 }
