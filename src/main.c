@@ -22,6 +22,7 @@ void	print_cmds(t_cmds cmds)
 {
 	int i = 0;
 	int j = 0;
+	printf("======DEBUG======\n");
 	while (i < cmds.nb_cmd)
 	{
 		printf("cmd[%d] = %s\n", i, cmds.cmd[i].name);
@@ -29,7 +30,8 @@ void	print_cmds(t_cmds cmds)
 		if (cmds.nb_cmd > 1)
 			printf("sep[%d] = %d\n", i, cmds.sep[i]);
 		i++;
-	}	
+	}
+	printf("=======END=======\n");
 }
 
 int main(int ac, char **av, char **envp) 

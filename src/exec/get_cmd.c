@@ -72,7 +72,7 @@ void	exec_multiple(t_cmds *cmds, t_exec *exec, char ***envp)
     i = -1;
 	setup_exec_var(cmds, exec);
 	printf("s_tube: %d\n", exec->s_tube);
-    while (++i < cmds->nb_cmd - 1)
+    while (++i <= cmds->nb_cmd - 1)
     {
 		printf("i: %d\n", i);
         if (cmds->sep[i] == Pipe)
@@ -98,7 +98,7 @@ void	setup_exec_var(t_cmds *cmds, t_exec *exec)
 
 	x = -1;
     exec->tube = malloc(sizeof(int *) * (cmds->nb_cmd - 1));
-    exec->s_tube = cmds->nb_cmd - 1;
+    exec->s_tube = cmds->nb_cmd;
     exec->pid = malloc(sizeof(pid_t) * cmds->nb_cmd);
     while (++x < cmds->nb_cmd - 1)
     {
