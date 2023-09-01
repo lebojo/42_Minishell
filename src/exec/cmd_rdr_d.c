@@ -81,6 +81,6 @@ void	push_to_fd(t_exec *exec ,char *res,int x)
 		if (dup2(exec->tube[x][1], STDOUT_FILENO) == -1)
 			return ;
 		close_pipe(exec, x - 1);
-		printf("%s", exec->res);
+		printf("%s", res);
 	}
 }

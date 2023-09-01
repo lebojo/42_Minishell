@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:02:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/01 18:44:07 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/01 19:34:21 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,9 @@
 
 void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 {
-	exec->pid[x] = fork(); 
+	char buf[4096];
+
+	exec->pid[x] = fork();
 	if (exec->pid[x] == 0)
 	{
 		printf("%d - %s\n", x, cmds->cmd[x].name);
@@ -22,11 +24,10 @@ void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 		if (exec->fd_out == -1)
 			return ;
 		if (dup2(exec->fd_out, STDOUT_FILENO) == -1)
-			return ;
-		close(exec->tube[x][0]);
-		push_to_fd(exec, exec->res , x);
+		 	return ;
+		read(exec->tube[x - 1][0], &buf, 4096);
+		push_to_fd(exec, buf, x);
 		close(exec->fd_out);
-		free(exec->res);
 		exit (1);
 	}
 }
