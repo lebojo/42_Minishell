@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/20 13:02:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/08/29 21:58:56 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/01 17:59:28 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,7 @@ void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x)
 	exec->pid[x] = fork(); 
 	if (exec->pid[x] == 0)
 	{
+		printf("%d - %s\n", x, cmds->cmd[x].name);
 		exec->fd_out = open(cmds->cmd[x].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 		if (exec->fd_out == -1)
 			return ;

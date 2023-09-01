@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/08/29 21:51:40 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/01 18:21:07 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,15 +72,23 @@ void	exec_multiple(t_cmds *cmds, t_exec *exec, char ***envp)
     i = -1;
 	setup_exec_var(cmds, exec);
 	printf("s_tube: %d\n", exec->s_tube);
-    while (++i <= cmds->nb_cmd - 1)
+    while (++i < cmds->nb_cmd)
     {
-		printf("i: %d\n", i);
+		printf("%d\n", i);
         if (cmds->sep[i] == Pipe)
 			cmd_pipe(&cmds->cmd[i], exec, envp, i);
 		else if (cmds->sep[i] == S_left)
 			cmd_rdr_l(cmds, exec, envp, i);
 		else if (cmds->sep[i] == S_right)
-			cmd_rdr_r(cmds, exec, envp, i);
+		{
+			cmd_pipe(&cmds->cmd[i], exec, envp, i);
+			close_pipe(exec, i);
+        	waitpid(exec->pid[i], NULL, 0);
+			cmd_rdr_r(cmds, exec, envp, i + 1);
+			close_pipe(exec, i + 1);
+        	waitpid(exec->pid[i + 1], NULL, 0);
+			continue ;
+		}
 		else if (cmds->sep[i] == D_right)
 			cmd_rdr_d_r(cmds, exec, envp, i++);
 		else if (cmds->sep[i] == D_left)
