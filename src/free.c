@@ -48,14 +48,8 @@ void    close_fd(t_exec *exec)
         close(exec->fd_out);
 }
 
-void    close_pipe(t_exec *exec, int x)
+void    close_pipe(int *fd)
 {
-    int i;
-
-    i = -1;
-    while(++i < x && i < exec->s_tube)
-    {
-        close(exec->tube[i][0]);
-        close(exec->tube[i][1]);
-    }
+    close(fd[0]);
+    close(fd[1]);
 }

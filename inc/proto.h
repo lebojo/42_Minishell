@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/08/01 16:44:35 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:13:19 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int 	main(int ac, char **av, char **envp);
 void	free_cmds(t_cmds *cmds);
 void	free_tube(t_exec *exec);
 void    close_fd(t_exec *exec);
-void	close_pipe(t_exec *exec, int i);
+void	close_pipe(int *fd);
 
 /*	PARSE					*/
 void	sep_counter(t_cmds *cmds, char *input);
@@ -85,6 +85,12 @@ void	setup_exec_var(t_cmds *cmds, t_exec *exec);
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
 char	*get_cmd(char **paths, char *cmd);
+
+/*	PIPE					*/
+void	first_pipe(int *fd, char ***envp, int *pid);
+void	mid_pipe(int *pipe_fd1, int *pipe_fd2, char ***envp, int *pid);
+void	last_pipe(int *fd, char ***envp, int *pid);
+int		**open_pipes(int nb_pipe);
 
 /*---------------------BUILTINS---------------------*/
 

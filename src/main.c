@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/05 15:32:35 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/05 19:08:32 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,7 @@ void	print_cmds(t_cmds cmds)
 	int i = 0;
 	int j = 0;
 	printf("======DEBUG======\n");
+	printf("nb_cmd: %i, nb_pipe: %i\n", cmds.nb_cmd, cmds.nb_pipe);
 	while (i < cmds.nb_cmd)
 	{
 		printf("cmd[%d] = %s\n", i, cmds.cmd[i].name);
