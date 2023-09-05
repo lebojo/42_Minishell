@@ -15,6 +15,7 @@
 
 enum e_sep
 {
+	None,
 	Pipe,	// == |
 	S_left,	// == <
 	S_right,// == >
