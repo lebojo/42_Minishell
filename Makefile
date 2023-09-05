@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
+#    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/08/28 14:45:44 by lebojo           ###   ########.fr        #
+#    Updated: 2023/09/05 14:20:46 by abourgue         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,8 +16,7 @@ NAME	=	minishell.a
 CFLAGS	=	-g 
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c utils.c\
-			exec/utils_exec.c exec/get_cmd.c exec/exec_cmd.c \
-			exec/cmd_pipe.c exec/cmd_rdr.c exec/cmd_rdr_d.c \
+			exec/exec_cmd.c exec/exec_line.c \
 			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
 			builtins/exit.c builtins/export.c builtins/unset.c builtins/hashmap.c \
 

@@ -5,8 +5,8 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/16 01:59:41 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/01 18:47:14 by abourgue         ###   ########.fr       */
+/*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
+/*   Updated: 2023/09/05 14:34:24 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,37 @@
 
 char **split_cmd(t_cmd cmd);
 
+char	*find_path(char **envp, char *s, int x)
+{
+	while (ft_strncmp(s, *envp, x))
+		envp++;
+	return (*envp + (x + 1));
+}
+
+char	*get_cmd(char **paths, char *cmd)
+{
+	char	*tmp;
+	char	*command;
+
+	while (*paths)
+	{
+		tmp = ft_strjoin(*paths, "/");
+		command = ft_strjoin(tmp, cmd);
+		free(tmp);
+		if (access(command, 0) == 0)
+			return (command);
+		free(command);
+		paths++;
+	}
+	return (NULL);
+}
+
 void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env)
 {
 	int 	x;
 	int		count;
 	char	*temp;
-
+    
 	exec->env_p = find_path(env, "PATH", 4);
 	exec->cmd_p = ft_split(exec->env_p, ':');
 	exec->cmd = get_cmd(exec->cmd_p, cmd->name);
