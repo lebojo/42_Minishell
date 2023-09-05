@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   get_cmd.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:35:14 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/01 18:41:25 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/05 02:11:56 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,9 +105,9 @@ void	setup_exec_var(t_cmds *cmds, t_exec *exec)
     int x;
 
 	x = -1;
-    exec->tube = malloc(sizeof(int *) * (cmds->nb_cmd - 1));
+	exec->tube = ft_calloc(cmds->nb_cmd - 1, sizeof(int *));
     exec->s_tube = cmds->nb_cmd;
-    exec->pid = malloc(sizeof(pid_t) * cmds->nb_cmd);
+	exec->pid = ft_calloc(cmds->nb_cmd, sizeof(pid_t));
 	exec->res = NULL;
     while (++x < cmds->nb_cmd - 1)
     {
