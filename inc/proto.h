@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/06 11:04:37 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:25:33 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,7 +70,7 @@ void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char ***envp, int x);
 void	exec_rdr(t_cmd *cmd, t_exec *exec, char ***envp, int x);
 
 /*	EXEC_CMD				*/
-void	exec_cmd(t_cmd *cmd, t_exec *exec, char **env);
+void	exec_cmd(t_cmd *cmd, char **env);
 char	**split_cmd(t_cmd cmd);
 int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);

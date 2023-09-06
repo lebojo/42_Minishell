@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/06 11:09:23 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:28:55 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,12 @@ int main(int ac, char **av, char **envp)
 				ft_exit();
 			print_cmds(cmds);
 			
+			/*Test de exec_cmd() : fonctionne en tout cas avec une seule commande (ex: cat outfile) */
+			// if (cmds.cmd[0].name)
+			// 	exec_cmd(&cmds.cmd[0], envp);
+			// else
+			// 	printf("Unknow error\n");
+			
 			/*Test du write file > */
 			// char *t1 = ft_strdup("C'est le test numéro 1");
 			// write_in_file("test.txt", t1);
@@ -75,7 +81,7 @@ int main(int ac, char **av, char **envp)
 			// write_in_file("test.txt", t2);
 			// free(t2);
 			
-			/*Test du heredoc: << */
+			/*Test du heredoc: <<  (ex: << s)*/
 			// char *res = heredoc(cmds.cmd[0].name);
 			// printf ("%s\n", res);
 			// free(res);
