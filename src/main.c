@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/05 19:08:32 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/06 10:34:22 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,10 +64,12 @@ int main(int ac, char **av, char **envp)
 			if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
 				ft_exit();
 			print_cmds(cmds);
-			if (cmds.cmd[0].name)
-				exec_line(&cmds, &envp);
-			else
-				printf("unknown error");
+			char *res = heredoc(cmds.cmd[0].name);
+			printf ("%s\n", res);
+			// if (cmds.cmd[0].name)
+			// 	exec_line(&cmds, &envp);
+			// else
+			// 	printf("unknown error");
 			add_history(input);
 			free(input);
 			free_cmds(&cmds);

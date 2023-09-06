@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/05 19:13:19 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/06 10:32:12 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ void	parse(t_cmds *cmds, char *input);
 int		char_in_str(char c, char *str);
 
 /*---------------------EXEC---------------------*/
+
+/*--------------------NEW-EXEC-----------------*/
+char	*heredoc(char *str);
 
 /*	CMD_PIPE				*/
 void	cmd_pipe(t_cmd *cmd, t_exec *exec, char ***envp, int x);
