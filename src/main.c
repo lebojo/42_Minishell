@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/06 10:34:22 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/06 11:09:23 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,12 +64,28 @@ int main(int ac, char **av, char **envp)
 			if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
 				ft_exit();
 			print_cmds(cmds);
-			char *res = heredoc(cmds.cmd[0].name);
-			printf ("%s\n", res);
+			
+			/*Test du write file > */
+			// char *t1 = ft_strdup("C'est le test numéro 1");
+			// write_in_file("test.txt", t1);
+			// free(t1);
+
+			/*Test du append file >> */
+			// char *t2 = ft_strdup(" -> et ça le test numero 2");
+			// write_in_file("test.txt", t2);
+			// free(t2);
+			
+			/*Test du heredoc: << */
+			// char *res = heredoc(cmds.cmd[0].name);
+			// printf ("%s\n", res);
+			// free(res);
+			
+			/*test de l'exec multiple*/
 			// if (cmds.cmd[0].name)
 			// 	exec_line(&cmds, &envp);
 			// else
 			// 	printf("unknown error");
+
 			add_history(input);
 			free(input);
 			free_cmds(&cmds);

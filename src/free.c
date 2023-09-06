@@ -31,23 +31,6 @@ void free_cmds(t_cmds *cmds)
 	}
 }
 
-void    free_tube(t_exec *exec)
-{
-    int i;
-
-    i = -1;
-    while(++i < exec->s_tube)
-        free(exec->tube[i]);
-}
-
-void    close_fd(t_exec *exec)
-{
-    if (exec->fd_in > 0)
-        close(exec->fd_in);
-    if (exec->fd_out > 0)
-        close(exec->fd_out);
-}
-
 void    close_pipe(int *fd)
 {
     close(fd[0]);
