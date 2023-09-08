@@ -29,5 +29,6 @@ char	*heredoc(char *str) // ex : << s  <-- dans cette situation on passe cmds->c
 		res = ft_strjoin(res, line);
 		free(line);
 	}
+	printf("%s\n", res);
 	return (res);
 }

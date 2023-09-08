@@ -89,7 +89,7 @@ void	parse(t_cmds *cmds, char *input)
 	j = 0;
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd + 1));
-	if (!char_in_str(split[i][0], "|<>"))
+	if (!char_in_str(split[i][0], "|<>'"))
 		cmds->cmd[0].name = ft_strdup(split[i++]);
 	else
 	{

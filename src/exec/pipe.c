@@ -30,56 +30,54 @@ int	**open_pipes(int nb_pipe)
 	return (res);
 }
 
-void first_pipe(int *pipe_fd, char ***envp, int *pid)
+void first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp)
 {
-	*pid = fork();
-	if (*pid < 0)
+	pipes->pid[0] = fork();
+	if (pipes->pid[0] < 0)
 		exit(1) ;
-	char *args[] = {"ls", "-l", NULL};
-	if (*pid == 0)
+	if (pipes->pid[0] == 0)
 	{
-		close(pipe_fd[0]);
-		dup2(pipe_fd[1], STDOUT_FILENO);
-		close(pipe_fd[1]);
-		execve("/bin/ls", args, *envp); // Et en fait ici, au lieu d'exec la cmd, il faut faire une fonction pour que ça exec tout avant la pipe (genre s'il y a des <, >, etc..)
+		close(pipes->fd[0][0]);
+		dup2(pipes->fd[0][1], STDOUT_FILENO);
+		close(pipes->fd[0][1]);
+		if (!is_builtins(&cmd, envp))
+			exec_cmd(&cmd, *envp);
 		exit(0);
 	}
 }
 
-void mid_pipe(int *pipe_fd1, int *pipe_fd2, char ***envp, int *pid)
+void	mid_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp)
 {
-	*pid = fork();
-	if (*pid < 0)
+	pipes->pid[i] = fork();
+	if (pipes->pid[i] < 0)
 		exit(1) ;
-	char *args[] = {"cat", "-e", NULL};
-	if (*pid == 0)
+	if (pipes->pid[i] == 0)
 	{
-		close(pipe_fd1[1]);
-		dup2(pipe_fd1[0], STDIN_FILENO);
-		close(pipe_fd1[0]);
+		close(pipes->fd[i][1]);
+		dup2(pipes->fd[i][0], STDIN_FILENO);
+		close(pipes->fd[i][0]);
 
-		close(pipe_fd2[0]);
-		dup2(pipe_fd2[1], STDOUT_FILENO);
-		close(pipe_fd2[1]);
-		
-		execve("/bin/cat", args, *envp); //same que plus haut
+		close(pipes->fd[i + 1][0]);
+		dup2(pipes->fd[i + 1][1], STDOUT_FILENO);
+		close(pipes->fd[i + 1][1]);
+		if (!is_builtins(&cmd, envp))
+			exec_cmd(&cmd, *envp);
 		exit(0);
 	}
 }
 
-void last_pipe(int *pipe_fd, char ***envp, int *pid)
+void	last_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp)
 {
-	*pid = fork();
-	if (*pid < 0)
-		exit(1) ;
-	char *args[] = {"cat", "-e", NULL};
-	if (*pid == 0)
+	pipes->pid[i] = fork();
+	if (pipes->pid[i] < 0)
+		exit(1);
+	if (pipes->pid[i] == 0)
 	{
-		close(pipe_fd[1]);
-		dup2(pipe_fd[0], STDIN_FILENO);
-		close(pipe_fd[0]);
-
-		execve("/bin/cat", args, *envp);  //same que plus haut
+		close(pipes->fd[i][1]);
+		dup2(pipes->fd[i][0], STDIN_FILENO);
+		close(pipes->fd[i][0]);
+		if (!is_builtins(&cmd, envp))
+			exec_cmd(&cmd, *envp);
 		exit(0);
 	}
 }

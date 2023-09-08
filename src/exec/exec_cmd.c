@@ -53,12 +53,12 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	{
 		if (dup2(2, STDOUT_FILENO) == -1)
 			return ;
-		printf("command not found: %s\n", cmd->name);
+		printf("Command not found: %s\n", cmd->name);
 		exit (1);
 	}
 	s_cmd = split_cmd(*cmd);
 	execve(ac_cmd, s_cmd, env);
-	exit(1);
+	exit(0);
 }
 
 char **split_cmd(t_cmd cmd)

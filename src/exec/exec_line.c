@@ -12,31 +12,6 @@
 
 #include "../../inc/proto.h"
 
-char	*find_path(char **envp, char *s, int x)
-{
-	while (ft_strncmp(s, *envp, x))
-		envp++;
-	return (*envp + (x + 1));
-}
-
-char	*get_cmd(char **paths, char *cmd)
-{
-	char	*tmp;
-	char	*command;
-
-	while (*paths)
-	{
-		tmp = ft_strjoin(*paths, "/");
-		command = ft_strjoin(tmp, cmd);
-		free(tmp);
-		if (access(command, 0) == 0)
-			return (command);
-		free(command);
-		paths++;
-	}
-	return (NULL);
-}
-
 int	is_builtins(t_cmd *cmd, char ***envp)
 {
 	if (ft_strcmp("echo", cmd->name))
@@ -58,38 +33,78 @@ int	is_builtins(t_cmd *cmd, char ***envp)
 	return (1);
 }
 
-void init_exec(t_exec *ex, t_cmds *cmds)
+void init_pipe(t_pipe *pipes, t_cmds *cmds)
 {
-	ex->pid = ft_calloc(cmds->nb_cmd, sizeof(int));
-	ex->pipe_fd = open_pipes(cmds->nb_pipe);
-	if (!ex->pid || !ex->pipe_fd)
-		ex = NULL;
+	pipes->pid = ft_calloc(cmds->nb_cmd, sizeof(int));
+	pipes->fd = open_pipes(cmds->nb_pipe);
+	if (!pipes->pid || !pipes->fd)
+		pipes = NULL;
 }
 
 void	 exec_line(t_cmds *cmds, char ***envp)
 {
-	t_exec	exec;
+	t_pipe	pipes;
 	int		i;
 
+	init_pipe(&pipes, cmds);
 	if (cmds->nb_cmd <= 0)
 		return ;
-	if (cmds->nb_pipe == 0)
+	if (cmds->sep[0] > Pipe)
+	{
+		exec_inpipe(cmds, &pipes, envp);
 		return ;
-
+	}
+	// Je pense qu'il faut créer un parse de cmds pour chaque interpipe
 	//execute ça que s'il y a au moins 1 pipe:
-	init_exec(&exec, cmds);
 	i = -1;
-	first_pipe(exec.pipe_fd[0], envp, &exec.pid[0]);
+	first_pipe(cmds->cmd[0], &pipes, envp);
 	while (++i < cmds->nb_pipe - 1) // le -1 c'est parce que s'il y a 1 pipe, il ne doit pas rentrer dedans, et t'as capté la logique.
 	{
-		mid_pipe(exec.pipe_fd[i], exec.pipe_fd[i + 1], envp, &exec.pid[i + 1]);
-		close_pipe(exec.pipe_fd[i]);
+		mid_pipe(cmds->cmd[i + 1], &pipes, i, envp);
+		close_pipe(pipes.fd[i]);
 	}
-	last_pipe(exec.pipe_fd[i], envp, &exec.pid[i + 1]);
+	last_pipe(cmds->cmd[i + 1], &pipes, i, envp); // le +1 c'est parce qu'il y a une dernière commande après le pipes
 
-	close_pipe(exec.pipe_fd[i]);
+	close_pipe(pipes.fd[i]);
 
 	i = -1;
 	while (++i <= cmds->nb_pipe)
-		waitpid(exec.pid[i], NULL, 0);
+		waitpid(pipes.pid[i], NULL, 0);
+}
+
+void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, char ***envp)
+{
+	if (cmds->nb_cmd > 1)
+		exec_sep(cmds, envp);
+	else
+	{
+		if (!is_builtins(&cmds->cmd[0], envp))
+		{
+			pipe->pid[0] = fork();
+			if (pipe->pid[0] < 0)
+				exit(1);
+			if (pipe->pid[0] == 0)
+			{
+				exec_cmd(&cmds->cmd[0], *envp);
+				exit(0);
+			}
+			waitpid(pipe->pid[0], NULL, 0);
+		}
+	}
+}
+
+void	exec_sep(t_cmds *cmds, char ***envp)
+{
+	int i;
+
+	i = -1;
+	while (cmds->sep[++i] != Pipe)
+	{
+		if (cmds->sep[i] == S_right)
+			write_in_file(cmds->cmd[i + 1].name, cmds->cmd[i].name);
+		else if (cmds->sep[i] == D_right)
+			append_to_file(cmds->cmd[i + 1].name, cmds->cmd[i].name);
+		else if (cmds->sep[i] == D_left)
+			heredoc(cmds->cmd[i].name);
+	}
 }

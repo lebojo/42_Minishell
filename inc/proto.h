@@ -37,8 +37,8 @@ int 	main(int ac, char **av, char **envp);
 
 /*	FREE					*/
 void	free_cmds(t_cmds *cmds);
-void	free_tube(t_exec *exec);
-void    close_fd(t_exec *exec);
+void	free_tube(t_pipe *exec);
+void    close_fd(t_pipe *exec);
 void	close_pipe(int *fd);
 
 /*	PARSE					*/
@@ -56,25 +56,14 @@ char	*heredoc(char *str);
 void	write_in_file(char *name, char *str);
 void	append_to_file(char *name, char *str);
 
-/*	CMD_PIPE				*/
-void	cmd_pipe(t_cmd *cmd, t_exec *exec, char ***envp, int x);
-
-/*	CMD_RDR_D				*/
-void	cmd_rdr_d_r(t_cmds *cmds, t_exec *exec, char ***envp, int x);
-void	cmd_rdr_d_l(t_cmds *cmds, t_exec *exec, char ***envp, int x);
-void	push_to_fd(t_exec *exec ,char *res,int x);
-
-/*	CMD_RDR					*/
-void	cmd_rdr_r(t_cmds *cmds, t_exec *exec, char ***envp, int x);
-void	cmd_rdr_l(t_cmds *cmds, t_exec *exec, char ***envp, int x);
-void	exec_rdr(t_cmd *cmd, t_exec *exec, char ***envp, int x);
-
 /*	EXEC_CMD				*/
 void	exec_cmd(t_cmd *cmd, char **env);
 char	**split_cmd(t_cmd cmd);
 int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char    *str_extractor(char *s);
+void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, char ***envp);
+void	exec_sep(t_cmds *cmds, char ***envp);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
@@ -83,18 +72,11 @@ char	*get_cmd(char **paths, char *cmd);
 /*	GET_CMD					*/
 int		is_builtins(t_cmd *cmd, char ***envp);
 void	exec_line(t_cmds *cmds, char ***envp);
-void	select_cmd_type(t_cmd *cmd, t_exec *exec, char ***envp);
-void	exec_multiple(t_cmds *cmds, t_exec *exec, char ***envp);
-void	setup_exec_var(t_cmds *cmds, t_exec *exec);
-
-/*	UTILS_EXEC				*/
-char	*find_path(char **envp, char *s, int x);
-char	*get_cmd(char **paths, char *cmd);
 
 /*	PIPE					*/
-void	first_pipe(int *fd, char ***envp, int *pid);
-void	mid_pipe(int *pipe_fd1, int *pipe_fd2, char ***envp, int *pid);
-void	last_pipe(int *fd, char ***envp, int *pid);
+void 	first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp);
+void	mid_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp);
+void	last_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp);
 int		**open_pipes(int nb_pipe);
 
 /*---------------------BUILTINS---------------------*/

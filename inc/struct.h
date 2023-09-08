@@ -23,11 +23,11 @@ enum e_sep
 	D_right	// == >>
 };
 
-typedef struct s_exec
+typedef struct s_pipe
 {
-    int **pipe_fd;
+    int **fd;
     int *pid;
-}    t_exec;
+}    t_pipe;
 
 typedef struct  s_cmd
 {
