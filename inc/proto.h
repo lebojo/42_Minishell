@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/06 11:25:33 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/22 17:13:15 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int		char_in_str(char c, char *str);
 
 /*--------------------NEW-EXEC-----------------*/
 char	*heredoc(char *str);
-void	write_in_file(char *name, char *str);
+void	write_in_file(char *name, t_cmd *cmd, char **env);
 void	append_to_file(char *name, char *str);
 
 /*	EXEC_CMD				*/
