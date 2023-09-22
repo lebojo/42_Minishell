@@ -40,9 +40,10 @@ void	sep_parse(t_cmds *cmds, char *input)
 	i = -1;
 	j = 0;
 	sep_counter(cmds, input);
+	cmds->sep = ft_calloc(cmds->nb_cmd + 1, sizeof(enum e_sep));
+	cmds->sep[0] = None;
 	if (cmds->nb_cmd <= 1 && cmds->nb_pipe < 1)
 		return ;
-	cmds->sep = ft_calloc(cmds->nb_cmd, sizeof(enum e_sep));
 	while (input[++i + 1])
 	{
 		if (input[i] == '|')
@@ -72,6 +73,7 @@ void	sep_parse(t_cmds *cmds, char *input)
 			continue;
 		}
 	}
+	cmds->sep[j] = None;
 }
 
 void	parse(t_cmds *cmds, char *input)
