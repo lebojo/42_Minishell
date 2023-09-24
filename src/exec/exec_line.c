@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/22 17:44:59 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 05:11:04 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,19 +51,19 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 		return ;
 	if (cmds->sep[0] != Pipe)
 	{
-		exec_inpipe(cmds, &pipes, envp);
+		exec_inpipe(cmds, &pipes, 0, envp);
 		return ;
 	}
 	// Je pense qu'il faut créer un parse de cmds pour chaque interpipe
 	//execute ça que s'il y a au moins 1 pipe:
 	i = -1;
-	first_pipe(cmds->cmd[0], &pipes, envp);
+	first_pipe(cmds, &pipes, envp);
 	while (++i < cmds->nb_pipe - 1) // le -1 c'est parce que s'il y a 1 pipe, il ne doit pas rentrer dedans, et t'as capté la logique.
 	{
-		mid_pipe(cmds->cmd[i + 1], &pipes, i, envp);
+		mid_pipe(cmds, &pipes, i, envp);
 		close_pipe(pipes.fd[i]);
 	}
-	last_pipe(cmds->cmd[i + 1], &pipes, i, envp); // le +1 c'est parce qu'il y a une dernière commande après le pipes
+	last_pipe(cmds, &pipes, i, envp); // le +1 c'est parce qu'il y a une dernière commande après le pipes
 
 	close_pipe(pipes.fd[i]);
 
@@ -72,20 +72,54 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 		waitpid(pipes.pid[i], NULL, 0);
 }
 
-void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, char ***envp)
+t_cmds	parse_cmds(t_cmds src, int which_pipe)
 {
-	if (cmds->nb_cmd > 1)
-		exec_sep(cmds, envp);
+	t_cmds	res;
+	int		i;
+	int		j;
+
+	i = 0;
+	j = 0;
+	res.nb_cmd = 0;
+	res.nb_pipe = 0;
+	res.sep = src.sep;
+	while (i < src.nb_cmd)
+	{
+		if (src.cmd[i].which_pipe == which_pipe)
+			res.nb_cmd++;
+		i++;
+	}
+	res.cmd = malloc(sizeof(t_cmd) * res.nb_cmd);
+	i = 0;
+	while (i < src.nb_cmd)
+	{
+		if (src.cmd[i].which_pipe == which_pipe)
+		{
+			res.cmd[j] = src.cmd[i];
+			j++;
+		}
+		i++;
+	}
+	return (res);
+}
+
+void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
+{
+	t_cmds	cmds_ip; // cmds interpipe
+
+	cmds_ip = parse_cmds(*cmds, which_pipe);
+	if (cmds_ip.nb_cmd > 1)
+		exec_sep(&cmds_ip, envp);
 	else
 	{
-		if (!is_builtins(&cmds->cmd[0], envp))
+		if (!is_builtins(&cmds_ip.cmd[0], envp))
 		{
 			pipe->pid[0] = fork();
 			if (pipe->pid[0] < 0)
 				exit(1);
 			if (pipe->pid[0] == 0)
 			{
-				exec_cmd(&cmds->cmd[0], *envp);
+				exec_cmd(&cmds_ip.cmd[0], *envp);
 				exit(0);
 			}
 			waitpid(pipe->pid[0], NULL, 0);

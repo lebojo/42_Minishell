@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/24 04:22:48 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 05:10:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ char	**split_cmd(t_cmd cmd);
 int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char    *str_extractor(char *s);
-void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, char ***envp);
+void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
 void	exec_sep(t_cmds *cmds, char ***envp);
 
 /*	UTILS_EXEC				*/
@@ -77,9 +77,9 @@ int		is_builtins(t_cmd *cmd, char ***envp);
 void	exec_line(t_cmds *cmds, char ***envp);
 
 /*	PIPE					*/
-void 	first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp);
-void	mid_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp);
-void	last_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp);
+void 	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp);
+void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp);
+void	last_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp);
 int		**open_pipes(int nb_pipe);
 
 /*---------------------BUILTINS---------------------*/

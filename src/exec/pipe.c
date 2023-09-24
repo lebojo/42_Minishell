@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/24 02:55:18 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 05:10:42 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	**open_pipes(int nb_pipe)
 	return (res);
 }
 
-void	first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp)
+void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp)
 {
 	pipes->pid[0] = fork();
 	if (pipes->pid[0] < 0)
@@ -40,13 +40,12 @@ void	first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp)
 		close(pipes->fd[0][0]);
 		dup2(pipes->fd[0][1], STDOUT_FILENO);
 		close(pipes->fd[0][1]);
-		if (!is_builtins(&cmd, envp))
-			exec_cmd(&cmd, *envp);
+		exec_inpipe(cmd, pipes, 0, envp);
 		exit(0);
 	}
 }
 
-void	mid_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp)
+void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
 {
 	pipes->pid[i] = fork();
 	if (pipes->pid[i] < 0)
@@ -60,13 +59,12 @@ void	mid_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp)
 		close(pipes->fd[i + 1][0]);
 		dup2(pipes->fd[i + 1][1], STDOUT_FILENO);
 		close(pipes->fd[i + 1][1]);
-		if (!is_builtins(&cmd, envp))
-			exec_cmd(&cmd, *envp);
+		exec_inpipe(cmd, pipes, i, envp);
 		exit(0);
 	}
 }
 
-void	last_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp)
+void	last_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
 {
 	pipes->pid[i] = fork();
 	if (pipes->pid[i] < 0)
@@ -76,8 +74,7 @@ void	last_pipe(t_cmd cmd, t_pipe *pipes, int i, char ***envp)
 		close(pipes->fd[i][1]);
 		dup2(pipes->fd[i][0], STDIN_FILENO);
 		close(pipes->fd[i][0]);
-		if (!is_builtins(&cmd, envp))
-			exec_cmd(&cmd, *envp);
+		exec_inpipe(cmd, pipes, i, envp);
 		exit(0);
 	}
 }
