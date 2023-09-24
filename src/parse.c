@@ -81,6 +81,7 @@ void	parse(t_cmds *cmds, char *input)
 	char	**split;
 	int		i;
 	int		j;
+	int		i_pipe;
 
 	if (!*input)
 		return ;
@@ -90,7 +91,7 @@ void	parse(t_cmds *cmds, char *input)
 	i = 0;
 	j = 0;
 	sep_parse(cmds, input);
-	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd + 1));
+	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
 	if (!char_in_str(split[i][0], "|<>'"))
 		cmds->cmd[0].name = ft_strdup(split[i++]);
 	else
@@ -99,15 +100,20 @@ void	parse(t_cmds *cmds, char *input)
 		i++;
 	}
 	cmds->cmd[0].arg = NULL;
+	i_pipe = 0;
+	cmds->cmd[0].which_pipe = i_pipe;
 	if (split[i] && !char_in_str(split[i][0], "|<>"))
 		cmds->cmd[0].arg = ft_strdup(split[i++]);
 	if (!split[i])
 		return ;
 	while (split[i])
 	{
+		if (char_in_str('|', split[i]))
+			i_pipe++;
 		if (char_in_str(split[i][0], "|<>"))
 		{
 			j++;
+			cmds->cmd[j].which_pipe =  i_pipe;
 			if (!split[++i])
 				break ;
 			cmds->cmd[j].name = split[i];
@@ -117,8 +123,6 @@ void	parse(t_cmds *cmds, char *input)
 			if (char_in_str(split[i][0], "|<>"))
 				continue ;
 			cmds->cmd[j].arg = split[i];
-			i++;
-			continue ;
 		}
 		else
 		{
@@ -129,6 +133,7 @@ void	parse(t_cmds *cmds, char *input)
 			}
 			else
 				cmds->cmd[j].arg = ft_strdup(split[i]);
+			cmds->cmd[j].which_pipe = i_pipe;
 		}
 		i++;
 	}

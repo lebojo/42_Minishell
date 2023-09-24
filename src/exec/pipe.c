@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/05 19:49:19 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/24 02:55:18 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	**open_pipes(int nb_pipe)
 	return (res);
 }
 
-void first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp)
+void	first_pipe(t_cmd cmd, t_pipe *pipes, char ***envp)
 {
 	pipes->pid[0] = fork();
 	if (pipes->pid[0] < 0)

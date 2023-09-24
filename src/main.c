@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/06 11:28:55 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/24 04:28:41 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,17 +22,16 @@ void	print_cmds(t_cmds cmds)
 {
 	int i = 0;
 	int j = 0;
-	printf("======DEBUG======\n");
+	printf("\033[1;33m======DEBUG======\033[0m\n");
 	printf("nb_cmd: %i, nb_pipe: %i\n", cmds.nb_cmd, cmds.nb_pipe);
 	while (i < cmds.nb_cmd)
 	{
-		printf("cmd[%d] = %s\n", i, cmds.cmd[i].name);
-		printf("arg[%d] = %s\n", i, cmds.cmd[i].arg);
+		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i, cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
 		if (cmds.nb_cmd > 1)
 			printf("sep[%d] = %d\n", i, cmds.sep[i]);
 		i++;
 	}
-	printf("=======END=======\n");
+	printf("\033[1;33m=======END=======\033[0m\n");
 }
 
 void sigint_handler(int sig)
@@ -63,21 +62,12 @@ int main(int ac, char **av, char **envp)
 			parse(&cmds, input);
 			if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
 				ft_exit();
-			print_cmds(cmds);
-
+			if (ac > 1)
+				print_cmds(cmds);
 			if (cmds.cmd[0].name)
 				exec_line(&cmds, &envp);
 			else
 				printf("unknown error");
-			
-			/*Test du write file > */
-			// write_in_file("test.txt", av[1]);
-
-			/*Test du append file >> */
-			// char *t2 = ft_strdup(" -> et ça le test numero 2");
-			// append_to_file("test.txt", t2);
-			// free(t2);
-
 			add_history(input);
 			free(input);
 			free_cmds(&cmds);

@@ -33,13 +33,13 @@ typedef struct  s_cmd
 {
     char    *name;
     char    *arg;
+	int		which_pipe;
 }    t_cmd;
 
 typedef struct	s_cmds
 {
 	int			nb_cmd;
 	int			nb_pipe;
-    int         test;
 	t_cmd		*cmd;
 	enum e_sep	*sep;
 }	t_cmds;
