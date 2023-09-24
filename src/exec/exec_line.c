@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/24 05:30:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 05:35:46 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -168,7 +168,7 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 		if (cmds->sep[i] == S_right)
 			write_in_file(cmds->cmd[i + 1].name, &cmds->cmd[0], *envp);
 		else if (cmds->sep[i] == D_right)
-			append_to_file(cmds->cmd[i + 1].name, cmds->cmd[i].name);
+			append_to_file(cmds->cmd[i + 1].name, &cmds->cmd[0], *envp);
 		else if (cmds->sep[i] == D_left)
 			heredoc(cmds->cmd[i].name);
 		i++;

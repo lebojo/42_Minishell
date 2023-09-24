@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/24 05:10:24 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 05:35:35 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,7 @@ int		char_in_str(char c, char *str);
 /*--------------------NEW-EXEC-----------------*/
 char	*heredoc(char *str);
 void	write_in_file(char *name, t_cmd *cmd, char **env);
-void	append_to_file(char *name, char *str);
+void	append_to_file(char *name, t_cmd *cmd, char **env);
 
 /*	EXEC_CMD				*/
 void	exec_cmd(t_cmd *cmd, char **env);
