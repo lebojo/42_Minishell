@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/24 05:13:18 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 05:30:25 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,6 +72,37 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 		waitpid(pipes.pid[i], NULL, 0);
 }
 
+enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
+{
+	int			i;
+	int			cnt;
+	int			tmp;
+	enum e_sep	*res;
+
+	i = 0;
+	cnt = 0;
+	tmp = 0;
+	res = NULL;
+	while (which_pipe > 0 && src[i] != None)
+	{
+		if (src[i++] == Pipe)
+			cnt++;
+		if (cnt == which_pipe)
+			break ;
+	}
+	while (src[i] != None && src[i] != Pipe)
+	{
+		tmp++;
+		i++;
+	}
+	res = malloc(sizeof(enum e_sep) * (tmp + 1));
+	i -= tmp;
+	tmp = 0;
+	while (src[i] != None && src[i] != Pipe)
+		res[tmp++] = src[i++];
+	return (res);
+}
+
 t_cmds	parse_cmds(t_cmds src, int which_pipe)
 {
 	t_cmds	res;
@@ -82,7 +113,7 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe)
 	j = 0;
 	res.nb_cmd = 0;
 	res.nb_pipe = 0;
-	res.sep = src.sep;
+	res.sep = sep_parse_inpipe(src.sep, which_pipe);
 	while (i < src.nb_cmd)
 	{
 		if (src.cmd[i].which_pipe == which_pipe)
