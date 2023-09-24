@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/24 19:30:34 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 19:49:19 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,13 @@
 
 void	create_prompt(char **prompt)
 {
-	*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", actual_folder(), 2);
+	char	*af;
+
+	af = actual_folder();
+	if (ft_strcmp(af, "Jordan"))
+		*prompt = add_str("❤️ \e[0;32m➜ \e[0;36m", af, 2);
+	else
+		*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", af, 2);
 	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
 }
 
