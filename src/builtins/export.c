@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/08/01 16:28:18 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/24 19:32:31 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	update_env(char *key, char *arg, char *new_env, char ***env)
 		if (ft_strcmp(s_env[0], key))
 			break ;
 	}
-	free((*env)[i]);
+	//free((*env)[i]);
 	(*env)[i] = ft_strdup(new_env);
 }
 

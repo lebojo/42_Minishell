@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/24 04:28:41 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/24 19:30:34 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,10 +48,13 @@ int main(int ac, char **av, char **envp)
 	char	*input;
 	char	*prompt;
 	t_cmds	cmds;
+	t_cmd	c;
 
 	(void)ac;
 	(void)av;
 	signal(SIGINT, sigint_handler); //Pour que le CTRL+C ne quitte pas le programme
+	c.arg = add_str("SHLVL=", ft_itoa(ft_atoi(find_path(envp, "SHLVL", 5)) + 1), 0);
+	ft_export(&c, &envp);
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
