@@ -6,22 +6,11 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/25 19:36:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:40:47 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
-
-char	**create_envar(char *key, char *value)
-{
-	char **res;
-
-	res = malloc(sizeof(char *) * 3);
-	res[0] = ft_strdup(key);
-	res[1] = ft_strdup(value);
-	res[2] = NULL;
-	return (res);
-}
 
 void	create_envp(char ***envp)
 {
