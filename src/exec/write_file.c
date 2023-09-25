@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/25 15:26:02 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:37:44 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,9 @@
 
 void	write_in_file(char *str,char *name, t_cmd *cmd, char **env)
 {
-	int	fd;
+	int		fd;
 	char	*input;
-	int	id;
+	int		id;
 
 	id = 0;
 	fd = open(name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
