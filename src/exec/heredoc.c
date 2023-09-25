@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/25 15:29:54 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:00:41 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,9 +41,15 @@ void	read_file(char *name, t_cmd *cmd, char **env)
 	fd = open(name, O_RDONLY);
 	if (fd == -1)
 		return ;
-	dup2(fd, STDIN_FILENO);
+	id = fork();
 	if (id == 0)
+	{
+		dup2(fd, STDIN_FILENO);
 		exec_cmd(cmd, env);
-	close(fd);
+		dup2(0, STDIN_FILENO);
+		close(fd);
+	}
+	else
+		close(fd);
 	waitpid(id, NULL, 0);
 }	
