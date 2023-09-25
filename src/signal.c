@@ -1,21 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   exit.c                                             :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/25 17:05:18 by jchapell         ###   ########.fr       */
+/*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
+/*   Updated: 2023/09/25 17:04:25 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../../inc/proto.h"
+#include "../inc/proto.h"
 
-void	ft_exit(void)
+void	sigint_handler(int sig)
 {
-	printf("\nExiting ");
-	printf(MS);
-	printf("...\n");
-	exit(1);
+	char *prompt;
+
+	(void)sig;
+	create_prompt(&prompt);
+	printf("\n%s", prompt);
 }

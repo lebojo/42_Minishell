@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:43 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/25 16:57:05 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:07:01 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,6 @@ void	update_pwds(char *pwd, char *new_path, char ***envp)
 	new_pwd = create_cmd("", add_str("PWD=", pwd, 0), 0);
 	ft_export(&old_pwd, envp);
 	ft_export(&new_pwd, envp);
-	printf("\n===PWD_UPDATE===\n%s\n%s\n", old_pwd.arg, new_pwd.arg);
 }
 
 void	ft_cd(char *new_path, char ***envp)

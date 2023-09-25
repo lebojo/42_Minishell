@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/25 16:32:47 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:05:47 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include "struct.h"
 # include "libft/libft.h"
 
+# define MS "\e[0;32mMinishell 2\e[0m"
+
 /*===================================SOURCES====================================*/
 
 /*	MAIN					*/
@@ -41,8 +43,6 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe);
 
 /*	FREE					*/
 void	free_cmds(t_cmds *cmds);
-void	free_tube(t_pipe *exec);
-void    close_fd(t_pipe *exec);
 void	close_pipe(int *fd);
 
 /*	PARSE					*/
@@ -52,6 +52,12 @@ void	parse(t_cmds *cmds, char *input);
 
 /*	UTILS					*/
 int		char_in_str(char c, char *str);
+
+/*	START					*/
+void	start(int ac, char **av, char ***envp);
+
+/*	SIGNAL					*/
+void	sigint_handler(int sig);
 
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
