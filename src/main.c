@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/25 15:20:42 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:04:12 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,17 @@ void sigint_handler(int sig)
 	printf("\n%s", prompt);
 }
 
+void	create_envp(char ***envp)
+{
+	t_cmd	tmp;
+
+	tmp.arg = ft_strdup("SHLVL=0");
+	ft_export(&tmp, envp);
+	free(tmp.arg);
+	tmp.arg = ft_strdup("SH=12");
+	//ft_export(&tmp, envp);
+}
+
 int main(int ac, char **av, char **envp) 
 {
 	char	*input;
@@ -58,6 +69,12 @@ int main(int ac, char **av, char **envp)
 
 	(void)ac;
 	(void)av;
+	printf("\e[0;32mMinishell 2\e[0m is starting...\n");
+	if (!getenv("SHLVL"))
+	{
+		printf("Create env...\n");
+		create_envp(&envp);
+	}
 	signal(SIGINT, sigint_handler); //Pour que le CTRL+C ne quitte pas le programme
 	c.arg = add_str("SHLVL=", ft_itoa(ft_atoi(find_path(envp, "SHLVL", 5)) + 1), 0);
 	ft_export(&c, &envp);
