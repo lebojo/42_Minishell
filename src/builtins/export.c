@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/24 19:32:31 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:38:43 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ void	add_env(char **arg, char ***env)
 	i = 0;
 	while ((*env)[i++])
 		;
-	new_env = malloc(sizeof(char *) * (i + 1));
+	new_env = malloc(sizeof(char *) * (i + 2));
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = ft_strdup((*env)[i]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/06/16 23:10:49 by jordan           ###   ########.fr       */
+/*   Updated: 2023/09/25 16:22:43 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,5 +16,4 @@ void	ft_exit(void)
 {
 	printf("Exiting Minishell 2...\n");
 	exit(1);
-	printf("Eheheheh en fait non\n - Arthur\n");
 }

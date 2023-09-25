@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/25 14:57:56 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 16:32:47 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ int 	main(int ac, char **av, char **envp);
 
 /*	EXPANDER				*/
 char	*expand(char *src, char ***envp);
+t_cmd	create_cmd(char *name, char *arg, int which_pipe);
 
 /*	FREE					*/
 void	free_cmds(t_cmds *cmds);
@@ -52,9 +53,7 @@ void	parse(t_cmds *cmds, char *input);
 /*	UTILS					*/
 int		char_in_str(char c, char *str);
 
-/*---------------------EXEC---------------------*/
-
-/*--------------------NEW-EXEC-----------------*/
+/*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
 void	read_file(char *name, t_cmd *cmd, char **env);
 void	write_in_file(char *str, char *name, t_cmd *cmd, char **env);
@@ -86,7 +85,7 @@ int		**open_pipes(int nb_pipe);
 /*---------------------BUILTINS---------------------*/
 
 /*	CD				*/
-void	ft_cd(char *new_path);
+void	ft_cd(char *new_path, char ***envp);
 
 /*	ECHO			*/
 void	print_echo(char *arg, char ***envp);
