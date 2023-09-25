@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/25 17:04:48 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:11:56 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,8 @@ void	create_envp(char ***envp)
 
 void	start(int ac, char **av, char ***envp)
 {
+	t_cmd	c;
+
 	printf("\e[0;32mMinishell 2\e[0m is starting...\n");
 	if (!getenv("SHLVL"))
 	{
@@ -32,4 +34,6 @@ void	start(int ac, char **av, char ***envp)
 		create_envp(envp);
 	}
 	signal(SIGINT, sigint_handler);
+	c.arg = add_str("SHLVL=", ft_itoa(ft_atoi(find_path(*envp, "SHLVL", 5)) + 1), 0);
+	ft_export(&c, envp);
 }

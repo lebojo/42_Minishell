@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/25 17:06:23 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:17:08 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,10 +31,13 @@ void	print_cmds(t_cmds cmds)
 void	create_prompt(char **prompt)
 {
 	char	*af;
+	char	pwd[4096];
 
 	af = actual_folder();
 	if (ft_strcmp(af, "Jordan"))
 		*prompt = add_str("❤️ \e[0;32m➜ \e[0;36m", af, 2);
+	else if (ft_strcmp(getcwd(pwd, 4096), getenv("HOME")))
+		*prompt = add_str("🏠 \e[0;32m➜ \e[0;36m", af, 2);
 	else
 		*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", af, 2);
 	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
