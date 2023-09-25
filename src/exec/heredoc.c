@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/25 14:15:37 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:29:54 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,6 @@ char	*heredoc(char *str) // ex : << s  <-- dans cette situation on passe cmds->c
 		res = ft_strjoin(res, line);
 		free(line);
 	}
-	printf("%s\n", res);
 	return (res);
 }
 
@@ -44,9 +43,7 @@ void	read_file(char *name, t_cmd *cmd, char **env)
 		return ;
 	dup2(fd, STDIN_FILENO);
 	if (id == 0)
-	{
 		exec_cmd(cmd, env);
-	}
 	close(fd);
 	waitpid(id, NULL, 0);
 }	
