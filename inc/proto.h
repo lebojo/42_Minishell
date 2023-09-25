@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/25 17:05:47 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:16:07 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe);
 
 /*	FREE					*/
 void	free_cmds(t_cmds *cmds);
+void	free_cmd(t_cmd *cmd);
 void	close_pipe(int *fd);
 
 /*	PARSE					*/
