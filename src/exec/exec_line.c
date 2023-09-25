@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/25 14:57:02 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 15:28:00 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -172,7 +172,7 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 		else if (cmds->sep[i] == D_right)
 			append_to_file(res, cmds->cmd[i + 1].name, &cmds->cmd[i], *envp);
 		else if (cmds->sep[i] == D_left)
-			res = heredoc(res, cmds->cmd[i].name);
+			res = heredoc(cmds->cmd[i].name);
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[i + 1].name, &cmds->cmd[i], *envp);
 		i++;
