@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/24 05:35:46 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:57:02 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -161,16 +161,20 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 void	exec_sep(t_cmds *cmds, char ***envp)
 {
 	int i;
+	char *res;
 
 	i = 0;
+	res = NULL;
 	while (cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
 		if (cmds->sep[i] == S_right)
-			write_in_file(cmds->cmd[i + 1].name, &cmds->cmd[0], *envp);
+			write_in_file(res, cmds->cmd[i + 1].name, &cmds->cmd[i], *envp);
 		else if (cmds->sep[i] == D_right)
-			append_to_file(cmds->cmd[i + 1].name, &cmds->cmd[0], *envp);
+			append_to_file(res, cmds->cmd[i + 1].name, &cmds->cmd[i], *envp);
 		else if (cmds->sep[i] == D_left)
-			heredoc(cmds->cmd[i].name);
+			res = heredoc(res, cmds->cmd[i].name);
+		else if (cmds->sep[i] == S_left)
+			read_file(cmds->cmd[i + 1].name, &cmds->cmd[i], *envp);
 		i++;
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/24 19:48:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:57:56 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,9 @@ int		char_in_str(char c, char *str);
 
 /*--------------------NEW-EXEC-----------------*/
 char	*heredoc(char *str);
-void	write_in_file(char *name, t_cmd *cmd, char **env);
-void	append_to_file(char *name, t_cmd *cmd, char **env);
+void	read_file(char *name, t_cmd *cmd, char **env);
+void	write_in_file(char *str, char *name, t_cmd *cmd, char **env);
+void	append_to_file(char *str, char *name, t_cmd *cmd, char **env);
 
 /*	EXEC_CMD				*/
 void	exec_cmd(t_cmd *cmd, char **env);

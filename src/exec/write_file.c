@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   write_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/24 05:37:51 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 14:58:32 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	write_in_file(char *name, t_cmd *cmd, char **env)
+void	write_in_file(char *str,char *name, t_cmd *cmd, char **env)
 {
 	int	fd;
 	char	*str;
@@ -34,7 +34,7 @@ void	write_in_file(char *name, t_cmd *cmd, char **env)
 	waitpid(id, NULL, 0);
 }
 
-void	append_to_file(char *name, t_cmd *cmd, char **env)
+void	append_to_file(char *str,char *name, t_cmd *cmd, char **env)
 {
 	int	fd;
 	char	*str;
