@@ -1,23 +1,22 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strlen.c                                        :+:      :+:    :+:   */
+/*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/10/24 13:34:53 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/25 16:37:54 by jchapell         ###   ########.fr       */
+/*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
+/*   Updated: 2023/09/25 19:47:33 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../inc/proto.h"
 
-size_t	ft_strlen(const char *str)
+void	sigint_handler(int sig)
 {
-	int	i;
+	char *prompt;
 
-	i = 0;
-	while (str && str[i])
-		i++;
-	return (i);
+	(void)sig;
+	create_prompt(&prompt);
+	printf("\n%s", prompt);
 }

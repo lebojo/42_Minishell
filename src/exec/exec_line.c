@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/25 17:55:05 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:49:29 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ int	is_builtins(t_cmd *cmd, char ***envp)
 	if (ft_strcmp("echo", cmd->name))
 		ft_echo(cmd, envp);
 	else if (ft_strcmp("cd", cmd->name))
-		ft_cd(cmd->arg);
+		ft_cd(cmd->arg, envp);
 	else if (ft_strcmp("pwd",cmd->name))
 		ft_pwd();
 	else if (ft_strcmp("export",cmd->name))
@@ -140,7 +140,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
 	if (cmds_ip.nb_cmd > 1)
-		exec_sep(&cmds_ip, envp);
+		exec_sep(&cmds_ip, envp, &pipe->fd[which_pipe][0]);
 	else
 	{
 		if (!is_builtins(&cmds_ip.cmd[0], envp))
@@ -158,7 +158,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	}
 }
 
-void	exec_sep(t_cmds *cmds, char ***envp)
+void	exec_sep(t_cmds *cmds, char ***envp, int *fd)
 {
 	int 	i;
 	int		j;

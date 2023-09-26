@@ -31,6 +31,12 @@ void free_cmds(t_cmds *cmds)
 	}
 }
 
+void	free_cmd(t_cmd *cmd)
+{
+	free(cmd->name);
+	free(cmd->arg);
+}
+
 void    close_pipe(int *fd)
 {
     close(fd[0]);

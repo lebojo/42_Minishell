@@ -6,11 +6,21 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/24 04:43:36 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 18:14:26 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
+
+t_cmd	create_cmd(char *name, char *arg, int which_pipe)
+{
+	t_cmd	res;
+	
+	res.name = ft_strdup(name);
+	res.arg = ft_strdup(arg);
+	res.which_pipe = which_pipe;
+	return (res);
+}
 
 char	*expand(char *src, char ***envp)
 {

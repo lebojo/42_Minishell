@@ -6,100 +6,53 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/25 16:04:12 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:50:19 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-void	create_prompt(char **prompt)
+int	process_input(int ac, char *input, char ***envp)
 {
-	char	*af;
+	t_cmds	cmds;
 
-	af = actual_folder();
-	if (ft_strcmp(af, "Jordan"))
-		*prompt = add_str("❤️ \e[0;32m➜ \e[0;36m", af, 2);
-	else
-		*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", af, 2);
-	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
-}
-
-void	print_cmds(t_cmds cmds)
-{
-	int i = 0;
-	int j = 0;
-	printf("\033[1;33m======DEBUG======\033[0m\n");
-	printf("nb_cmd: %i, nb_pipe: %i\n", cmds.nb_cmd, cmds.nb_pipe);
-	while (i < cmds.nb_cmd)
+	if (input == NULL) // C'est pour le CTRL+D
+			ft_exit();
+	if (input && input[0] != '\0')
 	{
-		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i, cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
-		if (cmds.nb_cmd > 1)
-			printf("sep[%d] = %d\n", i, cmds.sep[i]);
-		i++;
+		parse(&cmds, input);
+		if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
+			ft_exit();
+		if (ac > 1)
+			print_cmds(cmds);
+		if (cmds.cmd[0].name)
+			exec_line(&cmds, envp);
+		else
+			printf("unknown error");
+		add_history(input);
+		free(input);
+		free_cmds(&cmds);
 	}
-	printf("\033[1;33m=======END=======\033[0m\n");
-}
-
-void sigint_handler(int sig)
-{
-	char *prompt;
-
-	(void)sig;
-	create_prompt(&prompt);
-	printf("\n%s", prompt);
-}
-
-void	create_envp(char ***envp)
-{
-	t_cmd	tmp;
-
-	tmp.arg = ft_strdup("SHLVL=0");
-	ft_export(&tmp, envp);
-	free(tmp.arg);
-	tmp.arg = ft_strdup("SH=12");
-	//ft_export(&tmp, envp);
+	return (0);
 }
 
 int main(int ac, char **av, char **envp) 
 {
 	char	*input;
 	char	*prompt;
-	t_cmds	cmds;
-	t_cmd	c;
 
-	(void)ac;
 	(void)av;
-	printf("\e[0;32mMinishell 2\e[0m is starting...\n");
-	if (!getenv("SHLVL"))
-	{
-		printf("Create env...\n");
-		create_envp(&envp);
-	}
-	signal(SIGINT, sigint_handler); //Pour que le CTRL+C ne quitte pas le programme
-	c.arg = add_str("SHLVL=", ft_itoa(ft_atoi(find_path(envp, "SHLVL", 5)) + 1), 0);
-	ft_export(&c, &envp);
+	start(ac, av, &envp);
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
-		if (input == NULL) // C'est pour le CTRL+D
-			ft_exit();
-		if (input && input[0] != '\0')
+		if (process_input(ac, input, &envp))
 		{
-			parse(&cmds, input);
-			if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
-				ft_exit();
-			if (ac > 1)
-				print_cmds(cmds);
-			if (cmds.cmd[0].name)
-				exec_line(&cmds, &envp);
-			else
-				printf("unknown error");
-			add_history(input);
-			free(input);
-			free_cmds(&cmds);
+			printf("CRITICAL ERROR\n");
+			return (1);
 		}
 		free(prompt);
 	}
-	return 0;
+	return (0);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/24 19:32:31 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/25 19:37:59 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,7 @@ void	add_env(char **arg, char ***env)
 		new_env[i] = ft_strdup((*env)[i]);
 	new_env[i] = add_str(arg[0], "=", 1);
 	new_env[i] = add_str(new_env[i], arg[1], 3);
+	free(*env);
 	*env = new_env;
 }
 

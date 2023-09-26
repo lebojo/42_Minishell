@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/25 17:57:56 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/26 15:49:12 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@
 # include "struct.h"
 # include "libft/libft.h"
 
+# define MS "\e[0;32mMinishell 2\e[0m"
+
 /*===================================SOURCES====================================*/
 
 /*	MAIN					*/
@@ -37,11 +39,11 @@ int 	main(int ac, char **av, char **envp);
 
 /*	EXPANDER				*/
 char	*expand(char *src, char ***envp);
+t_cmd	create_cmd(char *name, char *arg, int which_pipe);
 
 /*	FREE					*/
 void	free_cmds(t_cmds *cmds);
-void	free_tube(t_pipe *exec);
-void    close_fd(t_pipe *exec);
+void	free_cmd(t_cmd *cmd);
 void	close_pipe(int *fd);
 
 /*	PARSE					*/
@@ -52,9 +54,13 @@ void	parse(t_cmds *cmds, char *input);
 /*	UTILS					*/
 int		char_in_str(char c, char *str);
 
-/*---------------------EXEC---------------------*/
+/*	START					*/
+void	start(int ac, char **av, char ***envp);
 
-/*--------------------NEW-EXEC-----------------*/
+/*	SIGNAL					*/
+void	sigint_handler(int sig);
+
+/*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
 void	read_file(char *name, t_cmd *cmd, char ***env);
 void	write_in_file(char *str, char *name, t_cmd *cmd, char ***env);
@@ -69,7 +75,7 @@ int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char    *str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
-void	exec_sep(t_cmds *cmds, char ***envp);
+void	exec_sep(t_cmds *cmds, char ***envp, int *fd);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
@@ -88,7 +94,7 @@ int		**open_pipes(int nb_pipe);
 /*---------------------BUILTINS---------------------*/
 
 /*	CD				*/
-void	ft_cd(char *new_path);
+void	ft_cd(char *new_path, char ***envp);
 
 /*	ECHO			*/
 void	print_echo(char *arg, char ***envp);
