@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/25 14:57:56 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:57:56 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,9 +56,11 @@ int		char_in_str(char c, char *str);
 
 /*--------------------NEW-EXEC-----------------*/
 char	*heredoc(char *str);
-void	read_file(char *name, t_cmd *cmd, char **env);
-void	write_in_file(char *str, char *name, t_cmd *cmd, char **env);
-void	append_to_file(char *str, char *name, t_cmd *cmd, char **env);
+void	read_file(char *name, t_cmd *cmd, char ***env);
+void	write_in_file(char *str, char *name, t_cmd *cmd, char ***env);
+void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env);
+void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env);
+int		exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env);
 
 /*	EXEC_CMD				*/
 void	exec_cmd(t_cmd *cmd, char **env);

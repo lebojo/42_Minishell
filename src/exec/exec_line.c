@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/25 15:48:42 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:55:05 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -170,11 +170,11 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 	while (cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
 		if (cmds->sep[i] == S_right)
-			write_in_file(res, cmds->cmd[j + 1].name, &cmds->cmd[j], *envp);
+			write_in_file(res, cmds->cmd[j + 1].name, &cmds->cmd[j], envp);
 		else if (cmds->sep[i] == D_right)
-			append_to_file(res, cmds->cmd[j + 1].name, &cmds->cmd[j], *envp);
+			append_to_file(res, cmds->cmd[j + 1].name, &cmds->cmd[j], envp);
 		else if (cmds->sep[i] == S_left)
-			read_file(cmds->cmd[j + 1].name, &cmds->cmd[j], *envp);
+			read_file(cmds->cmd[j + 1].name, &cmds->cmd[j], envp);
 		if (cmds->sep[i] == D_left)
 			res = heredoc(cmds->cmd[j].name);
 		else

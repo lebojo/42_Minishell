@@ -6,7 +6,7 @@
 /*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/25 16:00:41 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/25 17:57:28 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,24 +32,16 @@ char	*heredoc(char *str) // ex : << s  <-- dans cette situation on passe cmds->c
 	return (res);
 }
 
-void	read_file(char *name, t_cmd *cmd, char **env)
+void	read_file(char *name, t_cmd *cmd, char ***env)
 {
-	int	fd;
-	int	id;
+	int	id[2];
 
-	id = 0;
-	fd = open(name, O_RDONLY);
-	if (fd == -1)
+	id[0] = 0;
+	id[1] = open(name, O_RDONLY);
+	if (id[1] == -1)
 		return ;
-	id = fork();
-	if (id == 0)
-	{
-		dup2(fd, STDIN_FILENO);
-		exec_cmd(cmd, env);
-		dup2(0, STDIN_FILENO);
-		close(fd);
-	}
+	if (exec_inpipe_builtins(STDIN_FILENO, id[1], cmd, env))
+		return ;
 	else
-		close(fd);
-	waitpid(id, NULL, 0);
+	 exec_in_fork(STDIN_FILENO, id, cmd, *env);
 }	
