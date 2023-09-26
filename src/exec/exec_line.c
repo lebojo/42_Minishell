@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/26 17:57:34 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 18:13:35 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,10 @@ void init_pipe(t_pipe *pipes, t_cmds *cmds)
 		pipes = NULL;
 }
 
-void	 exec_line(t_cmds *cmds, char ***envp)
+int	one_cmd(t_cmds *cmds, t_pipe *pipes, char ***envp)
 {
-	t_pipe	pipes;
 	int		i;
 
-	init_pipe(&pipes, cmds);
-	if (cmds->nb_cmd <= 0)
-		return ;
 	i = -1;
 	while (cmds->sep[++i] != None)
 	{
@@ -60,9 +56,22 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 	}
 	if (i != -42)
 	{
-		exec_inpipe(cmds, &pipes, 0, envp);
-		return ;
+		exec_inpipe(cmds, pipes, 0, envp);
+		return (1);
 	}
+	return (0);
+}
+
+void	 exec_line(t_cmds *cmds, char ***envp)
+{
+	t_pipe	pipes;
+	int		i;
+
+	init_pipe(&pipes, cmds);
+	if (cmds->nb_cmd <= 0)
+		return ;
+	if (one_cmd(cmds, &pipes, envp))
+		return ;
 	i = -1;
 	first_pipe(cmds, &pipes, envp);
 	while (++i < cmds->nb_pipe - 1) // le -1 c'est parce que s'il y a 1 pipe, il ne doit pas rentrer dedans, et t'as capté la logique.
