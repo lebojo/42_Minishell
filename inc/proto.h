@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/25 18:16:07 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 14:54:12 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char    *str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
-void	exec_sep(t_cmds *cmds, char ***envp);
+void	exec_sep(t_cmds *cmds, char ***envp, int *fd);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
