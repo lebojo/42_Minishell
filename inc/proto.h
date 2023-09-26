@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/26 15:49:12 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:30:31 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,7 @@ char	**copy_tab(char **tab);
 void	print_sorted_env(char **env);
 void	add_env(char **arg, char ***env);
 void	update_env(char *key, char *arg, char *new_env, char ***env);
-char	**emptyEnv(char *s);
+char	**empty_env(char *s);
 void	ft_export(t_cmd *cmd, char ***env);
 
 /*	HASHMAP			*/

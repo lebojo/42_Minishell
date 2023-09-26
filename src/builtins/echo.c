@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:53 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/24 04:30:51 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:28:20 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	ft_echo(t_cmd *cmd, char ***envp)
 {
 	if (!cmd->arg)
 		return ;
-	if(cmd->arg[0] == '-' && cmd->arg[1] == 'n' && cmd->arg[2] == ' ')
+	if (cmd->arg[0] == '-' && cmd->arg[1] == 'n' && cmd->arg[2] == ' ')
 	{
 		printf("%s", expand(cmd->arg + 3, envp));
 	}

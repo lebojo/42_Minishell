@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:33:51 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/24 19:47:27 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:31:33 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	*actual_folder(void)
 		size = ft_strlen(pwd) - 1;
 		while (pwd[size] && pwd[size] != '/')
 			res[i--] = pwd[size--];
-		return(res);
+		return (res);
 	}
 	printf("ERROR -> getting actual folder");
 	return (NULL);
@@ -44,7 +44,7 @@ void	ft_pwd(void)
 
 	if (getcwd(pwd, 4096))
 	{
-		printf("%s\n", pwd); 
+		printf("%s\n", pwd);
 		return ;
 	}
 	printf("ERROR\n");

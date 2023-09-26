@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/26 15:49:29 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:57:34 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,13 +49,20 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 	init_pipe(&pipes, cmds);
 	if (cmds->nb_cmd <= 0)
 		return ;
-	if (cmds->sep[0] != Pipe)
+	i = -1;
+	while (cmds->sep[++i] != None)
+	{
+		if (cmds->sep[i] == Pipe)
+		{
+			i = -42;
+			break ;
+		}
+	}
+	if (i != -42)
 	{
 		exec_inpipe(cmds, &pipes, 0, envp);
 		return ;
 	}
-	// Je pense qu'il faut créer un parse de cmds pour chaque interpipe
-	//execute ça que s'il y a au moins 1 pipe:
 	i = -1;
 	first_pipe(cmds, &pipes, envp);
 	while (++i < cmds->nb_pipe - 1) // le -1 c'est parce que s'il y a 1 pipe, il ne doit pas rentrer dedans, et t'as capté la logique.

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:43 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/25 17:07:01 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 16:31:54 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,27 @@ void	update_pwds(char *pwd, char *new_path, char ***envp)
 	ft_export(&new_pwd, envp);
 }
 
+void	process_cd(char *pwd, char *new_path, char ***envp)
+{
+	if (ft_strcmp(new_path, "-"))
+	{
+		chdir(hm_get_value(*envp, "OLDPWD"));
+		update_pwds(pwd, new_path, envp);
+		return ;
+	}
+	if (new_path[0] == '~')
+	{
+		new_path++;
+		new_path = add_str(hm_get_value(*envp, "HOME"), new_path, 0);
+	}
+	if (new_path[0] != '/')
+		new_path = add_str("/", new_path, 0);
+	if (chdir(add_str(pwd, new_path, 0)))
+		if (chdir(new_path))
+			printf("Path not found\n");
+	update_pwds(pwd, new_path, envp);
+}
+
 void	ft_cd(char *new_path, char ***envp)
 {
 	char	pwd[4096];	
@@ -32,24 +53,8 @@ void	ft_cd(char *new_path, char ***envp)
 		chdir(hm_get_value(*envp, "HOME"));
 	else if (getcwd(pwd, 4096))
 	{
-		if (ft_strcmp(new_path, "-"))
-		{
-			chdir(hm_get_value(*envp, "OLDPWD"));
-			update_pwds(pwd, new_path, envp);
-			return ;
-		}
-		if (new_path[0] == '~')
-		{
-			new_path++;
-			new_path = add_str(hm_get_value(*envp, "HOME"), new_path, 0);
-		}
-		if (new_path[0] != '/')
-			new_path = add_str("/", new_path, 0);
-		if (chdir(add_str(pwd, new_path, 0)))
-			if(chdir(new_path))
-				printf("Path not found\n");
-		update_pwds(pwd, new_path, envp);
+		process_cd(pwd, new_path, envp);
 	}
-	else 
+	else
 		printf("Unknown error\n");
 }

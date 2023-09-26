@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashmap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 00:29:12 by jordan            #+#    #+#             */
-/*   Updated: 2023/06/21 17:02:54 by jordan           ###   ########.fr       */
+/*   Updated: 2023/09/26 16:31:21 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,4 @@ char	*hm_get_value(char **map, char *key)
 		i++;
 	}
 	return (NULL);
-}
-
-void	hm_set_value(char ***map, char *key, char *value)
-{
 }

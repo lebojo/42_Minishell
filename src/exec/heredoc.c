@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/25 17:57:28 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:28:29 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,5 +43,5 @@ void	read_file(char *name, t_cmd *cmd, char ***env)
 	if (exec_inpipe_builtins(STDIN_FILENO, id[1], cmd, env))
 		return ;
 	else
-	 exec_in_fork(STDIN_FILENO, id, cmd, *env);
+		exec_in_fork(STDIN_FILENO, id, cmd, *env);
 }	

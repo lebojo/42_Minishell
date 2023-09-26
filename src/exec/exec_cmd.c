@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/24 19:22:40 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 17:15:07 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,11 @@ char	*get_cmd(char **paths, char *cmd)
 
 void	exec_cmd(t_cmd *cmd, char **env)
 {
-    char    *ac_cmd;    // = acces_command (/bin/[name])
+	char	*ac_cmd; // = acces_command (/bin/[name])
 	char	*path_env;
-    char    **path_cmd;
-    char    **s_cmd;    // = split_command ({"ls","-l",NULL})
-    
+	char	**path_cmd;
+	char	**s_cmd;    // = split_command ({"ls","-l",NULL})
+
 	path_env = find_path(env, "PATH", 4);
 	path_env = add_str(path_env, ":", 0);
 	path_env = add_str(path_env, find_path(env, "PWD", 3), 0);
@@ -63,109 +63,109 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	exit(0);
 }
 
-char **split_cmd(t_cmd cmd)
+char	**split_cmd(t_cmd cmd)
 {
-    char    **res;
-    int     i;
-    int     j;
-    int     k;
-    int     nb_arg;
+	char	**res;
+	int	 i;
+	int	 j;
+	int	 k;
+	int	 nb_arg;
 
-    i = 0;
-    j = 0;
-    k = 0;
-    nb_arg = arg_counter(cmd.arg);
-    res = ft_calloc(nb_arg + 1, sizeof(char *));
-    res[i++] = ft_strdup(cmd.name);
-    if (!cmd.arg)
-        return (res);
-    while (--nb_arg - 1)
-    {
-        k = 0;
-        if (cmd.arg[j] == '"')
-        {
-            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '"') + 1, sizeof(char));
-            j++;
-            while (cmd.arg[j] && cmd.arg[j] != '"')
-                res[i][k++] = cmd.arg[j++];
-        }
-        else if (cmd.arg[j] == '\'')
-        {
-            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '\'') + 1, sizeof(char));
-            j++;
-            while (cmd.arg[j] && cmd.arg[j] != '\'')
-                res[i][k++] = cmd.arg[j++];
-        }
-        else
-        {
-            res[i] = ft_calloc(strlen_to_char(cmd.arg, j, ' ') + 1, sizeof(char));
-            while (cmd.arg[j] && cmd.arg[j] != ' ')
-                res[i][k++] = cmd.arg[j++];
-        }
-        i++;
-        j++;
-    }
-    return (res);
+	i = 0;
+	j = 0;
+	k = 0;
+	nb_arg = arg_counter(cmd.arg);
+	res = ft_calloc(nb_arg + 1, sizeof(char *));
+	res[i++] = ft_strdup(cmd.name);
+	if (!cmd.arg)
+		return (res);
+	while (--nb_arg - 1)
+	{
+		k = 0;
+		if (cmd.arg[j] == '"')
+		{
+			res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '"') + 1, sizeof(char));
+			j++;
+			while (cmd.arg[j] && cmd.arg[j] != '"')
+				res[i][k++] = cmd.arg[j++];
+		}
+		else if (cmd.arg[j] == '\'')
+		{
+			res[i] = ft_calloc(strlen_to_char(cmd.arg, j, '\'') + 1, sizeof(char));
+			j++;
+			while (cmd.arg[j] && cmd.arg[j] != '\'')
+				res[i][k++] = cmd.arg[j++];
+		}
+		else
+		{
+			res[i] = ft_calloc(strlen_to_char(cmd.arg, j, ' ') + 1, sizeof(char));
+			while (cmd.arg[j] && cmd.arg[j] != ' ')
+				res[i][k++] = cmd.arg[j++];
+		}
+		i++;
+		j++;
+	}
+	return (res);
 }
 
-int arg_counter(char *s)
+int	arg_counter(char *s)
 {
-    int i;
-    int res;
+	int	i;
+	int	res;
 
-    i = -1;
-    if (!s)
-        return (2);
-    res = 3;
-    while (s && s[++i])
-    {
-        if (s[i] == ' ' )
-            res++;
-        if (s[i] == '"')
-        {
-            while (s[++i] && s[i] != '"')
-                ;
-            if (!s[i] && s[i - 1] != '"')
-                return (-1);
-        }
-        else if (s[i] == '\'')
-        {
-            while (s[++i] && s[i] != '\'')
-                ;
-            if (!s[i] && s[i - 1] != '\'')
-                return (-1);
-        }
-    }
-    return (res);
+	i = -1;
+	if (!s)
+		return (2);
+	res = 3;
+	while (s && s[++i])
+	{
+		if (s[i] == ' ' )
+			res++;
+		if (s[i] == '"')
+		{
+			while (s[++i] && s[i] != '"')
+				;
+			if (!s[i] && s[i - 1] != '"')
+				return (-1);
+		}
+		else if (s[i] == '\'')
+		{
+			while (s[++i] && s[i] != '\'')
+				;
+			if (!s[i] && s[i - 1] != '\'')
+				return (-1);
+		}
+	}
+	return (res);
 }
 
-int    strlen_to_char(char *s, int i, char c)
+int	strlen_to_char(char *s, int i, char c)
 {
-    while (s[i] && s[i] != c)
-        i++;
-    return (i);
+	while (s[i] && s[i] != c)
+		i++;
+	return (i);
 }
 
-char    *str_extractor(char *s)
+char	*str_extractor(char *s)
 {
-    int i;
-    char *res;
+	int		i;
+	char	*res;
 
-    i = 0;
-    res = ft_calloc(ft_strlen(s) - 2, sizeof(char));
-    if (s[i] == '"')
-    {
-        while (s[++i] && s[i] != '"')
-            res[i - 1] = s[i];
-        if (!s[i])
-            return (NULL);
-    }
-    else if (s[i] == '\'')
-    {
-        while (s[++i] && s[i] != '\'')
-            res[i - 1] = s[i];
-        if (!s[i])
-            return (NULL);
-    }
-    return (res);
+	i = 0;
+	res = ft_calloc(ft_strlen(s) - 2, sizeof(char));
+	if (s[i] == '"')
+	{
+		while (s[++i] && s[i] != '"')
+			res[i - 1] = s[i];
+		if (!s[i])
+			return (NULL);
+	}
+	else if (s[i] == '\'')
+	{
+		while (s[++i] && s[i] != '\'')
+			res[i - 1] = s[i];
+		if (!s[i])
+			return (NULL);
+	}
+	return (res);
 }
