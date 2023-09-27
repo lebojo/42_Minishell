@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:02 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/26 16:30:33 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/26 19:00:47 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,7 @@ void	update_env(char *key, char *arg, char *new_env, char ***env)
 		if (ft_strcmp(s_env[0], key))
 			break ;
 	}
+	//free(*env);
 	(*env)[i] = ft_strdup(new_env);
 }
 

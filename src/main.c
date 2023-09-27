@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/25 19:50:19 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/09/27 14:08:45 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,13 +40,15 @@ int main(int ac, char **av, char **envp)
 {
 	char	*input;
 	char	*prompt;
+	char	**env;
 
 	(void)av;
 	start(ac, av, &envp);
+	env = copy_tab(envp);
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
-		if (process_input(ac, input, &envp))
+		if (process_input(ac, input, &env))
 		{
 			printf("CRITICAL ERROR\n");
 			return (1);

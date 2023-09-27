@@ -112,8 +112,7 @@ void	parse(t_cmds *cmds, char *input)
 			i_pipe++;
 		if (char_in_str(split[i][0], "|<>"))
 		{
-			j++;
-			cmds->cmd[j].which_pipe =  i_pipe;
+			cmds->cmd[++j].which_pipe =  i_pipe;
 			if (!split[++i])
 				break ;
 			cmds->cmd[j].name = split[i];
