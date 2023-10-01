@@ -23,6 +23,35 @@ enum e_sep
 	D_right	// == >>
 };
 
+enum e_quote
+{
+	none,
+	simple,
+	double_q
+};
+
+typedef struct s_inc
+{
+	int		i;
+	int		j;
+	int		k;
+	int		l;
+	int		m;
+	int		n;
+	int		o;
+	int		p;
+	int		q;
+	int		r;
+	int		s;
+	int		t;
+	int		u;
+	int		v;
+	int		w;
+	int		x;
+	int		y;
+	int		z;
+}    t_inc;
+
 typedef struct s_pipe
 {
     int **fd;

@@ -76,7 +76,7 @@ void	sep_parse(t_cmds *cmds, char *input)
 	cmds->sep[j] = None;
 }
 
-void	parse(t_cmds *cmds, char *input)
+void	parse(t_cmds *cmds, char *input, char ***envp)
 {
 	char	**split;
 	int		i;
@@ -93,17 +93,17 @@ void	parse(t_cmds *cmds, char *input)
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
 	if (!char_in_str(split[i][0], "|<>'"))
-		cmds->cmd[0].name = ft_strdup(split[i++]);
+		cmds->cmd[0].name = expand(split[i++], envp);
 	else
 	{
-		cmds->cmd[0].name = ft_strdup(split[++i]);
+		cmds->cmd[0].name = expand(split[++i], envp);
 		i++;
 	}
 	cmds->cmd[0].arg = NULL;
 	i_pipe = 0;
 	cmds->cmd[0].which_pipe = i_pipe;
 	if (split[i] && !char_in_str(split[i][0], "|<>"))
-		cmds->cmd[0].arg = ft_strdup(split[i++]);
+		cmds->cmd[0].arg = expand(split[i++], envp);
 	if (!split[i])
 		return ;
 	while (split[i])
@@ -115,23 +115,23 @@ void	parse(t_cmds *cmds, char *input)
 			cmds->cmd[++j].which_pipe =  i_pipe;
 			if (!split[++i])
 				break ;
-			cmds->cmd[j].name = split[i];
+			cmds->cmd[j].name = expand(split[i], envp);
 			cmds->cmd[j].arg = NULL;
 			if (!split[++i])
 				break ;
 			if (char_in_str(split[i][0], "|<>"))
 				continue ;
-			cmds->cmd[j].arg = split[i];
+			cmds->cmd[j].arg = expand(split[i], envp);
 		}
 		else
 		{
 			if (cmds->cmd[j].arg && cmds->cmd[j].arg[0])
 			{
-				cmds->cmd[j].arg = add_str(cmds->cmd[j].arg, " ", 1);
-				cmds->cmd[j].arg = add_str(cmds->cmd[j].arg, split[i], 3);
+				cmds->cmd[j].arg = expand(add_str(cmds->cmd[j].arg, " ", 1), envp);
+				cmds->cmd[j].arg = expand(add_str(cmds->cmd[j].arg, split[i], 3), envp);
 			}
 			else
-				cmds->cmd[j].arg = ft_strdup(split[i]);
+				cmds->cmd[j].arg = expand(split[i], envp);
 			cmds->cmd[j].which_pipe = i_pipe;
 		}
 		i++;

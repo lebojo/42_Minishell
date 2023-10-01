@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/09/27 14:10:18 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:22:40 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	close_pipe(int *fd);
 /*	PARSE					*/
 void	sep_counter(t_cmds *cmds, char *input);
 void	sep_parse(t_cmds *cmds, char *input);
-void	parse(t_cmds *cmds, char *input);
+void	parse(t_cmds *cmds, char *input, char ***envp);
 
 /*	UTILS					*/
 int		char_in_str(char c, char *str);

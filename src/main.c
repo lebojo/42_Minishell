@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/09/27 14:08:45 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:23:01 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	process_input(int ac, char *input, char ***envp)
 			ft_exit();
 	if (input && input[0] != '\0')
 	{
-		parse(&cmds, input);
+		parse(&cmds, input, envp);
 		if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
 			ft_exit();
 		if (ac > 1)
