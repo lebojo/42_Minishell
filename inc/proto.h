@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/02 01:22:40 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:47:54 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,6 +80,7 @@ void	exec_sep(t_cmds *cmds, char ***envp, int *fd);
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
 char	*get_cmd(char **paths, char *cmd);
+void	update_last_exit(int status, char ***envp);
 
 /*	GET_CMD					*/
 int		is_builtins(t_cmd *cmd, char ***envp);

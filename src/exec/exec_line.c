@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/26 18:13:35 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:50:54 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 {
 	t_pipe	pipes;
 	int		i;
+	int		exit_status;
 
 	init_pipe(&pipes, cmds);
 	if (cmds->nb_cmd <= 0)
@@ -85,7 +86,8 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 
 	i = -1;
 	while (++i <= cmds->nb_pipe)
-		waitpid(pipes.pid[i], NULL, 0);
+		waitpid(pipes.pid[i], &exit_status, 0);
+	update_last_exit(exit_status, envp);
 }
 
 enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
@@ -153,6 +155,7 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe)
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 {
 	t_cmds	cmds_ip; // cmds interpipe
+	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
 	if (cmds_ip.nb_cmd > 1)
@@ -169,7 +172,8 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 				exec_cmd(&cmds_ip.cmd[0], *envp);
 				exit(0);
 			}
-			waitpid(pipe->pid[0], NULL, 0);
+			waitpid(pipe->pid[0], &exit_status, 0);
+			update_last_exit(exit_status, envp);
 		}
 	}
 }

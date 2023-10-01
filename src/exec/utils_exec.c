@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/26 17:32:50 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 01:54:01 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ void	close_return(int fd)
 
 void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env)
 {
+	int	exit_status;
+
 	tab[0] = fork();
 	if (tab[0] == 0)
 	{
@@ -28,7 +30,8 @@ void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env)
 		dup2(0, entry);
 		close(tab[1]);
 	}
-	waitpid(tab[0], NULL, 0);
+	waitpid(tab[0], &exit_status, 0);
+	update_last_exit(exit_status, &env);
 }
 
 int	check_builtins(t_cmd *cmd, char ***envp)
@@ -62,4 +65,16 @@ int	exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env)
 		return (1);
 	}
 	return (0);
+}
+
+void	update_last_exit(int status, char ***envp)
+{
+	char	*str;
+	t_cmd	cmd;
+
+	str = ft_itoa(WEXITSTATUS(status));
+	cmd = create_cmd("", add_str("?=", str, 2), 0);
+	printf("=== %s ===\n", cmd.arg);
+	ft_export(&cmd, envp);
+	free(str);
 }
