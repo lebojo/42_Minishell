@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/02 01:43:06 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 04:32:41 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,10 +36,11 @@ char	**copy_tab(char **tab)
 	i = 0;
 	while (tab[i++])
 		;
-	res = malloc(sizeof(char *) * i);
+	res = malloc(sizeof(char *) * i + 1);
 	i = -1;
 	while (tab[++i])
 		res[i] = ft_strdup(tab[i]);
+	res[i] = NULL;
 	return (res);
 }
 

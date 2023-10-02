@@ -13,128 +13,81 @@
 
 #include "../inc/proto.h"
 
-void	sep_counter(t_cmds *cmds, char *input)
+char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 {
-	int	i;
+	char **split;
 
-	i = -1;
-	cmds->nb_cmd = 1;
-	cmds->nb_pipe = 0;
-	while (input[++i])
+	if (!*input)
+		return (NULL);
+	split = ft_split(input, ' ');
+	if (!split[0])
+		return (NULL);
+	inc->i = 0;
+	inc->j = 0;
+	sep_parse(cmds, input);
+	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
+	if (!char_in_str(split[inc->i][0], "|<>'"))
+		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0);
+	else
 	{
-		if (input[i] == '|' && input[i - 1] != '|')
-			cmds->nb_pipe += 1;
-		if (input[i] == '|' || input[i] == '<' || input[i] == '>')
-			cmds->nb_cmd += 1;
-		if ((input[i] == '<' && input[i - 1] == '<')
-			||(input[i] == '>' && input[i - 1] == '>'))
-			cmds->nb_cmd -= 1;
+		cmds->cmd[0] = create_cmd(expand(split[++inc->i], envp), NULL, 0);
+		inc->i++;
 	}
+	inc->k = 0;
+	if (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
+		cmds->cmd[0].arg = expand(split[inc->i++], envp);
+	if (!split[inc->i])
+		return (NULL);
+	return (split);
 }
 
-void	sep_parse(t_cmds *cmds, char *input)
+int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 {
-	int	i;
-	int	j;
-
-	i = -1;
-	j = 0;
-	sep_counter(cmds, input);
-	cmds->sep = ft_calloc(cmds->nb_cmd + 1, sizeof(enum e_sep));
-	cmds->sep[0] = None;
-	if (cmds->nb_cmd <= 1 && cmds->nb_pipe < 1)
-		return ;
-	while (input[++i + 1])
+	if (char_in_str(split[inc->i][0], "|<>"))
 	{
-		if (input[i] == '|')
-			cmds->sep[j++] = Pipe;
-		if (input[i] == '<')
-		{
-			if (input[i + 1] == '<')
-			{
-				cmds->sep[j++] = D_left;
-				i++;
-				continue;
-			}
-			else
-				cmds->sep[j++] = S_left;
-			continue;
-		}
-			if (input[i] == '>')
-		{
-			if (input[i + 1] == '>')
-			{
-				cmds->sep[j++] = D_right;
-				i++;
-				continue;
-			}
-			else
-				cmds->sep[j++] = S_right;
-			continue;
-		}
+		cmds->cmd[++inc->j].which_pipe =  inc->k;
+		if (!split[++inc->i])
+			return (2) ;
+		cmds->cmd[inc->j].name = expand(split[inc->i], envp);
+		cmds->cmd[inc->j].arg = NULL;
+		if (!split[++inc->i])
+			return (2) ;
+		if (char_in_str(split[inc->i][0], "|<>"))
+			return (1) ;
+		cmds->cmd[inc->j].arg = expand(split[inc->i], envp);
 	}
-	cmds->sep[j] = None;
+	else
+	{
+		if (cmds->cmd[inc->j].arg && cmds->cmd[inc->j].arg[0])
+		{
+			cmds->cmd[inc->j].arg = expand(add_str(cmds->cmd[inc->j].arg, " ", 1), envp);
+			cmds->cmd[inc->j].arg = expand(add_str(cmds->cmd[inc->j].arg, split[inc->i], 3), envp);
+		}
+		else
+			cmds->cmd[inc->j].arg = expand(split[inc->i], envp);
+		cmds->cmd[inc->j].which_pipe = inc->k;
+	}
+	return (0);
 }
 
 void	parse(t_cmds *cmds, char *input, char ***envp)
 {
 	char	**split;
-	int		i;
-	int		j;
-	int		i_pipe;
+	t_inc	inc;
 
-	if (!*input)
+	split = init_parse(cmds, input, envp, &inc);
+	if (!split)
 		return ;
-	split = ft_split(input, ' ');
-	if (!split[0])
-		return ;
-	i = 0;
-	j = 0;
-	sep_parse(cmds, input);
-	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
-	if (!char_in_str(split[i][0], "|<>'"))
-		cmds->cmd[0].name = expand(split[i++], envp);
-	else
+	while (split[inc.i])
 	{
-		cmds->cmd[0].name = expand(split[++i], envp);
-		i++;
-	}
-	cmds->cmd[0].arg = NULL;
-	i_pipe = 0;
-	cmds->cmd[0].which_pipe = i_pipe;
-	if (split[i] && !char_in_str(split[i][0], "|<>"))
-		cmds->cmd[0].arg = expand(split[i++], envp);
-	if (!split[i])
-		return ;
-	while (split[i])
-	{
-		if (char_in_str('|', split[i]))
-			i_pipe++;
-		if (char_in_str(split[i][0], "|<>"))
-		{
-			cmds->cmd[++j].which_pipe =  i_pipe;
-			if (!split[++i])
-				break ;
-			cmds->cmd[j].name = expand(split[i], envp);
-			cmds->cmd[j].arg = NULL;
-			if (!split[++i])
-				break ;
-			if (char_in_str(split[i][0], "|<>"))
-				continue ;
-			cmds->cmd[j].arg = expand(split[i], envp);
-		}
-		else
-		{
-			if (cmds->cmd[j].arg && cmds->cmd[j].arg[0])
-			{
-				cmds->cmd[j].arg = expand(add_str(cmds->cmd[j].arg, " ", 1), envp);
-				cmds->cmd[j].arg = expand(add_str(cmds->cmd[j].arg, split[i], 3), envp);
-			}
-			else
-				cmds->cmd[j].arg = expand(split[i], envp);
-			cmds->cmd[j].which_pipe = i_pipe;
-		}
-		i++;
+		if (char_in_str('|', split[inc.i]))
+			inc.k++;
+		inc.l = process_parse(cmds, &inc, split, envp);
+		if (inc.l == 1)
+			continue ;
+		else if (inc.l == 2)
+			break ;
+		inc.i++;
 	}
 	free(split[0]);
 	free(split);

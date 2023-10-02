@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+         #
+#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/09/26 15:49:02 by abourgue         ###   ########.fr        #
+#    Updated: 2023/10/02 04:14:35 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,9 +15,9 @@ ENAME	=	minishell
 NAME	=	minishell.a
 CFLAGS	=	-g 
 AR		=	ar -rsc
-FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c\
+FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c sep_parse.c \
 			exec/exec_cmd.c exec/exec_line.c exec/pipe.c exec/heredoc.c \
-			exec/write_file.c exec/utils_exec.c\
+			exec/write_file.c exec/utils_exec.c \
 			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
 			builtins/exit.c builtins/export.c builtins/unset.c builtins/hashmap.c \
 

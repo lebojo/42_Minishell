@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/02 02:27:40 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 04:34:07 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env)
 		close(tab[1]);
 	}
 	waitpid(tab[0], &exit_status, 0);
-	update_last_exit(exit_status, &env);
+	//update_last_exit(exit_status, &env);
 }
 
 int	check_builtins(t_cmd *cmd, char ***envp)
@@ -72,7 +72,7 @@ void	update_last_exit(int status, char ***envp)
 	char	*str;
 	t_cmd	cmd;
 
-	str = ft_itoa(WEXITSTATUS(status));
+	str = ft_itoa(status);
 	cmd = create_cmd("", add_str("?=", str, 2), 0);
 	ft_export(&cmd, envp);
 	free(str);

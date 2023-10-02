@@ -6,21 +6,21 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/02 02:25:17 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 04:35:32 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-int	process_input(int ac, char *input, char ***envp)
+static int	process_input(int ac, char **input, char ***envp)
 {
 	t_cmds	cmds;
 
-	if (input == NULL) // C'est pour le CTRL+D
+	if (*input == NULL) // C'est pour le CTRL+D
 			ft_exit();
-	if (input && input[0] != '\0')
+	if (*input && *input[0] != '\0')
 	{
-		parse(&cmds, input, envp);
+		parse(&cmds, *input, envp);
 		if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
 			ft_exit();
 		if (ac > 1)
@@ -29,8 +29,8 @@ int	process_input(int ac, char *input, char ***envp)
 			exec_line(&cmds, envp);
 		else
 			printf("unknown error");
-		add_history(input);
-		free(input);
+		add_history(*input);
+		free(*input);
 		free_cmds(&cmds);
 	}
 	return (0);
@@ -43,13 +43,13 @@ int main(int ac, char **av, char **envp)
 	char	**env;
 
 	(void)av;
-	start(ac, av, &envp);
 	env = copy_tab(envp);
+	start(ac, av, &env);
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
 		g_status = 1;
-		if (process_input(ac, input, &env))
+		if (process_input(ac, &input, &env))
 		{
 			printf("CRITICAL ERROR\n");
 			return (1);
