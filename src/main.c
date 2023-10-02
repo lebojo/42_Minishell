@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/02 01:23:01 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 02:25:17 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,14 @@ int main(int ac, char **av, char **envp)
 	while (1) {
 		create_prompt(&prompt);
 		input = readline(prompt);
+		g_status = 1;
 		if (process_input(ac, input, &env))
 		{
 			printf("CRITICAL ERROR\n");
 			return (1);
 		}
 		free(prompt);
+		g_status = 0;
 	}
 	return (0);
 }

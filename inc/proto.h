@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/02 01:47:54 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 02:15:22 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ int		char_in_str(char c, char *str);
 void	start(int ac, char **av, char ***envp);
 
 /*	SIGNAL					*/
-void	sigint_handler(int sig);
+void	sig_handler(int sig);
 
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);

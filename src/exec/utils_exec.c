@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/02 01:54:01 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 02:27:40 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,6 @@ void	update_last_exit(int status, char ***envp)
 
 	str = ft_itoa(WEXITSTATUS(status));
 	cmd = create_cmd("", add_str("?=", str, 2), 0);
-	printf("=== %s ===\n", cmd.arg);
 	ft_export(&cmd, envp);
 	free(str);
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/09/27 14:35:12 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/02 02:24:29 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,8 @@ void	start(int ac, char **av, char ***envp)
 		create_envp(envp);
 	else
 		c.arg = add_str("SHLVL=", ft_itoa(ft_atoi(find_path(*envp, "SHLVL", 5)) + 1), 0);
-	signal(SIGINT, sigint_handler);
+	signal(SIGINT, sig_handler);
+	signal(SIGQUIT, sig_handler);
 	ft_export(&c, envp);
+	g_status = 0;
 }
