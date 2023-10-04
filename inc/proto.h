@@ -3,17 +3,17 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/02 04:35:57 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:45:48 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #ifndef PROTO_H
 # define PROTO_H
 
-/*===================================INCLUDES====================================*/
+/*=================================INCLUDES==================================*/
 
 # include <stdio.h>
 # include <stdlib.h>
@@ -28,14 +28,14 @@
 # include "struct.h"
 # include "libft/libft.h"
 
-# define MS "\e[0;32mMinishell 2\e[0m"
+# define MS "\e[0;32mMinishell\e[0m"
 
-/*===================================SOURCES====================================*/
+/*=================================SOURCES==================================*/
 
 /*	MAIN					*/
 void	create_prompt(char **prompt);
-void 	print_cmds(t_cmds cmds);
-int 	main(int ac, char **av, char **envp);
+void	print_cmds(t_cmds cmds);
+int		main(int ac, char **av, char **envp);
 
 /*	EXPANDER				*/
 char	*expand(char *src, char ***envp);
@@ -74,7 +74,7 @@ void	exec_cmd(t_cmd *cmd, char **env);
 char	**split_cmd(t_cmd cmd);
 int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
-char    *str_extractor(char *s);
+char	*str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
 void	exec_sep(t_cmds *cmds, char ***envp, int *fd);
 
@@ -88,10 +88,14 @@ int		is_builtins(t_cmd *cmd, char ***envp);
 void	exec_line(t_cmds *cmds, char ***envp);
 
 /*	PIPE					*/
-void 	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp);
+void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp);
 void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp);
 void	last_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp);
 int		**open_pipes(int nb_pipe);
+void	init_pipe(t_pipe *pipes, t_cmds *cmds);
+
+/*	PARSE_CMDS				*/
+t_cmds	parse_cmds(t_cmds src, int which_pipe);
 
 /*---------------------BUILTINS---------------------*/
 
@@ -99,7 +103,6 @@ int		**open_pipes(int nb_pipe);
 void	ft_cd(char *new_path, char ***envp);
 
 /*	ECHO			*/
-void	print_echo(char *arg, char ***envp);
 void	ft_echo(t_cmd *cmd, char ***envp);
 
 /*	ENV				*/

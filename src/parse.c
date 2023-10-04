@@ -5,17 +5,16 @@
 /*                                                    +:+ +:+         +:+     */
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/08/29 17:4135 by lebojo           ###   ########.fr       */
+/*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
+/*   Updated: 2023/10/04 18:43:34 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
-
 
 #include "../inc/proto.h"
 
 char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 {
-	char **split;
+	char	**split;
 
 	if (!*input)
 		return (NULL);
@@ -45,24 +44,23 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 {
 	if (char_in_str(split[inc->i][0], "|<>"))
 	{
-		cmds->cmd[++inc->j].which_pipe =  inc->k;
+		cmds->cmd[++inc->j].which_pipe = inc->k;
 		if (!split[++inc->i])
-			return (2) ;
+			return (2);
 		cmds->cmd[inc->j].name = expand(split[inc->i], envp);
 		cmds->cmd[inc->j].arg = NULL;
 		if (!split[++inc->i])
-			return (2) ;
+			return (2);
 		if (char_in_str(split[inc->i][0], "|<>"))
-			return (1) ;
+			return (1);
 		cmds->cmd[inc->j].arg = expand(split[inc->i], envp);
 	}
 	else
 	{
 		if (cmds->cmd[inc->j].arg && cmds->cmd[inc->j].arg[0])
-		{
-			cmds->cmd[inc->j].arg = expand(add_str(cmds->cmd[inc->j].arg, " ", 1), envp);
-			cmds->cmd[inc->j].arg = expand(add_str(cmds->cmd[inc->j].arg, split[inc->i], 3), envp);
-		}
+			cmds->cmd[inc->j].arg = expand(add_str(
+						add_str(cmds->cmd[inc->j].arg, " ", 1),
+						split[inc->i], 3), envp);
 		else
 			cmds->cmd[inc->j].arg = expand(split[inc->i], envp);
 		cmds->cmd[inc->j].which_pipe = inc->k;

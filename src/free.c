@@ -33,8 +33,8 @@ void	free_cmds(t_cmds *cmds)
 		free(cmds->sep);
 }
 
-void    close_pipe(int *fd)
+void	close_pipe(int *fd)
 {
-    close(fd[0]);
-    close(fd[1]);
+	close(fd[0]);
+	close(fd[1]);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/02 03:59:17 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:33:23 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 {
 	t_cmd	res;
-	
+
 	res.name = ft_strdup(name);
 	if (name)
 		res.name = ft_strdup(name);
@@ -29,7 +29,7 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 	return (res);
 }
 
-enum e_quote is_quote(char *src, int i)
+enum e_quote	is_quote(char *src, int i)
 {
 	if (src[0] == '"')
 		return (double_q);
@@ -39,14 +39,11 @@ enum e_quote is_quote(char *src, int i)
 		return (none);
 }
 
-void	process_expand(char ***envp, char *src, char *res, t_inc *incr, enum e_quote *quote)
+void	process_expand(char ***envp, char *src, char *res, t_inc *incr)
 {
 	char	*tmp;
 	char	*var;
 
-	if ((*quote == double_q && src[incr->i] == '"')
-		|| (*quote == simple && src[incr->i] == '\''))
-		return ;
 	if (src[incr->i] == '$')
 	{
 		tmp = ft_calloc(ft_strlen(src) + 1, sizeof(char));
@@ -82,6 +79,11 @@ char	*expand(char *src, char ***envp)
 	if (!res)
 		return (NULL);
 	while (src[++incr.i])
-		process_expand(envp, src, res, &incr, &quote);
+	{
+		if ((quote == double_q && src[incr.i] == '"')
+			|| (quote == simple && src[incr.i] == '\''))
+			continue ;
+		process_expand(envp, src, res, &incr);
+	}
 	return (res);
 }

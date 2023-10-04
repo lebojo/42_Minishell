@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: Invalid date        by                   #+#    #+#             */
-/*   Updated: 2023/10/02 04:35:32 by jchapell         ###   ########.fr       */
+/*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
+/*   Updated: 2023/10/04 18:35:58 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,12 @@ static int	process_input(int ac, char **input, char ***envp)
 {
 	t_cmds	cmds;
 
-	if (*input == NULL) // C'est pour le CTRL+D
-			ft_exit();
+	if (*input == NULL)
+		ft_exit();
 	if (*input && *input[0] != '\0')
 	{
 		parse(&cmds, *input, envp);
-		if (ft_strcmp("exit", cmds.cmd[0].name)) //Il n'y a pas moyen de faire autrement
+		if (ft_strcmp("exit", cmds.cmd[0].name))
 			ft_exit();
 		if (ac > 1)
 			print_cmds(cmds);
@@ -38,7 +38,7 @@ static int	process_input(int ac, char **input, char ***envp)
 	return (0);
 }
 
-int main(int ac, char **av, char **envp) 
+int	main(int ac, char **av, char **envp)
 {
 	char	*input;
 	char	*prompt;
@@ -47,7 +47,8 @@ int main(int ac, char **av, char **envp)
 	(void)av;
 	env = copy_tab(envp);
 	start(ac, av, &env);
-	while (1) {
+	while (1)
+	{
 		create_prompt(&prompt);
 		input = readline(prompt);
 		g_status = 1;
@@ -61,4 +62,3 @@ int main(int ac, char **av, char **envp)
 	}
 	return (0);
 }
-

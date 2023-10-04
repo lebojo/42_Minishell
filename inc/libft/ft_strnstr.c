@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_strnstr.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:40:14 by jchapell          #+#    #+#             */
-/*   Updated: 2022/10/24 14:43:32 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:44:21 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ char	*ft_strnstr(const char *big, const char *little, size_t len)
 			if (ft_check(&bigc[i], little, i, len))
 				return (&bigc[i]);
 		}
-			i++;
+		i++;
 	}
 	return (NULL);
 }

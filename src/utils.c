@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/09/25 17:17:08 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:42:58 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,17 @@
 
 void	print_cmds(t_cmds cmds)
 {
-	int i = 0;
-	int j = 0;
+	int	i;
+	int	j;
+
+	i = 0;
+	j = 0;
 	printf("\033[1;33m======DEBUG======\033[0m\n");
 	printf("nb_cmd: %i, nb_pipe: %i\n", cmds.nb_cmd, cmds.nb_pipe);
 	while (i < cmds.nb_cmd)
 	{
-		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i, cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
+		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i,
+			cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
 		if (cmds.nb_cmd > 1)
 			printf("sep[%d] = %d\n", i, cmds.sep[i]);
 		i++;

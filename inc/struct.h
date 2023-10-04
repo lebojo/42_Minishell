@@ -18,11 +18,11 @@ extern int	g_status;
 enum e_sep
 {
 	None,
-	Pipe,	// == |
-	S_left,	// == <
-	S_right,// == >
-	D_left,	// == <<
-	D_right	// == >>
+	Pipe,
+	S_left,
+	S_right,
+	D_left,
+	D_right
 };
 
 enum e_quote
@@ -34,40 +34,40 @@ enum e_quote
 
 typedef struct s_inc
 {
-	int		i;
-	int		j;
-	int		k;
-	int		l;
-	int		m;
-	int		n;
-	int		o;
-	int		p;
-	int		q;
-	int		r;
-	int		s;
-	int		t;
-	int		u;
-	int		v;
-	int		w;
-	int		x;
-	int		y;
-	int		z;
-}    t_inc;
+	int	i;
+	int	j;
+	int	k;
+	int	l;
+	int	m;
+	int	n;
+	int	o;
+	int	p;
+	int	q;
+	int	r;
+	int	s;
+	int	t;
+	int	u;
+	int	v;
+	int	w;
+	int	x;
+	int	y;
+	int	z;
+}	t_inc;
 
 typedef struct s_pipe
 {
-    int **fd;
-    int *pid;
-}    t_pipe;
+	int	**fd;
+	int	*pid;
+}	t_pipe;
 
-typedef struct  s_cmd
+typedef struct s_cmd
 {
-    char    *name;
-    char    *arg;
+	char	*name;
+	char	*arg;
 	int		which_pipe;
-}    t_cmd;
+}	t_cmd;
 
-typedef struct	s_cmds
+typedef struct s_cmds
 {
 	int			nb_cmd;
 	int			nb_pipe;

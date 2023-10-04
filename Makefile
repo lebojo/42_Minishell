@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
+#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/10/02 04:14:35 by jchapell         ###   ########.fr        #
+#    Updated: 2023/10/04 18:46:17 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,11 +15,14 @@ ENAME	=	minishell
 NAME	=	minishell.a
 CFLAGS	=	-g 
 AR		=	ar -rsc
-FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c sep_parse.c \
+FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
+			sep_parse.c \
 			exec/exec_cmd.c exec/exec_line.c exec/pipe.c exec/heredoc.c \
-			exec/write_file.c exec/utils_exec.c \
+			exec/write_file.c exec/utils_exec.c exec/exec_cmd_utils.c \
+			exec/split_cmd.c exec/parse_cmds.c \
 			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
-			builtins/exit.c builtins/export.c builtins/unset.c builtins/hashmap.c \
+			builtins/exit.c builtins/export.c builtins/unset.c \
+			builtins/hashmap.c \
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/

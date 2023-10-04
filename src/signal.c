@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/02 02:26:50 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:40:37 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	prompt(void)
 {
-	char *prompt;
+	char	*prompt;
 
 	create_prompt(&prompt);
 	ft_putstr_fd(prompt, 1);

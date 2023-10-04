@@ -3,16 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/26 17:28:29 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/04 18:20:51 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-char	*heredoc(char *str) // ex : << s  <-- dans cette situation on passe cmds->cmd[0].name
+char	*heredoc(char *str)
 {
 	char	*line;
 	char	*res;
@@ -25,7 +25,7 @@ char	*heredoc(char *str) // ex : << s  <-- dans cette situation on passe cmds->c
 			line = ft_strdup("\n");
 		if (ft_strcmp(line, str) == 1)
 			break ;
-		line = ft_strjoin(line,"\n");
+		line = ft_strjoin(line, "\n");
 		res = ft_strjoin(res, line);
 		free(line);
 	}
@@ -44,4 +44,4 @@ void	read_file(char *name, t_cmd *cmd, char ***env)
 		return ;
 	else
 		exec_in_fork(STDIN_FILENO, id, cmd, *env);
-}	
+}
