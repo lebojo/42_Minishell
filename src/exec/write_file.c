@@ -12,7 +12,7 @@
 
 #include "../../inc/proto.h"
 
-void	write_in_file(char *str,char *name, t_cmd *cmd, char ***env)
+void	write_in_file(char *str, char *name, t_cmd *cmd, char ***env)
 {
 	char	*input;
 	int		id[2];
@@ -33,10 +33,10 @@ void	write_in_file(char *str,char *name, t_cmd *cmd, char ***env)
 		exec_in_fork(STDOUT_FILENO, id, cmd, *env);
 }
 
-void	append_to_file(char *str,char *name, t_cmd *cmd, char ***env)
+void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env)
 {
 	char	*input;
-	int	id[2];
+	int		id[2];
 
 	id[0] = 0;
 	id[1] = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);

@@ -13,7 +13,7 @@
 #ifndef STRUCT_H
 # define STRUCT_H
 
-int	g_status;
+extern int	g_status;
 
 enum e_sep
 {

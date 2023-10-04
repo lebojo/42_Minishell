@@ -12,29 +12,25 @@
 
 #include "../inc/proto.h"
 
-void free_cmds(t_cmds *cmds) 
-{
-	if (cmds == NULL)
-		return;
-	int i = 0;
-	while (i < cmds->nb_cmd) {
-		if (cmds->cmd[i].name != NULL)
-			free(cmds->cmd[i].name);
-		if (cmds->cmd[i].arg != NULL)
-			free(cmds->cmd[i].arg);
-		i++;
-	}
-	free(cmds->cmd);
-
-	if (cmds->nb_cmd > 1) {
-		free(cmds->sep);
-	}
-}
-
 void	free_cmd(t_cmd *cmd)
 {
-	free(cmd->name);
-	free(cmd->arg);
+	if (cmd->name != NULL)
+		free(cmd->name);
+	if (cmd->arg != NULL)
+		free(cmd->arg);
+}
+
+void	free_cmds(t_cmds *cmds)
+{
+	int	i;
+
+	i = 0;
+	if (cmds == NULL)
+		return ;
+	while (i < cmds->nb_cmd)
+		free_cmd(&cmds->cmd[i++]);
+	if (cmds->nb_cmd > 1)
+		free(cmds->sep);
 }
 
 void    close_pipe(int *fd)

@@ -39,10 +39,37 @@ enum e_quote is_quote(char *src, int i)
 		return (none);
 }
 
+void	process_expand(char ***envp, char *src, char *res, t_inc *incr, enum e_quote *quote)
+{
+	char	*tmp;
+	char	*var;
+
+	if ((*quote == double_q && src[incr->i] == '"')
+		|| (*quote == simple && src[incr->i] == '\''))
+		return ;
+	if (src[incr->i] == '$')
+	{
+		tmp = ft_calloc(ft_strlen(src) + 1, sizeof(char));
+		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"\'\\$"))
+			tmp[incr->k++] = src[incr->i];
+		var = hm_get_value(*envp, tmp);
+		if (var)
+		{
+			res = add_str(res, var, 1);
+			res = add_str(res, " ", 1);
+			incr->j += ft_strlen(var) + 1;
+			free(var);
+		}
+		free(tmp);
+		incr->k = 0;
+	}
+	else
+		res[incr->j++] = src[incr->i];
+}
+
 char	*expand(char *src, char ***envp)
 {
 	char			*res;
-	char			*tmp;
 	char			*var;
 	t_inc			incr;
 	enum e_quote	quote;
@@ -55,29 +82,6 @@ char	*expand(char *src, char ***envp)
 	if (!res)
 		return (NULL);
 	while (src[++incr.i])
-	{
-		if (quote == double_q && src[incr.i] == '"')
-			continue;
-		else if (quote == simple && src[incr.i] == '\'')
-			continue;
-		if (src[incr.i] == '$')
-		{
-			tmp = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-			while (src[++incr.i] && !char_in_str(src[incr.i], " \t\"\'\\$"))
-				tmp[incr.k++] = src[incr.i];
-			var = hm_get_value(*envp, tmp);
-			if (var)
-			{
-				res = add_str(res, var, 1);
-				res = add_str(res, " ", 1);
-				incr.j += ft_strlen(var) + 1;
-				free(var);
-			}
-			free(tmp);
-			incr.k = 0;
-		}
-		else
-			res[incr.j++] = src[incr.i];
-	}
+		process_expand(envp, src, res, &incr, &quote);
 	return (res);
-} //Une fonction qui remplacer les variables d'environnement par leur valeur et return la string modifiée
+}

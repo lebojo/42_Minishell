@@ -12,6 +12,8 @@
 
 #include "../inc/proto.h"
 
+int	g_status = 0;
+
 static int	process_input(int ac, char **input, char ***envp)
 {
 	t_cmds	cmds;

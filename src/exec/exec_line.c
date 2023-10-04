@@ -81,13 +81,11 @@ void	 exec_line(t_cmds *cmds, char ***envp)
 		close_pipe(pipes.fd[i]);
 	}
 	last_pipe(cmds, &pipes, i, envp); // le +1 c'est parce qu'il y a une dernière commande après le pipes
-
 	close_pipe(pipes.fd[i]);
-
 	i = -1;
 	while (++i <= cmds->nb_pipe)
 		waitpid(pipes.pid[i], &exit_status, 0);
-	//update_last_exit(exit_status, envp);
+	update_last_exit(exit_status, envp);
 }
 
 enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
@@ -108,11 +106,8 @@ enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
 		if (cnt == which_pipe)
 			break ;
 	}
-	while (src[i] != None && src[i] != Pipe)
-	{
+	while (src[i] != None && src[i++] != Pipe)
 		tmp++;
-		i++;
-	}
 	res = malloc(sizeof(enum e_sep) * (tmp + 1));
 	i -= tmp;
 	tmp = 0;
@@ -143,10 +138,7 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe)
 	while (i < src.nb_cmd)
 	{
 		if (src.cmd[i].which_pipe == which_pipe)
-		{
-			res.cmd[j] = src.cmd[i];
-			j++;
-		}
+			res.cmd[j++] = src.cmd[i];
 		i++;
 	}
 	return (res);
@@ -173,7 +165,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 				exit(0);
 			}
 			waitpid(pipe->pid[0], &exit_status, 0);
-			//update_last_exit(exit_status, envp);
+			// update_last_exit(exit_status, envp); -> SEGFAULT
 		}
 	}
 }
