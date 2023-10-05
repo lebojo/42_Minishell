@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/04 18:17:58 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/05 03:34:20 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,9 +37,9 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	char	**path_cmd;
 	char	**s_cmd;
 
-	path_env = find_path(env, "PATH", 4);
-	path_env = add_str(path_env, ":", 0);
-	path_env = add_str(path_env, find_path(env, "PWD", 3), 0);
+	path_env = hm_get_value(env, "PATH");
+	path_env = add_str(path_env, ":", 1);
+	path_env = add_str(path_env, hm_get_value(env, "PWD"), 3);
 	path_cmd = ft_split(path_env, ':');
 	ac_cmd = get_cmd(path_cmd, cmd->name);
 	if (!ac_cmd)

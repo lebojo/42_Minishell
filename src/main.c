@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/04 18:35:58 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/05 03:21:52 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,9 @@ int	main(int ac, char **av, char **envp)
 
 	(void)av;
 	env = copy_tab(envp);
-	start(ac, av, &env);
+	start(&env);
+	// printf("%s -- %s\n", env[0], env[61]);
+	// printf("%s -- %s\n", envp[0], envp[61]);
 	while (1)
 	{
 		create_prompt(&prompt);

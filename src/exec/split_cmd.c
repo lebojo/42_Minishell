@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:17:14 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/04 18:17:53 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/05 02:39:22 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,7 +66,7 @@ char	**split_cmd(t_cmd cmd)
 int	process_arg_counter(int	*res, int *i, char *s)
 {
 	if (s[*i] == ' ' )
-		*res++;
+		*res += 1;
 	if (s[*i] == '"')
 	{
 		while (s[++*i] && s[*i] != '"')

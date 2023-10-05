@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/04 18:45:48 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/05 03:22:27 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,7 +56,7 @@ void	sep_parse(t_cmds *cmds, char *input);
 int		char_in_str(char c, char *str);
 
 /*	START					*/
-void	start(int ac, char **av, char ***env);
+void	start(char ***env);
 
 /*	SIGNAL					*/
 void	sig_handler(int sig);

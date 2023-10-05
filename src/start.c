@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/04 18:42:01 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/05 03:22:33 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	create_envp(char ***envp)
 	*envp = new_envp;
 }
 
-void	start(int ac, char **av, char ***env)
+void	start(char ***env)
 {
 	t_cmd	c;
 	int		i;
@@ -38,6 +38,6 @@ void	start(int ac, char **av, char ***env)
 						find_path(*env, "SHLVL", 5)) + 1), 0);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-	ft_export(&c, env);
+	//ft_export(&c, env);
 	g_status = 0;
 }
