@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/06 02:23:57 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/06 04:02:37 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,7 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe);
 void	free_cmds(t_cmds *cmds);
 void	free_cmd(t_cmd *cmd);
 void	close_pipe(int *fd);
+void	free_all(t_cmds *cmds, char ***env);
 
 /*	PARSE					*/
 void	parse(t_cmds *cmds, char *input, char ***envp);
@@ -110,6 +111,7 @@ void	ft_env(char **env);
 
 /*	EXIT			*/
 void	ft_exit(void);
+void	ft_exit_free(char ***envp, t_cmds *cmds);
 
 /*	EXPORT			*/
 int		strdiff(const char *s1, const char *s2);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/06 02:28:28 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/06 04:03:09 by jordan           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ static int	process_input(int ac, char **input, char ***envp)
 	{
 		parse(&cmds, *input, envp);
 		if (ft_strcmp("exit", cmds.cmd[0].name))
-			ft_exit();
+			ft_exit_free(envp, &cmds);
 		if (ac > 1)
 			print_cmds(cmds);
 		if (cmds.cmd[0].name)

@@ -38,3 +38,15 @@ void	close_pipe(int *fd)
 	close(fd[0]);
 	close(fd[1]);
 }
+
+void	free_all(t_cmds *cmds, char ***env)
+{
+	int	i;
+
+	i = 0;
+	free_cmds(cmds);
+	free(cmds);
+	while ((*env)[i] != NULL)
+		free((*env)[i++]);
+	free(*env);
+}
