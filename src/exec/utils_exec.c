@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/05 02:46:38 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/06 02:28:42 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env)
 		close(tab[1]);
 	}
 	waitpid(tab[0], &exit_status, 0);
-	//update_last_exit(exit_status, &env);
+	update_last_exit(exit_status, &env);
 }
 
 int	check_builtins(t_cmd *cmd, char ***envp)

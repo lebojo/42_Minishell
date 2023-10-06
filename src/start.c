@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/05 03:22:33 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/06 02:26:33 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,21 @@ void	create_envp(char ***envp)
 	*envp = new_envp;
 }
 
+void	increment_shlvl(char ***env)
+{
+	char	*shlvl;
+	char	*new_shlvl;
+	t_cmd	tmp;
+
+	shlvl = hm_get_value(*env, "SHLVL");
+	new_shlvl = ft_itoa(ft_atoi(shlvl) + 1);
+	tmp = create_cmd(NULL, add_str("SHLVL=", new_shlvl, 2), 0);
+	free(shlvl);
+	ft_export(&tmp, env);
+}
+
 void	start(char ***env)
 {
-	t_cmd	c;
 	int		i;
 
 	i = -1;
@@ -34,10 +46,8 @@ void	start(char ***env)
 	if (!getenv("PWD"))
 		create_envp(env);
 	else
-		c.arg = add_str("SHLVL=", ft_itoa(ft_atoi(
-						find_path(*env, "SHLVL", 5)) + 1), 0);
+		increment_shlvl(env);
 	signal(SIGINT, sig_handler);
 	signal(SIGQUIT, sig_handler);
-	//ft_export(&c, env);
 	g_status = 0;
 }

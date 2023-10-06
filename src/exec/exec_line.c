@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/05 02:57:28 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/06 02:29:00 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec_line(t_cmds *cmds, char ***envp)
 	i = -1;
 	while (++i <= cmds->nb_pipe)
 		waitpid(pipes.pid[i], &exit_status, 0);
-	// update_last_exit(exit_status, envp);
+	update_last_exit(exit_status, envp);
 }
 
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
@@ -101,7 +101,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 				exit(0);
 			}
 			waitpid(pipe->pid[0], &exit_status, 0);
-			// update_last_exit(exit_status, envp); -> SEGFAULT
+			update_last_exit(exit_status, envp);
 		}
 	}
 }

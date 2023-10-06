@@ -6,12 +6,11 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 17:47:27 by jchapell          #+#    #+#             */
-/*   Updated: 2023/07/25 16:06:28 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/06 02:28:23 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "libft.h"
-//#include <stdio.h>
 
 static int	count_words(const char *str, char c)
 {

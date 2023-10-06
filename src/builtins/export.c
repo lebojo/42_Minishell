@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/05 03:16:13 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/06 02:26:02 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ void	ft_export(t_cmd *cmd, char ***env)
 	else
 		s_arg = empty_env(cmd->arg);
 	if (hm_get_value(*env, s_arg[0]))
-		update_env(s_arg[0], s_arg[1], cmd->arg, env);
+		hm_set_value(env, s_arg[0], s_arg[1]);
 	else
 		add_env(s_arg, env);
 }
