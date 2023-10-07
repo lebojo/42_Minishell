@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/06 04:02:37 by jordan           ###   ########.fr       */
+/*   Updated: 2023/10/07 01:21:23 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,6 +61,9 @@ void	start(char ***env);
 
 /*	SIGNAL					*/
 void	sig_handler(int sig);
+
+/*	SPACER					*/
+char	*format_input(char *str);
 
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);

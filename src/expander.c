@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/04 18:33:23 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/07 02:08:44 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ enum e_quote	is_quote(char *src, int i)
 		return (none);
 }
 
-void	process_expand(char ***envp, char *src, char *res, t_inc *incr)
+void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 {
 	char	*tmp;
 	char	*var;
@@ -47,13 +47,13 @@ void	process_expand(char ***envp, char *src, char *res, t_inc *incr)
 	if (src[incr->i] == '$')
 	{
 		tmp = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"\'\\$"))
+		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"'\\$"))
 			tmp[incr->k++] = src[incr->i];
 		var = hm_get_value(*envp, tmp);
 		if (var)
 		{
-			res = add_str(res, var, 1);
-			res = add_str(res, " ", 1);
+			(*res) = add_str((*res), var, 1);
+			(*res) = add_str((*res), " ", 1);
 			incr->j += ft_strlen(var) + 1;
 			free(var);
 		}
@@ -61,7 +61,7 @@ void	process_expand(char ***envp, char *src, char *res, t_inc *incr)
 		incr->k = 0;
 	}
 	else
-		res[incr->j++] = src[incr->i];
+		(*res)[incr->j++] = src[incr->i];
 }
 
 char	*expand(char *src, char ***envp)
@@ -83,7 +83,7 @@ char	*expand(char *src, char ***envp)
 		if ((quote == double_q && src[incr.i] == '"')
 			|| (quote == simple && src[incr.i] == '\''))
 			continue ;
-		process_expand(envp, src, res, &incr);
+		process_expand(envp, src, &res, &incr);
 	}
 	return (res);
 }

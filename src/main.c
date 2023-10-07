@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jordan <jordan@student.42.fr>              +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/06 04:03:09 by jordan           ###   ########.fr       */
+/*   Updated: 2023/10/07 01:58:56 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ static int	process_input(int ac, char **input, char ***envp)
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
+	char	*input_formatted;
 	char	*prompt;
 	char	**env;
 
@@ -52,7 +53,8 @@ int	main(int ac, char **av, char **envp)
 		create_prompt(&prompt);
 		input = readline(prompt);
 		g_status = 1;
-		if (process_input(ac, &input, &env))
+		input_formatted = format_input(input);
+		if (process_input(ac, &input_formatted, &env))
 		{
 			printf("CRITICAL ERROR\n");
 			return (1);

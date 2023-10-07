@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
+#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/10/05 02:51:04 by jchapell         ###   ########.fr        #
+#    Updated: 2023/10/07 01:23:03 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME	=	minishell.a
 CFLAGS	=	-g 
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
-			sep_parse.c exec/split_cmd.c \
+			sep_parse.c spacer.c exec/split_cmd.c \
 			exec/exec_cmd.c exec/exec_line.c exec/pipe.c exec/heredoc.c \
 			exec/write_file.c exec/utils_exec.c exec/exec_cmd_utils.c \
 			exec/parse_cmds.c \

@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/06 02:26:33 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/07 01:03:57 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,6 @@ void	start(char ***env)
 	else
 		increment_shlvl(env);
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	//signal(SIGQUIT, sig_handler);
 	g_status = 0;
 }
