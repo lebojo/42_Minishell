@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/16 19:29:24 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:51:55 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,10 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 			break ;
 		inc.i++;
 	}
+	inc.p = 0;
+	while (inc.p < cmds->nb_cmd)
+		if (char_in_str(cmds->cmd[inc.p++].name[0], "|<>"))
+			return (1);
 	free(split[0]);
 	free(split);
 	return (0);
