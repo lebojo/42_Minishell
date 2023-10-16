@@ -6,14 +6,14 @@
 #    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/10/07 01:23:03 by lebojo           ###   ########.fr        #
+#    Updated: 2023/10/16 15:12:20 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Executable Name
 ENAME	=	minishell
 NAME	=	minishell.a
-CFLAGS	=	-g 
+CFLAGS	=	-g -Wall -Wextra -Werror 
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
 			sep_parse.c spacer.c exec/split_cmd.c \

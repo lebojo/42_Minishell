@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/07 02:08:44 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 15:13:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,7 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 	return (res);
 }
 
-enum e_quote	is_quote(char *src, int i)
+enum e_quote	is_quote(char *src)
 {
 	if (src[0] == '"')
 		return (double_q);
@@ -67,7 +67,6 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 char	*expand(char *src, char ***envp)
 {
 	char			*res;
-	char			*var;
 	t_inc			incr;
 	enum e_quote	quote;
 
@@ -75,7 +74,7 @@ char	*expand(char *src, char ***envp)
 	incr.j = 0;
 	incr.k = 0;
 	res = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-	quote = is_quote(src, incr.i);
+	quote = is_quote(src);
 	if (!res)
 		return (NULL);
 	while (src[++incr.i])

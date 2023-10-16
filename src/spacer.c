@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/07 01:57:29 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 15:59:44 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,5 +47,6 @@ char	*format_input(char *str)
 		else
 			res[inc.j++] = str[inc.i++];
 	}
+	free(str);
 	return (res);
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:02 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/05 03:10:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:18:48 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,7 +52,7 @@ void	add_env(char **arg, char ***env)
 	*env = new_env;
 }
 
-void	update_env(char *key, char *arg, char *new_env, char ***env)
+void	update_env(char *key, char *new_env, char ***env)
 {
 	int		i;
 	char	**s_env;

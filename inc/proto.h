@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/07 01:21:23 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 15:19:08 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char	*str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
-void	exec_sep(t_cmds *cmds, char ***envp, int *fd);
+void	exec_sep(t_cmds *cmds, char ***envp);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
@@ -121,7 +121,7 @@ int		strdiff(const char *s1, const char *s2);
 char	**copy_tab(char **tab);
 void	print_sorted_env(char **env);
 void	add_env(char **arg, char ***env);
-void	update_env(char *key, char *arg, char *new_env, char ***env);
+void	update_env(char *key, char *new_env, char ***env);
 char	**empty_env(char *s);
 void	ft_export(t_cmd *cmd, char ***env);
 

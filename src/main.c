@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/07 01:58:56 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 16:02:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,15 @@
 
 int	g_status = 0;
 
-static int	process_input(int ac, char **input, char ***envp)
+static int	process_input(int ac, char *input, char ***envp)
 {
 	t_cmds	cmds;
 
-	if (*input == NULL)
+	if (input == NULL)
 		ft_exit();
-	if (*input && *input[0] != '\0')
+	if (input && input[0] != '\0')
 	{
-		parse(&cmds, *input, envp);
+		parse(&cmds, input, envp);
 		if (ft_strcmp("exit", cmds.cmd[0].name))
 			ft_exit_free(envp, &cmds);
 		if (ac > 1)
@@ -31,8 +31,8 @@ static int	process_input(int ac, char **input, char ***envp)
 			exec_line(&cmds, envp);
 		else
 			printf("unknown error");
-		add_history(*input);
-		free(*input);
+		add_history(input);
+		free(input);
 		free_cmds(&cmds);
 	}
 	return (0);
@@ -51,10 +51,10 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		create_prompt(&prompt);
-		input = readline(prompt);
+		input = readline("->");
 		g_status = 1;
 		input_formatted = format_input(input);
-		if (process_input(ac, &input_formatted, &env))
+		if (process_input(ac, input_formatted, &env))
 		{
 			printf("CRITICAL ERROR\n");
 			return (1);

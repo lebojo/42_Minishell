@@ -6,13 +6,13 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:43 by arthur            #+#    #+#             */
-/*   Updated: 2023/09/26 16:31:54 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:17:37 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	update_pwds(char *pwd, char *new_path, char ***envp)
+void	update_pwds(char *pwd, char ***envp)
 {
 	t_cmd	old_pwd;
 	t_cmd	new_pwd;
@@ -29,7 +29,7 @@ void	process_cd(char *pwd, char *new_path, char ***envp)
 	if (ft_strcmp(new_path, "-"))
 	{
 		chdir(hm_get_value(*envp, "OLDPWD"));
-		update_pwds(pwd, new_path, envp);
+		update_pwds(pwd, envp);
 		return ;
 	}
 	if (new_path[0] == '~')
@@ -42,7 +42,7 @@ void	process_cd(char *pwd, char *new_path, char ***envp)
 	if (chdir(add_str(pwd, new_path, 0)))
 		if (chdir(new_path))
 			printf("Path not found\n");
-	update_pwds(pwd, new_path, envp);
+	update_pwds(pwd, envp);
 }
 
 void	ft_cd(char *new_path, char ***envp)

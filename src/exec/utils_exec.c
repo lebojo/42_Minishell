@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/06 02:28:42 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 15:16:56 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env)
 	update_last_exit(exit_status, &env);
 }
 
-int	check_builtins(t_cmd *cmd, char ***envp)
+int	check_builtins(t_cmd *cmd) 
 {
 	if (ft_strcmp("echo", cmd->name))
 		return (1);
@@ -55,7 +55,7 @@ int	check_builtins(t_cmd *cmd, char ***envp)
 
 int	exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env)
 {
-	if (check_builtins(cmd, env))
+	if (check_builtins(cmd))
 	{
 		dup2(fd, entry);
 		is_builtins(cmd, env);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/09/25 17:58:42 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/10/16 15:16:10 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 void	write_in_file(char *str, char *name, t_cmd *cmd, char ***env)
 {
-	char	*input;
 	int		id[2];
 
 	id[0] = 0;
@@ -35,7 +34,6 @@ void	write_in_file(char *str, char *name, t_cmd *cmd, char ***env)
 
 void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env)
 {
-	char	*input;
 	int		id[2];
 
 	id[0] = 0;
