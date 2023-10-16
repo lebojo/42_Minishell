@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/04 18:42:58 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 18:24:52 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,21 @@ void	print_cmds(t_cmds cmds)
 	printf("\033[1;33m=======END=======\033[0m\n");
 }
 
+// void	create_prompt(char **prompt)
+// {
+// 	char	*af;
+// 	char	pwd[4096];
+
+// 	af = actual_folder();
+// 	if (ft_strcmp(af, "Jordan"))
+// 		*prompt = add_str("❤️ \e[0;32m➜ \e[0;36m", af, 2);
+// 	else if (ft_strcmp(getcwd(pwd, 4096), getenv("HOME")))
+// 		*prompt = add_str("🏠 \e[0;32m➜ \e[0;36m", af, 2);
+// 	else
+// 		*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", af, 2);
+// 	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
+// }
+
 void	create_prompt(char **prompt)
 {
 	char	*af;
@@ -39,12 +54,12 @@ void	create_prompt(char **prompt)
 
 	af = actual_folder();
 	if (ft_strcmp(af, "Jordan"))
-		*prompt = add_str("❤️ \e[0;32m➜ \e[0;36m", af, 2);
+		*prompt = add_str("➜ ", af, 2);
 	else if (ft_strcmp(getcwd(pwd, 4096), getenv("HOME")))
-		*prompt = add_str("🏠 \e[0;32m➜ \e[0;36m", af, 2);
+		*prompt = add_str("➜ ", af, 2);
 	else
-		*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", af, 2);
-	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
+		*prompt = add_str("➜ ", af, 2);
+	*prompt = add_str(*prompt, " > ", 1);
 }
 
 int	char_in_str(char c, char *str)

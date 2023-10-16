@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/16 15:15:29 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:38:22 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_builtins(t_cmd *cmd, char ***envp)
 	else if (ft_strcmp("env", cmd->name))
 		ft_env(*envp);
 	else if (ft_strcmp("exit", cmd->name))
-		ft_exit();
+		ft_exit_cmd(cmd);
 	else
 		return (0);
 	return (1);
@@ -77,7 +77,6 @@ void	exec_line(t_cmds *cmds, char ***envp)
 	i = -1;
 	while (++i <= cmds->nb_pipe)
 		waitpid(pipes.pid[i], &exit_status, 0);
-	update_last_exit(exit_status, envp);
 }
 
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)

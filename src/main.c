@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/16 16:02:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:40:25 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,31 +17,34 @@ int	g_status = 0;
 static int	process_input(int ac, char *input, char ***envp)
 {
 	t_cmds	cmds;
+	char	*formatted_input;
 
 	if (input == NULL)
-		ft_exit();
-	if (input && input[0] != '\0')
+		ft_exit(1);
+	if (only_space(input))
+		return (1);
+	formatted_input = format_input(input);
+	if (formatted_input && formatted_input[0] != '\0')
 	{
-		parse(&cmds, input, envp);
+		if (parse(&cmds, formatted_input, envp))
+			return (1);
 		if (ft_strcmp("exit", cmds.cmd[0].name))
-			ft_exit_free(envp, &cmds);
+			ft_exit_cmd(&cmds.cmd[0]);
 		if (ac > 1)
 			print_cmds(cmds);
 		if (cmds.cmd[0].name)
 			exec_line(&cmds, envp);
 		else
 			printf("unknown error");
-		add_history(input);
-		free(input);
 		free_cmds(&cmds);
 	}
+	free(formatted_input);
 	return (0);
 }
 
 int	main(int ac, char **av, char **envp)
 {
 	char	*input;
-	char	*input_formatted;
 	char	*prompt;
 	char	**env;
 
@@ -51,14 +54,12 @@ int	main(int ac, char **av, char **envp)
 	while (1)
 	{
 		create_prompt(&prompt);
-		input = readline("->");
+		input = readline(prompt);
+		add_history(input);
 		g_status = 1;
-		input_formatted = format_input(input);
-		if (process_input(ac, input_formatted, &env))
-		{
-			printf("CRITICAL ERROR\n");
-			return (1);
-		}
+		if (process_input(ac, input, &env))
+			printf("Syntax error\n");
+		input = NULL;
 		free(prompt);
 		g_status = 0;
 	}

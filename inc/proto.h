@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/16 15:19:08 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:38:50 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ void	close_pipe(int *fd);
 void	free_all(t_cmds *cmds, char ***env);
 
 /*	PARSE					*/
-void	parse(t_cmds *cmds, char *input, char ***envp);
+int	parse(t_cmds *cmds, char *input, char ***envp);
 
 /*	SEP_PARSE				*/
 void	sep_parse(t_cmds *cmds, char *input);
@@ -64,6 +64,7 @@ void	sig_handler(int sig);
 
 /*	SPACER					*/
 char	*format_input(char *str);
+int		only_space(char *str);
 
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
@@ -113,8 +114,8 @@ void	ft_echo(t_cmd *cmd, char ***envp);
 void	ft_env(char **env);
 
 /*	EXIT			*/
-void	ft_exit(void);
-void	ft_exit_free(char ***envp, t_cmds *cmds);
+void	ft_exit(int status);
+void	ft_exit_cmd(t_cmd *cmd);
 
 /*	EXPORT			*/
 int		strdiff(const char *s1, const char *s2);

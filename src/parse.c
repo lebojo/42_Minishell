@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/04 18:43:34 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/16 19:29:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,6 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	inc->k = 0;
 	if (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
 		cmds->cmd[0].arg = expand(split[inc->i++], envp);
-	if (!split[inc->i])
-		return (NULL);
 	return (split);
 }
 
@@ -68,14 +66,14 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 	return (0);
 }
 
-void	parse(t_cmds *cmds, char *input, char ***envp)
+int	parse(t_cmds *cmds, char *input, char ***envp)
 {
 	char	**split;
 	t_inc	inc;
 
 	split = init_parse(cmds, input, envp, &inc);
 	if (!split)
-		return ;
+		return (1);
 	while (split[inc.i])
 	{
 		if (char_in_str('|', split[inc.i]))
@@ -89,4 +87,5 @@ void	parse(t_cmds *cmds, char *input, char ***envp)
 	}
 	free(split[0]);
 	free(split);
+	return (0);
 }

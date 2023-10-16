@@ -3,17 +3,17 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
+#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/10/16 15:12:20 by jchapell         ###   ########.fr        #
+#    Updated: 2023/10/16 19:20:28 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 # Executable Name
 ENAME	=	minishell
 NAME	=	minishell.a
-CFLAGS	=	-g -Wall -Wextra -Werror 
+CFLAGS	=	-g -Wall -Wextra -Werror
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
 			sep_parse.c spacer.c exec/split_cmd.c \
@@ -39,14 +39,14 @@ OBJ := $(patsubst %,$(OBJ_PATH)%,$(OBJ1))
 $(OBJ_PATH)%.o: $(SRC_PATH)%.c
 	@echo [CC] $<
 	@mkdir -p $(dir $@)
-	@$(CC) $(CFLAGS) -o $@ -c $<     
+	@$(CC) $(CFLAGS) -I/Users/${USER}/.brew/opt/readline/include -o $@ -c $<     
 
 # Build final Binary
 $(NAME): $(OBJ)
 	@make -C $(LIBFT_PATH)
 	@echo [INFO] Creating $(Shell uname) Binary Executable [$(NAME)]
 	$(AR) $(NAME) $(OBJ) $(LINKFLAGS)
-	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -lreadline -o $(ENAME)
+	$(CC) $(CFLAGS) $(NAME) $(LIBFT_PATH)libft.a -L/Users/${USER}/.brew/opt/readline/lib -lreadline -o $(ENAME)
 
 # Clean all the object files and the binary
 clean:   
