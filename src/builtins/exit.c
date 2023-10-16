@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/16 19:37:55 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/16 19:42:53 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ void	ft_exit_cmd(t_cmd *cmd)
 
 	i = 0;
 	status = 0;
-	if (cmd->arg[i])
+	if (cmd->arg)
 	{
 		while (cmd->arg[i])
 		{
