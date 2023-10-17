@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/05 03:34:20 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/17 05:00:17 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,26 +30,43 @@ char	*get_cmd(char **paths, char *cmd)
 	return (NULL);
 }
 
-void	exec_cmd(t_cmd *cmd, char **env)
+char	**create_path_cmd(char **env)
 {
-	char	*ac_cmd;
 	char	*path_env;
 	char	**path_cmd;
-	char	**s_cmd;
 
 	path_env = hm_get_value(env, "PATH");
 	path_env = add_str(path_env, ":", 1);
 	path_env = add_str(path_env, hm_get_value(env, "PWD"), 3);
 	path_cmd = ft_split(path_env, ':');
+	return (path_cmd);
+}
+
+void	exec_cmd(t_cmd *cmd, char **env)
+{
+	char	*ac_cmd;
+	char	**path_cmd;
+	char	**s_cmd;
+
+	path_cmd = create_path_cmd(env);
 	ac_cmd = get_cmd(path_cmd, cmd->name);
 	if (!ac_cmd)
 	{
-		if (dup2(2, STDOUT_FILENO) == -1)
-			return ;
-		printf("Command not found: %s\n", cmd->name);
-		exit (1);
+		s_cmd = split_cmd(*cmd);
+		if (execve(cmd->name, s_cmd, env) == -1)
+		{
+			if (dup2(2, STDOUT_FILENO) == -1)
+				return ;
+			printf("Command not found: %s\n", cmd->name);
+			exit (1);
+		}
+		exit(0);
 	}
 	s_cmd = split_cmd(*cmd);
-	execve(ac_cmd, s_cmd, env);
+	if (execve(ac_cmd, s_cmd, env) == -1)
+	{
+		printf("Error execve\n");
+		exit (1);
+	}
 	exit(0);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/16 19:42:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/17 04:50:31 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_exit(int status)
 {
-	printf("\nExiting ");
+	printf("Exiting ");
 	printf(MS);
 	printf("...\n");
 	exit(status);
