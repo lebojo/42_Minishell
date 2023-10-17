@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/16 18:35:42 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/17 05:20:15 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ int	only_space(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (!char_in_str(str[i], "|<> \t"))
+		if (!char_in_str(str[i], " \t"))
 			return (0);
 	return (1);
 }

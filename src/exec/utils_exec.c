@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/17 05:03:58 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/17 05:46:48 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,9 +68,14 @@ int	exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env)
 void	update_last_exit(int status, char ***envp)
 {
 	char	*str;
+	int		i;
 	t_cmd	cmd;
 
-	str = ft_itoa(status);
+	if (WIFEXITED(status))
+		i = WEXITSTATUS(status);
+	else
+		i = 127;
+	str = ft_itoa(i);
 	cmd = create_cmd("", add_str("?=", str, 2), 0);
 	ft_export(&cmd, envp);
 }

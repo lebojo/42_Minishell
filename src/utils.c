@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/16 18:24:52 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/17 05:41:12 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	print_cmds(t_cmds cmds)
 // 	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
 // }
 
-void	create_prompt(char **prompt)
+void	create_prompt(char **prompt, char **env)
 {
 	char	*af;
 	char	pwd[4096];
@@ -55,7 +55,7 @@ void	create_prompt(char **prompt)
 	af = actual_folder();
 	if (ft_strcmp(af, "Jordan"))
 		*prompt = add_str("➜ ", af, 2);
-	else if (ft_strcmp(getcwd(pwd, 4096), getenv("HOME")))
+	else if (ft_strcmp(getcwd(pwd, 4096), hm_get_value(env, "HOME")))
 		*prompt = add_str("➜ ", af, 2);
 	else
 		*prompt = add_str("➜ ", af, 2);

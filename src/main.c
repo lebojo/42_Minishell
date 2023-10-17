@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/16 19:40:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/17 05:51:03 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,15 +14,27 @@
 
 int	g_status = 0;
 
+int check_syntax(char *str)
+{
+	int	i;
+
+	i = -1;
+	while (str[++i])
+		if (!char_in_str(str[i], "<>|"))
+			return (0);
+	return (1);
+}
+
 static int	process_input(int ac, char *input, char ***envp)
 {
 	t_cmds	cmds;
 	char	*formatted_input;
 
-	if (input == NULL)
-		ft_exit(1);
 	if (only_space(input))
+		return (0);
+	if (check_syntax(input))
 		return (1);
+	add_history(input);
 	formatted_input = format_input(input);
 	if (formatted_input && formatted_input[0] != '\0')
 	{
@@ -53,10 +65,11 @@ int	main(int ac, char **av, char **envp)
 	start(&env);
 	while (1)
 	{
-		create_prompt(&prompt);
+		create_prompt(&prompt, env);
 		input = readline(prompt);
-		add_history(input);
 		g_status = 1;
+		if (input == NULL)
+			ft_exit(1);
 		if (process_input(ac, input, &env))
 			printf("Syntax error\n");
 		input = NULL;

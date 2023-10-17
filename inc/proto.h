@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/16 19:38:50 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/17 05:41:45 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@
 /*=================================SOURCES==================================*/
 
 /*	MAIN					*/
-void	create_prompt(char **prompt);
+void	create_prompt(char **prompt, char **env);
 void	print_cmds(t_cmds cmds);
 int		main(int ac, char **av, char **envp);
 
