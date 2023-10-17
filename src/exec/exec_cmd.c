@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/17 05:00:17 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/17 05:09:20 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ char	*get_cmd(char **paths, char *cmd)
 	char	*tmp;
 	char	*command;
 
+	if (!paths)
+		return (NULL);
 	while (*paths)
 	{
 		tmp = ft_strjoin(*paths, "/");
@@ -36,6 +38,8 @@ char	**create_path_cmd(char **env)
 	char	**path_cmd;
 
 	path_env = hm_get_value(env, "PATH");
+	if (path_env == NULL)
+		return (NULL);
 	path_env = add_str(path_env, ":", 1);
 	path_env = add_str(path_env, hm_get_value(env, "PWD"), 3);
 	path_cmd = ft_split(path_env, ':');
