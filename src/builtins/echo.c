@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   echo.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:53 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/20 17:00:10 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 01:45:17 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,13 +14,12 @@
 
 void	ft_echo(t_cmd *cmd, char ***envp)
 {
-	(void) envp;
 	if (!cmd->arg)
 		return ;
 	if (cmd->arg[0] == '-' && cmd->arg[1] == 'n' && !cmd->arg[2])
 		return ;
 	if (cmd->arg[0] == '-' && cmd->arg[1] == 'n' && cmd->arg[2] == ' ')
-		printf("%s", cmd->arg + 3);
+		printf("%s", expand(cmd->arg + 3, envp));
 	else
-		printf("%s\n", cmd->arg);
+		printf("%s\n", expand(cmd->arg, envp));
 }

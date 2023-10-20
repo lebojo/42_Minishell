@@ -6,11 +6,27 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 01:22:48 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:53:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
+
+void	free_split(char **split)
+{
+	int	i;
+
+	i = 0;
+	while (split[i])
+		free(split[i++]);
+	free(split);
+}
+
+void	add_str_space(char **src, char *add)
+{
+	*src = add_str(*src, " ", 0);
+	*src = add_str(*src, add, 0);
+}
 
 char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 {
@@ -23,7 +39,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		return (NULL);
 	inc->i = 0;
 	inc->j = 0;
-	sep_parse(cmds, &input);
+	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
 	if (!char_in_str(split[inc->i][0], "|<>")) //
 		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0);
@@ -37,13 +53,13 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		cmds->cmd[0].arg = split[inc->i++];
 	if (!char_in_str('"', cmds->cmd[0].arg) && !char_in_str('\'', cmds->cmd[0].arg))
 		while (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
-			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 1);
+			add_str_space(&cmds->cmd[0].arg, split[inc->i++]);
 	else if (char_in_str('\'', cmds->cmd[0].arg))
 		while (split[inc->i] && !char_in_str('\'', split[inc->i]))
-			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 1);
+			add_str_space(&cmds->cmd[0].arg, split[inc->i++]);
 	else if (char_in_str('"', cmds->cmd[0].arg))
 		while (split[inc->i] && !char_in_str('"', split[inc->i]))
-			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 1);
+			add_str_space(&cmds->cmd[0].arg, split[inc->i++]);
 	return (split);
 }
 
@@ -98,7 +114,5 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	while (inc.p < cmds->nb_cmd)
 		if (char_in_str(cmds->cmd[inc.p++].name[0], "|<>"))
 			return (1);
-	free(split[0]);
-	free(split);
 	return (0);
 }

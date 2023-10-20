@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 01:12:03 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:43:52 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,35 +27,6 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 		res.arg = NULL;
 	res.which_pipe = which_pipe;
 	return (res);
-}
-
-enum e_quote	is_quote(char *src)
-{
-	int				i;
-	enum e_quote	res;
-
-	i = -1;
-	res = none;
-	while (src[++i])
-	{
-		if (src[i] == '"')
-		{
-			if (res == none)
-				res = double_q;
-			else
-				return (res);
-		}
-		else if (src[i] == '\'')
-		{
-			if (res == none)
-				res = simple;
-			else
-				return (res);
-		}
-	}
-	if (res == none)
-		return (res);
-	return (ask_quote(res));
 }
 
 int	is_inquote(char *str, int i)
@@ -99,7 +70,6 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 		if (var)
 		{
 			(*res) = add_str((*res), var, 1);
-			(*res) = add_str((*res), " ", 1);
 			incr->j += ft_strlen(var) + 1;
 			free(var);
 		}
@@ -120,13 +90,14 @@ char	*expand(char *src, char ***envp)
 	incr.j = 0;
 	incr.k = 0;
 	res = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-	quote = is_quote(src);
+	quote = none;
 	if (!res)
 		return (NULL);
 	if (quote < 0)
 		return (NULL);
 	while (src[++incr.i])
 	{
+		rev_quote(&quote, src[incr.i]);
 		if ((quote == double_q && src[incr.i] == '"')
 			|| (quote == simple && src[incr.i] == '\''))
 			continue ;
