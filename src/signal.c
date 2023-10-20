@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/17 05:56:41 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/20 20:33:24 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,8 +16,8 @@ void	sig_handler(int sign_num)
 {
 	if (sign_num == SIGINT)
 	{
+		rl_replace_line("\n", 0);
 		rl_on_new_line();
-		rl_replace_line("", 0);
 		rl_redisplay();
 	}
 	else if (sign_num == SIGQUIT)

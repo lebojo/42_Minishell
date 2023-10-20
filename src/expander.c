@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/16 15:13:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/20 20:29:33 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,14 +29,77 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 	return (res);
 }
 
+enum e_quote	ask_quote(enum e_quote q)
+{
+	char	*rp;
+
+	while (1)
+	{
+		rp = readline("quote>");
+		if (!rp)
+			return (-1);
+		if (rp[0] == '"' && q == double_q)
+			return (double_q);
+		if (rp[0] == '\'' && q == simple)
+			return (simple);
+	}
+	return (-1);
+}
+
 enum e_quote	is_quote(char *src)
 {
-	if (src[0] == '"')
-		return (double_q);
-	else if (src[0] == '\'')
-		return (simple);
-	else
-		return (none);
+	int				i;
+	enum e_quote	res;
+
+	i = -1;
+	res = none;
+	while (src[++i])
+	{
+		if (src[i] == '"')
+		{
+			if (res == none)
+				res = double_q;
+			else
+				return (res);
+		}
+		else if (src[i] == '\'')
+		{
+			if (res == none)
+				res = simple;
+			else
+				return (res);
+		}
+	}
+	if (res == none)
+		return (res);
+	return (ask_quote(res));
+}
+
+int	is_inquote(char *str, int i)
+{
+	int res;
+	int	start;
+
+	res = -1;
+	start = i;
+	while (i >= 0)
+	{
+		if (str[i--] == '\'')
+		{
+			res++;
+			break ;
+		}
+	}
+	i = start;
+	while (str[++i])
+	{
+		if (str[i] == '\'')
+		{
+			res++;
+			break;
+		}
+	}
+	return (res);
 }
 
 void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
@@ -44,10 +107,10 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 	char	*tmp;
 	char	*var;
 
-	if (src[incr->i] == '$')
+	if (src[incr->i] == '$' && is_inquote(src, incr->i) != 1)
 	{
-		tmp = ft_calloc(ft_strlen(src) + 1, sizeof(char));
-		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"'\\$"))
+		tmp = ft_calloc(ft_strlen(src), sizeof(char));
+		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"'\\$")) // <-- le problème viens clairement de là
 			tmp[incr->k++] = src[incr->i];
 		var = hm_get_value(*envp, tmp);
 		if (var)
@@ -77,6 +140,8 @@ char	*expand(char *src, char ***envp)
 	quote = is_quote(src);
 	if (!res)
 		return (NULL);
+	if (quote < 0)
+		return (NULL);
 	while (src[++incr.i])
 	{
 		if ((quote == double_q && src[incr.i] == '"')
@@ -84,5 +149,6 @@ char	*expand(char *src, char ***envp)
 			continue ;
 		process_expand(envp, src, &res, &incr);
 	}
+	res[incr.j] = '\0';
 	return (res);
 }
