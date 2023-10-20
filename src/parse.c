@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 00:57:20 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:22:48 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		return (NULL);
 	inc->i = 0;
 	inc->j = 0;
-	inc->q = 0;
-	sep_parse(cmds, input);
+	sep_parse(cmds, &input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
 	if (!char_in_str(split[inc->i][0], "|<>")) //
 		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0);
@@ -36,12 +35,15 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	inc->k = 0;
 	if (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
 		cmds->cmd[0].arg = split[inc->i++];
-	if (!char_in_str('"', cmds->cmd[0].arg))
+	if (!char_in_str('"', cmds->cmd[0].arg) && !char_in_str('\'', cmds->cmd[0].arg))
 		while (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
-			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 3);
-	else
+			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 1);
+	else if (char_in_str('\'', cmds->cmd[0].arg))
+		while (split[inc->i] && !char_in_str('\'', split[inc->i]))
+			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 1);
+	else if (char_in_str('"', cmds->cmd[0].arg))
 		while (split[inc->i] && !char_in_str('"', split[inc->i]))
-			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 3);
+			cmds->cmd[0].arg = add_str(cmds->cmd[0].arg, split[inc->i++], 1);
 	return (split);
 }
 
@@ -83,7 +85,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 		return (1);
 	while (split[inc.i])
 	{
-		if (char_in_str('|', split[inc.i]) && inc.q == 0)
+		if (char_in_str('|', split[inc.i]))
 			inc.k++;
 		inc.l = process_parse(cmds, &inc, split, envp);
 		if (inc.l == 1)

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 01:02:52 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 01:25:02 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int		only_space(char *str);
 
 /*QUOTE						*/
 void	rev_quote(enum e_quote *q, char c);
+char	*ask_quote(enum e_quote q, char *str);
 
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/17 05:20:15 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 01:31:08 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,15 +39,18 @@ int	only_space(char *str)
 
 char	*format_input(char *str)
 {
-	t_inc	inc;
-	char	*res;
+	t_inc			inc;
+	char			*res;
+	enum e_quote	q;
 
 	inc.i = 0;
 	inc.j = 0;
+	q = none;
 	res = malloc(sizeof(char) * ft_strlen(str));
 	res[ft_strlen(str)] = '\0';
 	while (str[inc.i])
 	{
+		rev_quote(&q, str[inc.i]);
 		if (char_in_str(str[inc.i], "|<>") && (str[inc.i - 1] != ' '
 				|| str[inc.i + 1] != ' '))
 		{
@@ -61,7 +64,9 @@ char	*format_input(char *str)
 		else
 			res[inc.j++] = str[inc.i++];
 	}
-	res[inc.j] = '\0';
 	free(str);
+	res[inc.j] = '\0';
+	if (q != none)
+		return (ask_quote(q, res));
 	return (res);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/20 20:29:33 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 01:12:03 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,23 +27,6 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 		res.arg = NULL;
 	res.which_pipe = which_pipe;
 	return (res);
-}
-
-enum e_quote	ask_quote(enum e_quote q)
-{
-	char	*rp;
-
-	while (1)
-	{
-		rp = readline("quote>");
-		if (!rp)
-			return (-1);
-		if (rp[0] == '"' && q == double_q)
-			return (double_q);
-		if (rp[0] == '\'' && q == simple)
-			return (simple);
-	}
-	return (-1);
 }
 
 enum e_quote	is_quote(char *src)
