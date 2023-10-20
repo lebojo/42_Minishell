@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/17 05:41:45 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 01:02:52 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,6 +65,9 @@ void	sig_handler(int sig);
 /*	SPACER					*/
 char	*format_input(char *str);
 int		only_space(char *str);
+
+/*QUOTE						*/
+void	rev_quote(enum e_quote *q, char c);
 
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
