@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 01:31:08 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 02:30:19 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ char	*format_input(char *str)
 				|| str[inc.i + 1] != ' '))
 		{
 			res = re_malloc(res, ft_strlen(res) + 2);
-			if (!char_in_str(str[inc.i - 1], "|<> "))
+			if (!char_in_str(str[inc.i - 1], "|<> ") && inc.i > 0)
 				res[inc.j++] = ' ';
 			res[inc.j++] = str[inc.i++];
 			if (!char_in_str(str[inc.i], "|<> "))

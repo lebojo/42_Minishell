@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/16 18:30:00 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 03:06:32 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,9 @@ void	start(char ***env)
 	else
 		increment_shlvl(env);
 	signal(SIGINT, sig_handler);
-	signal(SIGQUIT, sig_handler);
+	if (g_status == 1)
+		signal(SIGQUIT, sig_handler);
+	else
+		signal(SIGQUIT, SIG_IGN);
 	g_status = 0;
 }
