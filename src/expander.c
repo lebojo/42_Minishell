@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 02:12:02 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 23:16:50 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 
 int	is_inquote(char *str, int i)
 {
-	int res;
+	int	res;
 	int	start;
 
 	res = -1;
@@ -50,7 +50,7 @@ int	is_inquote(char *str, int i)
 		if (str[i] == '\'')
 		{
 			res++;
-			break;
+			break ;
 		}
 	}
 	return (res);
@@ -64,7 +64,7 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 	if (src[incr->i] == '$' && is_inquote(src, incr->i) != 1)
 	{
 		tmp = ft_calloc(ft_strlen(src), sizeof(char));
-		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"'\\$")) // <-- le problème viens clairement de là
+		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"'\\$"))
 			tmp[incr->k++] = src[incr->i];
 		var = hm_get_value(*envp, tmp);
 		if (var)
@@ -91,9 +91,7 @@ char	*expand(char *src, char ***envp)
 	incr.k = 0;
 	res = ft_calloc(ft_strlen(src) + 1, sizeof(char));
 	quote = none;
-	if (!res)
-		return (NULL);
-	if (quote < 0)
+	if (!res || quote < 0)
 		return (NULL);
 	while (src[++incr.i])
 	{

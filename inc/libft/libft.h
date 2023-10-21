@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 14:06:27 by jchapell          #+#    #+#             */
-/*   Updated: 2023/06/15 20:05:37 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:28:53 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,5 +55,6 @@ char	*ft_strmapi(char const *s, char (*f)(unsigned int, char));
 char	*ft_itoa(int n);
 char	**ft_split(char const *s, char c);
 char	*add_str(char *s1, char *s2, int f);
+void	add_str_space(char **src, char *add);
 
 #endif

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 02:30:19 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 23:22:54 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,23 @@ int	only_space(char *str)
 	return (1);
 }
 
+char	*format_input_process(t_inc *inc, char *str, char *res)
+{
+	if (char_in_str(str[inc->i], "|<>") && (str[inc->i - 1] != ' '
+			|| str[inc->i + 1] != ' '))
+	{
+		res = re_malloc(res, ft_strlen(res) + 2);
+		if (!char_in_str(str[inc->i - 1], "|<> ") && inc->i > 0)
+			res[inc->j++] = ' ';
+		res[inc->j++] = str[inc->i++];
+		if (!char_in_str(str[inc->i], "|<> "))
+			res[inc->j++] = ' ';
+	}
+	else
+		res[inc->j++] = str[inc->i++];
+	return (res);
+}
+
 char	*format_input(char *str)
 {
 	t_inc			inc;
@@ -51,18 +68,7 @@ char	*format_input(char *str)
 	while (str[inc.i])
 	{
 		rev_quote(&q, str[inc.i]);
-		if (char_in_str(str[inc.i], "|<>") && (str[inc.i - 1] != ' '
-				|| str[inc.i + 1] != ' '))
-		{
-			res = re_malloc(res, ft_strlen(res) + 2);
-			if (!char_in_str(str[inc.i - 1], "|<> ") && inc.i > 0)
-				res[inc.j++] = ' ';
-			res[inc.j++] = str[inc.i++];
-			if (!char_in_str(str[inc.i], "|<> "))
-				res[inc.j++] = ' ';
-		}
-		else
-			res[inc.j++] = str[inc.i++];
+		res = format_input_process(&inc, str, res);
 	}
 	free(str);
 	res[inc.j] = '\0';

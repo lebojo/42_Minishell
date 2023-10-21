@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/20 20:32:16 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:17:28 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	g_status = 0;
 
-int check_syntax(char *str)
+int	check_syntax(char *str)
 {
 	int	i;
 

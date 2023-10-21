@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 23:13:23 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:28:00 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ void	close_pipe(int *fd);
 void	free_all(t_cmds *cmds, char ***env);
 
 /*	PARSE					*/
-int	parse(t_cmds *cmds, char *input, char ***envp);
+int		parse(t_cmds *cmds, char *input, char ***envp);
 
 /*	SEP_PARSE				*/
 void	sep_parse(t_cmds *cmds, char *input);
@@ -70,7 +70,7 @@ int		only_space(char *str);
 /*QUOTE						*/
 void	rev_quote(enum e_quote *q, char c);
 char	*ask_quote(enum e_quote q, char *str);
-
+char	**quote_parse(t_cmds *cmds, char **split, t_inc *inc);
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
 void	read_file(char *name, t_cmd *cmd, char ***env);

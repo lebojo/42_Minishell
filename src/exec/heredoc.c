@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/21 23:12:21 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:15:09 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ void	ptain(int sig)
 		rl_on_new_line();
 	}
 }
+
 char	*heredoc(char *str)
 {
 	char	*line;

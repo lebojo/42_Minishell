@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 22:28:23 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:18:04 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	sig_handler(int sign_num)
 		else
 		{
 			printf("\n");
-			rl_replace_line("", 0); 
+			rl_replace_line("", 0);
 			rl_on_new_line();
 			rl_redisplay();
 		}

@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/17 05:46:48 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:14:48 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env)
 	waitpid(tab[0], &exit_status, 0);
 }
 
-int	check_builtins(t_cmd *cmd) 
+int	check_builtins(t_cmd *cmd)
 {
 	if (ft_strcmp("echo", cmd->name))
 		return (1);

@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 22:18:45 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:28:26 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,12 +20,6 @@ void	free_split(char **split)
 	while (split[i])
 		free(split[i++]);
 	free(split);
-}
-
-void	add_str_space(char **src, char *add)
-{
-	*src = add_str(*src, " ", 0);
-	*src = add_str(*src, add, 0);
 }
 
 char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
@@ -49,17 +43,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		inc->i++;
 	}
 	inc->k = 0;
-	if (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
-		cmds->cmd[0].arg = split[inc->i++];
-	if (!char_in_str('"', cmds->cmd[0].arg) && !char_in_str('\'', cmds->cmd[0].arg))
-		while (split[inc->i] && !char_in_str(split[inc->i][0], "|<>"))
-			add_str_space(&cmds->cmd[0].arg, split[inc->i++]);
-	else if (char_in_str('\'', cmds->cmd[0].arg))
-		while (split[inc->i] && !char_in_str('\'', split[inc->i]))
-			add_str_space(&cmds->cmd[0].arg, split[inc->i++]);
-	else if (char_in_str('"', cmds->cmd[0].arg))
-		while (split[inc->i] && !char_in_str('"', split[inc->i]))
-			add_str_space(&cmds->cmd[0].arg, split[inc->i++]);
+	split = quote_parse(cmds, split, inc);
 	return (split);
 }
 
@@ -82,8 +66,8 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 	{
 		if (cmds->cmd[inc->j].arg && cmds->cmd[inc->j].arg[0])
 			cmds->cmd[inc->j].arg = add_str(
-						add_str(cmds->cmd[inc->j].arg, " ", 1),
-						split[inc->i], 3);
+					add_str(cmds->cmd[inc->j].arg, " ", 1),
+					split[inc->i], 3);
 		else
 			cmds->cmd[inc->j].arg = split[inc->i];
 		cmds->cmd[inc->j].which_pipe = inc->k;
@@ -112,7 +96,8 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	}
 	inc.p = -1;
 	while (++inc.p < cmds->nb_cmd)
-		if (cmds->cmd[inc.p].name && char_in_str(cmds->cmd[inc.p].name[0], "|<>"))
+		if (cmds->cmd[inc.p].name
+			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>"))
 			return (1);
 	return (0);
 }
