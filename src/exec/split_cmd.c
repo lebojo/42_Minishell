@@ -3,46 +3,40 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:17:14 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 04:11:41 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 21:55:09 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	process_split_cmd(t_inc	*inc, char ***res, t_cmd *cmd)
+void	process_split_cmd(t_inc	*inc, char **res, t_cmd *cmd)
 {
 	inc->k = 0;
 	if (cmd->arg[inc->j] == '"')
 	{
-		*res[inc->i] = ft_calloc(strlen_to_char(cmd->arg, inc->j, '"') + 1,
+		res[inc->i] = ft_calloc(strlen_to_char(cmd->arg, inc->j, '"') + 1,
 				sizeof(char));
 		inc->j++;
 		while (cmd->arg[inc->j] && cmd->arg[inc->j] != '"')
-			*res[inc->i][inc->k++] = cmd->arg[inc->j++];
+			res[inc->i][inc->k++] = cmd->arg[inc->j++];
 	}
 	else if (cmd->arg[inc->j] == '\'')
 	{
-		*res[inc->i] = ft_calloc(strlen_to_char(cmd->arg, inc->j, '\'') + 1,
+		res[inc->i] = ft_calloc(strlen_to_char(cmd->arg, inc->j, '\'') + 1,
 				sizeof(char));
 		inc->j++;
 		while (cmd->arg[inc->j] && cmd->arg[inc->j] != '\'')
-			*res[inc->i][inc->k++] = cmd->arg[inc->j++];
+			res[inc->i][inc->k++] = cmd->arg[inc->j++];
 	}
 	else
 	{
-		*res[inc->i] = ft_calloc(strlen_to_char(cmd->arg, inc->j, ' ') + 1,
+		res[inc->i] = ft_calloc(strlen_to_char(cmd->arg, inc->j, ' ') + 1,
 				sizeof(char));
-		*res[inc->i] = ft_strdup(cmd->arg);
-		printf("res[%d] = %s\n", inc->i, *res[inc->i]);
-		// C'EST LE PROBLEME ICI VISIBLEMENT, RES NE PASSE PAS BIEN ICI
-		// while (cmd->arg[inc->j] && cmd->arg[inc->j] != ' ')
-		// {
-		// 	printf("%c", cmd->arg[inc->j]);
-		// 	*res[inc->i][inc->k++] = cmd->arg[inc->j++];
-		// }
+		while (cmd->arg[inc->j] && cmd->arg[inc->j] != ' ')
+			res[inc->i][inc->k++] = cmd->arg[inc->j++];
 	}
 }
 
@@ -63,8 +57,7 @@ char	**split_cmd(t_cmd cmd)
 	printf("%s, %i\n", res[0], nb_arg);
 	while (--nb_arg)
 	{
-		process_split_cmd(&inc, &res, &cmd);
-		printf("res[%d] = %s\n", inc.i, res[inc.i]);
+		process_split_cmd(&inc, res, &cmd);
 		inc.i++;
 		inc.j++;
 	}
