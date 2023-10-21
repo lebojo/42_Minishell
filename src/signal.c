@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 03:09:24 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 22:28:23 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	sig_handler(int sign_num)
 	if (sign_num == SIGINT)
 	{
 		if (g_status == 1)
-			ft_putstr_fd("\n", 1);
+			printf("\n");
 		else
 		{
 			printf("\n");

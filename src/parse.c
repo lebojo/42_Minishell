@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 02:11:18 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 22:18:45 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,9 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 			break ;
 		inc.i++;
 	}
-	inc.p = 0;
-	while (inc.p < cmds->nb_cmd)
-		if (char_in_str(cmds->cmd[inc.p++].name[0], "|<>"))
+	inc.p = -1;
+	while (++inc.p < cmds->nb_cmd)
+		if (cmds->cmd[inc.p].name && char_in_str(cmds->cmd[inc.p].name[0], "|<>"))
 			return (1);
 	return (0);
 }

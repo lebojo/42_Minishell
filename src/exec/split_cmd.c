@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:17:14 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 21:55:09 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 22:06:14 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,6 @@ char	**split_cmd(t_cmd cmd)
 	res[inc.i++] = ft_strdup(cmd.name);
 	if (!cmd.arg)
 		return (res);
-	printf("%s, %i\n", res[0], nb_arg);
 	while (--nb_arg)
 	{
 		process_split_cmd(&inc, res, &cmd);

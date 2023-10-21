@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 01:25:02 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 23:13:23 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,18 +15,19 @@
 
 /*=================================INCLUDES==================================*/
 
+# include "struct.h"
+# include "libft/libft.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
+# include <signal.h>
+# include <fcntl.h>
 # include <sys/types.h>
 # include <sys/uio.h>
-# include <fcntl.h>
+# include <sys/ioctl.h>
 # include <sys/wait.h>
 # include <readline/readline.h>
 # include <readline/history.h>
-# include <signal.h>
-# include "struct.h"
-# include "libft/libft.h"
 
 # define MS "\e[0;32mMinishell\e[0m"
 

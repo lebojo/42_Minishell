@@ -6,19 +6,29 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/04 18:20:51 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/21 23:12:21 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
+void	ptain(int sig)
+{
+	if (sig == SIGINT)
+	{
+		g_status = 2;
+		ioctl(STDIN_FILENO, TIOCSTI, "\n");
+		rl_on_new_line();
+	}
+}
 char	*heredoc(char *str)
 {
 	char	*line;
 	char	*res;
 
 	res = ft_strdup("");
-	while (1)
+	signal(SIGINT, ptain);
+	while (g_status != 2)
 	{
 		line = readline("heredoc>");
 		if (line[0] == '\0')
@@ -29,6 +39,7 @@ char	*heredoc(char *str)
 		res = ft_strjoin(res, line);
 		free(line);
 	}
+	signal(SIGINT, sig_handler);
 	return (res);
 }
 
