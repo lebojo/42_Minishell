@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:03:59 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 03:04:52 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/21 03:09:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,10 +16,15 @@ void	sig_handler(int sign_num)
 {
 	if (sign_num == SIGINT)
 	{
-		printf("\n");
-		rl_replace_line("", 0); 
-		rl_on_new_line();
-		rl_redisplay();
+		if (g_status == 1)
+			ft_putstr_fd("\n", 1);
+		else
+		{
+			printf("\n");
+			rl_replace_line("", 0); 
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 	else if (sign_num == SIGQUIT)
 	{
