@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/21 04:04:02 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/22 23:54:30 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	exec_cmd(t_cmd *cmd, char **env)
 			if (dup2(2, STDOUT_FILENO) == -1)
 				return ;
 			printf("Command not found: %s\n", cmd->name);
-			exit (1);
+			exit (127);
 		}
 		exit(0);
 	}
@@ -70,7 +70,7 @@ void	exec_cmd(t_cmd *cmd, char **env)
 	if (execve(ac_cmd, s_cmd, env) == -1)
 	{
 		printf("Error execve\n");
-		exit (1);
+		exit (127);
 	}
 	exit(0);
 }
