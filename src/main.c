@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/22 23:58:21 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:54:18 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ int	main(int ac, char **av, char **envp)
 	{
 		create_prompt(&prompt, env);
 		input = readline(prompt);
+		printf("%s\n", unspacer(input));
+		continue ;
 		g_status = 1;
 		if (input == NULL)
 			ft_exit(1);

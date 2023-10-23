@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 23:28:00 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:53:59 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,6 +66,7 @@ void	sig_handler(int sig);
 /*	SPACER					*/
 char	*format_input(char *str);
 int		only_space(char *str);
+char	*unspacer(char *str);
 
 /*QUOTE						*/
 void	rev_quote(enum e_quote *q, char c);

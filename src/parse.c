@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/21 23:28:26 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/23 18:39:01 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -85,6 +85,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 		return (1);
 	while (split[inc.i])
 	{
+		printf("split[%i] %s\n", inc.i, split[inc.i]);
 		if (char_in_str('|', split[inc.i]))
 			inc.k++;
 		inc.l = process_parse(cmds, &inc, split, envp);

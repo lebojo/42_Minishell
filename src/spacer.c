@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 23:22:54 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/23 23:14:38 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,20 +37,46 @@ int	only_space(char *str)
 	return (1);
 }
 
-char	*format_input_process(t_inc *inc, char *str, char *res)
+char	*format_input_process(t_inc *inc, char *str, char *res, int q)
 {
 	if (char_in_str(str[inc->i], "|<>") && (str[inc->i - 1] != ' '
-			|| str[inc->i + 1] != ' '))
+			|| str[inc->i + 1] != ' ') && q > 0)
 	{
-		res = re_malloc(res, ft_strlen(res) + 2);
 		if (!char_in_str(str[inc->i - 1], "|<> ") && inc->i > 0)
+		{
+			res = re_malloc(res, ft_strlen(res) + 1);
 			res[inc->j++] = ' ';
+		}
 		res[inc->j++] = str[inc->i++];
 		if (!char_in_str(str[inc->i], "|<> "))
+		{
+			res = re_malloc(res, ft_strlen(res) + 1);
 			res[inc->j++] = ' ';
+		}
 	}
 	else
 		res[inc->j++] = str[inc->i++];
+	return (res);
+}
+
+char	*unspacer(char *str)
+{
+	t_inc	i;
+	char	*res;
+
+	i.i = -1;
+	i.j = -1;
+	i.k = 0;
+	while (str[i.k] && char_in_str(str[i.k], " \t"))
+		i.k++;
+	i.n = ft_strlen(str);
+	while (i.n > 0 && char_in_str(str[i.n], " \t"))
+		--i.n;
+	res = malloc(sizeof(char) * (i.n - i.k + 1));
+	i.i = i.k - 1;
+	while (i.i <= i.n)
+		res[++i.j] = str[++i.i];
+	res[i.j] = '\0';
 	return (res);
 }
 
@@ -68,7 +94,7 @@ char	*format_input(char *str)
 	while (str[inc.i])
 	{
 		rev_quote(&q, str[inc.i]);
-		res = format_input_process(&inc, str, res);
+		res = format_input_process(&inc, str, res, q);
 	}
 	free(str);
 	res[inc.j] = '\0';
