@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/23 18:39:01 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/23 23:29:18 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	inc->j = 0;
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
+	split = quote_parse(cmds, split, inc);
 	if (!char_in_str(split[inc->i][0], "|<>"))
 		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0);
 	else
@@ -43,7 +44,6 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		inc->i++;
 	}
 	inc->k = 0;
-	split = quote_parse(cmds, split, inc);
 	return (split);
 }
 

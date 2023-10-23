@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/23 18:54:18 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/23 23:21:52 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,8 @@ static int	process_input(int ac, char *input, char ***envp)
 	if (check_syntax(input))
 		return (1);
 	add_history(input);
-	formatted_input = format_input(input);
+	formatted_input = unspacer(input);
+	formatted_input = format_input(formatted_input);
 	if (formatted_input && formatted_input[0] != '\0')
 	{
 		if (parse(&cmds, formatted_input, envp))
@@ -67,8 +68,6 @@ int	main(int ac, char **av, char **envp)
 	{
 		create_prompt(&prompt, env);
 		input = readline(prompt);
-		printf("%s\n", unspacer(input));
-		continue ;
 		g_status = 1;
 		if (input == NULL)
 			ft_exit(1);
