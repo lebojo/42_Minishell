@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/23 23:21:52 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 01:33:53 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int	check_syntax(char *str)
 static int	process_input(int ac, char *input, char ***envp)
 {
 	t_cmds	cmds;
-	char	*formatted_input;
+	char	*formatted_input = NULL;
 
 	if (only_space(input))
 		return (0);
@@ -36,7 +36,7 @@ static int	process_input(int ac, char *input, char ***envp)
 		return (1);
 	add_history(input);
 	formatted_input = unspacer(input);
-	formatted_input = format_input(formatted_input);
+	formatted_input = format_input(input);
 	if (formatted_input && formatted_input[0] != '\0')
 	{
 		if (parse(&cmds, formatted_input, envp))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 17:47:27 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/23 18:43:17 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 03:26:30 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ static char	*word_dup(const char *str, int start, int finish)
 	int		i;
 
 	i = 0;
-	word = malloc((finish - start + 1) * sizeof(char));
+	word = malloc((finish - start) * sizeof(char));
 	while (start < finish)
 		word[i++] = str[start++];
 	word[i] = '\0';
@@ -50,25 +50,27 @@ char	**ft_split(char const *s, char c)
 {
 	size_t	i;
 	size_t	j;
+	size_t	size;
 	int		index;
 	char	**res;
 
 	res = malloc((count_words(s, c) + 1) * sizeof(char *));
 	if (!s || !res)
 		return (0);
-	i = 0;
+	i = -1;
 	j = 0;
+	size = ft_strlen(s);
 	index = -1;
-	while (i <= ft_strlen(s))
+	while (++i <= size)
 	{
 		if (s[i] != c && index < 0)
 			index = i;
-		else if ((s[i] == c || i == ft_strlen(s)) && index >= 0)
+		else if ((s[i] == c || i == size) && index >= 0)
 		{
 			res[j++] = word_dup(s, index, i);
 			index = -1;
 		}
-		i++;
 	}
+	res[j] = NULL;
 	return (res);
 }

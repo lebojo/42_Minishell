@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/23 23:29:18 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 02:56:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,20 +22,50 @@ void	free_split(char **split)
 	free(split);
 }
 
+char	**split_cleaner(char **split)
+{
+	char **res;
+	int		i;
+	int		j;
+
+	i = -1;
+	j = 0;
+	while (split[++i])
+		if (ft_strlen(split[i]) > 0)
+			j++;
+	res = malloc(sizeof(char *) * (j + 1));
+	res[j] = NULL;
+	i = -1;
+	j = 0;
+	while (split[++i])
+		if (ft_strlen(split[i]) > 0)
+			res[j++] = ft_strdup(split[i]);
+	free_split(split);
+	return (res);
+}
+
 char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 {
 	char	**split;
 
 	if (!*input)
 		return (NULL);
+	printf("input (formatted): %s\nSplit:\n", input);
 	split = ft_split(input, ' ');
+	inc->t = 0;
+	while (split[inc->t])
+		printf("split[%d]: %s\n", inc->t, split[inc->t++]);
+	split = split_cleaner(split);
+	printf("AfterClean:\n");
+	inc->t = 0;
+	while (split[inc->t])
+		printf("split[%d]: %s\n", inc->t, split[inc->t++]);
 	if (!split[0])
 		return (NULL);
 	inc->i = 0;
 	inc->j = 0;
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
-	split = quote_parse(cmds, split, inc);
 	if (!char_in_str(split[inc->i][0], "|<>"))
 		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0);
 	else
@@ -44,6 +74,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		inc->i++;
 	}
 	inc->k = 0;
+	quote_parse(cmds, split, inc, envp);
 	return (split);
 }
 
@@ -60,7 +91,7 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 			return (2);
 		if (char_in_str(split[inc->i][0], "|<>"))
 			return (1);
-		cmds->cmd[inc->j].arg = split[inc->i];
+		quote_parse(cmds, split, inc, envp);
 	}
 	else
 	{
@@ -85,7 +116,6 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 		return (1);
 	while (split[inc.i])
 	{
-		printf("split[%i] %s\n", inc.i, split[inc.i]);
 		if (char_in_str('|', split[inc.i]))
 			inc.k++;
 		inc.l = process_parse(cmds, &inc, split, envp);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/22 23:56:09 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 02:14:42 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 int	is_builtins(t_cmd *cmd, char ***envp)
 {
 	if (ft_strcmp("echo", cmd->name))
-		ft_echo(cmd, envp);
+		ft_echo(cmd);
 	else if (ft_strcmp("cd", cmd->name))
 		ft_cd(cmd->arg, envp);
 	else if (ft_strcmp("pwd", cmd->name))

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 23:16:50 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 01:36:53 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,9 +91,9 @@ char	*expand(char *src, char ***envp)
 	incr.k = 0;
 	res = ft_calloc(ft_strlen(src) + 1, sizeof(char));
 	quote = none;
-	if (!res || quote < 0)
+	if (!res || !src || quote < 0)
 		return (NULL);
-	while (src[++incr.i])
+	while (src && src[++incr.i])
 	{
 		if (quote == none)
 			rev_quote(&quote, src[incr.i]);

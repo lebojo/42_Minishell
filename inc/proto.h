@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/23 18:53:59 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 02:14:05 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,8 @@ char	*unspacer(char *str);
 /*QUOTE						*/
 void	rev_quote(enum e_quote *q, char c);
 char	*ask_quote(enum e_quote q, char *str);
-char	**quote_parse(t_cmds *cmds, char **split, t_inc *inc);
+void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
+
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
 void	read_file(char *name, t_cmd *cmd, char ***env);
@@ -114,7 +115,7 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe);
 void	ft_cd(char *new_path, char ***envp);
 
 /*	ECHO			*/
-void	ft_echo(t_cmd *cmd, char ***envp);
+void	ft_echo(t_cmd *cmd);
 
 /*	ENV				*/
 void	ft_env(char **env);

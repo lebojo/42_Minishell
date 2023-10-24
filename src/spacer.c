@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/23 23:17:56 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 01:37:14 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ char	*unspacer(char *str)
 	i.i = -1;
 	i.j = -1;
 	i.k = 0;
+	if (!str)
+		return (NULL);
 	while (str[i.k] && char_in_str(str[i.k], " \t"))
 		i.k++;
 	i.n = ft_strlen(str);
