@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/24 04:29:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/24 05:01:42 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void	free_split(char **split)
 
 char	**split_cleaner(char **split)
 {
-	char **res;
+	char	**res;
 	int		i;
 	int		j;
 

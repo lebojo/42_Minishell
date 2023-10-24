@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/06 02:26:02 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/24 05:11:20 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**copy_tab(char **tab)
 	i = 0;
 	while (tab[i++])
 		;
-	res = malloc(sizeof(char *) * i + 1);
+	res = malloc(sizeof(char *) * i);
 	i = -1;
 	while (tab[++i])
 		res[i] = ft_strdup(tab[i]);
