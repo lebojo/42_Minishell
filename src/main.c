@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/24 01:33:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/24 04:27:05 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,14 +28,13 @@ int	check_syntax(char *str)
 static int	process_input(int ac, char *input, char ***envp)
 {
 	t_cmds	cmds;
-	char	*formatted_input = NULL;
+	char	*formatted_input;
 
 	if (only_space(input))
 		return (0);
 	if (check_syntax(input))
 		return (1);
 	add_history(input);
-	formatted_input = unspacer(input);
 	formatted_input = format_input(input);
 	if (formatted_input && formatted_input[0] != '\0')
 	{

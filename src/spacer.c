@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/24 01:37:14 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/24 04:27:34 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ char	*format_input(char *str)
 	inc.i = 0;
 	inc.j = 0;
 	q = none;
+	free(str);
+	str = unspacer(str);
 	res = malloc(sizeof(char) * ft_strlen(str));
 	res[ft_strlen(str)] = '\0';
 	while (str[inc.i])

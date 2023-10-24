@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/24 02:56:24 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/24 04:29:25 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,8 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 
 	if (!*input)
 		return (NULL);
-	printf("input (formatted): %s\nSplit:\n", input);
 	split = ft_split(input, ' ');
-	inc->t = 0;
-	while (split[inc->t])
-		printf("split[%d]: %s\n", inc->t, split[inc->t++]);
 	split = split_cleaner(split);
-	printf("AfterClean:\n");
-	inc->t = 0;
-	while (split[inc->t])
-		printf("split[%d]: %s\n", inc->t, split[inc->t++]);
 	if (!split[0])
 		return (NULL);
 	inc->i = 0;
