@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 00:29:12 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 00:38:59 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 03:00:51 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,8 @@ char	*hm_get_value(char **map, char *key)
 			return (split_map[1]);
 		}
 		free(split_map[0]);
-		free(split_map[1]);
+		if (split_map[1])
+			free(split_map[1]);
 		free(split_map);
 		i++;
 	}

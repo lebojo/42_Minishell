@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 01:05:11 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 03:38:02 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ int	char_in_str(char c, char *str)
 	int	i;
 
 	i = 0;
-	while (str && str[i])
+	while (str && *str && str[i])
 	{
 		if (str[i++] == c)
 			return (1);

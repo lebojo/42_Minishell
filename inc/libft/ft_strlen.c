@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/24 13:34:53 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/24 02:04:36 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:10:33 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ size_t	ft_strlen(const char *str)
 	int	i;
 
 	i = 0;
-	while (str && str[i])
+	while (str && *str && str[i])
 		i++;
 	return (i);
 }

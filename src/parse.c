@@ -6,21 +6,12 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 02:52:46 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:19:00 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-void	free_split(char **split)
-{
-	int	i;
-
-	i = 0;
-	while (split[i])
-		free(split[i++]);
-	free(split);
-}
 
 char	**split_cleaner(char **split)
 {
@@ -37,10 +28,9 @@ char	**split_cleaner(char **split)
 	res[j] = NULL;
 	i = -1;
 	j = 0;
-	while (split[++i])
-		if (ft_strlen(split[i]) > 0)
-			res[j++] = ft_strdup(split[i]);
-	free_split(split);
+	while (ft_strlen(split[++i]) > 0)
+		res[j++] = ft_strdup(split[i]);
+	free_tab(split);
 	return (res);
 }
 
@@ -133,7 +123,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	split = init_parse(cmds, input, envp, &inc);
 	if (!split)
 		return (1);
-	while (split[inc.i])
+	while (ft_strlen(split[inc.i]) > 0)
 	{
 		if (char_in_str('|', split[inc.i]))
 			inc.k++;
@@ -149,7 +139,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 		reverse_cmd(cmds, 0);
 	while (++inc.p < cmds->nb_cmd)
 		if (cmds->cmd[inc.p].name
-			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>")) // <- CA CRASH ICI BG
+			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>")) // <- CA CRASH ICI BG, c'est nb_cmd qui n'est pas justes
 			return (1);
 	return (0);
 }

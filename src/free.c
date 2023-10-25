@@ -20,6 +20,18 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd->arg);
 }
 
+void	free_tab(char **tab)
+{
+	int	i;
+
+	i = 0;
+	if (tab == NULL)
+		return ;
+	while (tab[i] != NULL)
+		free(tab[i++]);
+	free(tab);
+}
+
 void	free_cmds(t_cmds *cmds)
 {
 	int	i;
