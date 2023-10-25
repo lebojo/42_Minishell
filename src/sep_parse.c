@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   sep_parse.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 04:06:46 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 23:18:28 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/25 02:36:01 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ void	sep_counter(t_cmds *cmds, char *input)
 			continue ;
 		if (input[i] == '|' && input[i - 1] != '|')
 			cmds->nb_pipe += 1;
-		if ((input[i] == '|' || input[i] == '<' || input[i] == '>'))
+		if ((input[i] == '|' || input[i] == '<' || input[i] == '>') && i > 0)
 			cmds->nb_cmd += 1;
 		if ((input[i] == '<' && input[i - 1] == '<')
 			|| (input[i] == '>' && input[i - 1] == '>'))

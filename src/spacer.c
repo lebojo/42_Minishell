@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/24 04:27:34 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 01:24:58 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int	only_space(char *str)
 char	*format_input_process(t_inc *inc, char *str, char *res, int q)
 {
 	if (char_in_str(str[inc->i], "|<>") && (str[inc->i - 1] != ' '
-			|| str[inc->i + 1] != ' ') && q > 0)
+			|| str[inc->i + 1] != ' ') && q == none)
 	{
 		if (!char_in_str(str[inc->i - 1], "|<> ") && inc->i > 0)
 		{

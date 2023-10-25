@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/24 01:36:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 01:54:54 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,16 @@ int	is_inquote(char *str, int i)
 	return (res);
 }
 
+char *char_to_str(char c)
+{
+	char	*res;
+
+	res = malloc(sizeof(char) * 2);
+	res[0] = c;
+	res[1] = '\0';
+	return (res);
+}
+
 void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 {
 	char	*tmp;
@@ -64,20 +74,19 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 	if (src[incr->i] == '$' && is_inquote(src, incr->i) != 1)
 	{
 		tmp = ft_calloc(ft_strlen(src), sizeof(char));
-		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"'\\$"))
+		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"$"))
 			tmp[incr->k++] = src[incr->i];
 		var = hm_get_value(*envp, tmp);
 		if (var)
 		{
-			(*res) = add_str((*res), var, 1);
-			incr->j += ft_strlen(var) + 1;
-			free(var);
+			(*res) = add_str((*res), var, 3);
+			incr->i--;
 		}
 		free(tmp);
 		incr->k = 0;
 	}
 	else
-		(*res)[incr->j++] = src[incr->i];
+		(*res) = add_str((*res), char_to_str(src[incr->i]), 3);
 }
 
 char	*expand(char *src, char ***envp)
@@ -89,7 +98,7 @@ char	*expand(char *src, char ***envp)
 	incr.i = -1;
 	incr.j = 0;
 	incr.k = 0;
-	res = ft_calloc(ft_strlen(src) + 1, sizeof(char));
+	res = ft_calloc(ft_strlen(src), sizeof(char));
 	quote = none;
 	if (!res || !src || quote < 0)
 		return (NULL);
@@ -104,6 +113,5 @@ char	*expand(char *src, char ***envp)
 			rev_quote(&quote, src[incr.i]);
 		process_expand(envp, src, &res, &incr);
 	}
-	res[incr.j] = '\0';
 	return (res);
 }

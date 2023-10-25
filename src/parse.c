@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/24 05:01:42 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 02:44:44 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,28 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 	return (0);
 }
 
+void	reverse_cmd(t_cmds *cmds, int i)
+{
+	char	*tmp;
+	char	**sp;
+
+	if (!cmds->cmd[i].name)
+		return ;
+	tmp = cmds->cmd[i].name;
+	cmds->cmd[i].name = cmds->cmd[i].arg;
+	cmds->cmd[i].arg = tmp;
+	cmds->sep[i] = None;
+	if (char_in_str(' ', cmds->cmd[i].name))
+	{
+		sp = ft_split(cmds->cmd[i].name, ' ');
+		free(cmds->cmd[i].name);
+		cmds->cmd[i].name = sp[0];
+		sp[1] = add_str(sp[1], " ", 1);
+		cmds->cmd[i].arg = add_str(sp[1], cmds->cmd[i].arg, 3);
+		free(sp);
+	}
+}
+
 int	parse(t_cmds *cmds, char *input, char ***envp)
 {
 	char			**split;
@@ -118,9 +140,11 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 		inc.i++;
 	}
 	inc.p = -1;
+	if (input[0] == '<')
+		reverse_cmd(cmds, 0);
 	while (++inc.p < cmds->nb_cmd)
 		if (cmds->cmd[inc.p].name
-			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>"))
+			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>")) // <- CA CRASH ICI BG
 			return (1);
 	return (0);
 }

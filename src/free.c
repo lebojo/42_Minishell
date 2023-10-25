@@ -18,7 +18,6 @@ void	free_cmd(t_cmd *cmd)
 		free(cmd->name);
 	if (cmd->arg != NULL)
 		free(cmd->arg);
-	free(cmd);
 }
 
 void	free_cmds(t_cmds *cmds)

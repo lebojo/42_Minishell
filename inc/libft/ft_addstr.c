@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 20:01:26 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/24 02:49:54 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 01:44:10 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*add_str(char *s1, char *s2, int f)
 	int		i;
 	int		ii;
 
-	res = malloc(ft_strlen(s1) + ft_strlen(s2) + sizeof(char));
+	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2), sizeof(char));
 	i = -1;
 	ii = 0;
 	while (s1[++i])
