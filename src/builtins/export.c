@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/25 05:02:28 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 07:32:11 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,6 @@ void	ft_export(t_cmd *cmd, char ***env)
 		hm_set_value(env, s_arg[0], s_arg[1]);
 	else
 		add_env(s_arg, env);
-	free(s_arg);
+	free_tab(s_arg);
 	free(tmp);
 }

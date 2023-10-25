@@ -6,12 +6,11 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 04:32:15 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 06:52:56 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
-
 
 char	**split_cleaner(char **split)
 {
@@ -137,6 +136,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	inc.p = -1;
 	if (input[0] == '<')
 		reverse_cmd(cmds, 0);
+	free_tab(split);
 	while (++inc.p < cmds->nb_cmd)
 		if (cmds->cmd[inc.p].name
 			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>")) // <- CA CRASH ICI BG, c'est nb_cmd qui n'est pas justes

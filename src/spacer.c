@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 01:24:58 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 07:19:06 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,6 +79,7 @@ char	*unspacer(char *str)
 	while (i.i <= i.n)
 		res[++i.j] = str[++i.i];
 	res[i.j] = '\0';
+	free(str);
 	return (res);
 }
 
@@ -91,7 +92,6 @@ char	*format_input(char *str)
 	inc.i = 0;
 	inc.j = 0;
 	q = none;
-	free(str);
 	str = unspacer(str);
 	res = malloc(sizeof(char) * ft_strlen(str));
 	res[ft_strlen(str)] = '\0';

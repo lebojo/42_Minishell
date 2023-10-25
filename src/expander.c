@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/25 04:31:43 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 07:21:15 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe, int fred)
 {
 	t_cmd	res;
 
-	res.name = ft_strdup(name);
 	if (name)
 		res.name = ft_strdup(name);
 	else

@@ -24,11 +24,11 @@ void	free_tab(char **tab)
 {
 	int	i;
 
-	i = -1;
+	i = 0;
 	if (tab == NULL)
 		return ;
-	while (tab[++i] != NULL)
-		free(tab[i]);
+	while (tab[i] != NULL && tab[i][0] != '\0')
+		free(tab[i++]);
 	free(tab);
 }
 
@@ -42,8 +42,7 @@ void	free_cmds(t_cmds *cmds)
 	while (i < cmds->nb_cmd)
 		free_cmd(&cmds->cmd[i++]);
 	free(cmds->cmd);
-	if (cmds->nb_cmd > 1)
-		free(cmds->sep);
+	free(cmds->sep);
 }
 
 void	close_pipe(int *fd)

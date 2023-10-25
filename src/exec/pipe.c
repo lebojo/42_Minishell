@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/25 05:28:41 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 06:29:56 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ int	**open_pipes(int nb_pipe)
 	int	i;
 
 	res = ft_calloc(nb_pipe, sizeof(int *));
-	if (!res)
+	if (!res || nb_pipe == 0)
 		return (NULL);
 	i = -1;
 	while (++i < nb_pipe)

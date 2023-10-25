@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 06:23:24 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 07:41:53 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,9 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 			update_last_exit(exit_status, envp);
 		}
 	}
+	free(pipe->pid);
 	free(cmds_ip.cmd);
+	free(cmds_ip.sep);
 }
 
 void	exec_sep(t_cmds *cmds, char ***envp)
