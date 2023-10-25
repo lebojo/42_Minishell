@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 02:44:44 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 02:52:46 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ void	reverse_cmd(t_cmds *cmds, int i)
 {
 	char	*tmp;
 	char	**sp;
+	int		j;
 
 	if (!cmds->cmd[i].name)
 		return ;
@@ -114,8 +115,12 @@ void	reverse_cmd(t_cmds *cmds, int i)
 		sp = ft_split(cmds->cmd[i].name, ' ');
 		free(cmds->cmd[i].name);
 		cmds->cmd[i].name = sp[0];
-		sp[1] = add_str(sp[1], " ", 1);
-		cmds->cmd[i].arg = add_str(sp[1], cmds->cmd[i].arg, 3);
+		j = 0;
+		while (sp[++j])
+		{
+			sp[j] = add_str(sp[j], " ", 1);
+			cmds->cmd[i].arg = add_str(sp[j], cmds->cmd[i].arg, 3);
+		}
 		free(sp);
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/24 02:14:05 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 02:53:00 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	free_all(t_cmds *cmds, char ***env);
 
 /*	PARSE					*/
 int		parse(t_cmds *cmds, char *input, char ***envp);
+void	reverse_cmd(t_cmds *cmds, int i);
 
 /*	SEP_PARSE				*/
 void	sep_parse(t_cmds *cmds, char *input);
