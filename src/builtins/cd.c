@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:43 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/16 15:17:37 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:33:22 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,9 +17,9 @@ void	update_pwds(char *pwd, char ***envp)
 	t_cmd	old_pwd;
 	t_cmd	new_pwd;
 
-	old_pwd = create_cmd("", add_str("OLDPWD=", pwd, 0), 0);
+	old_pwd = create_cmd("", add_str("OLDPWD=", pwd, 0), 0, 2);
 	getcwd(pwd, 4096);
-	new_pwd = create_cmd("", add_str("PWD=", pwd, 0), 0);
+	new_pwd = create_cmd("", add_str("PWD=", pwd, 0), 0, 2);
 	ft_export(&old_pwd, envp);
 	ft_export(&new_pwd, envp);
 }

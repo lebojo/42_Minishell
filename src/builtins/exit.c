@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/25 04:06:07 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:26:59 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exit(int status, char ***env)
 	printf("Exiting ");
 	printf(MS);
 	printf("...\n");
-	free_tab(*env);
+	free_tab((*env));
 	exit(status);
 }
 

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 03:38:02 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:48:46 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,16 +50,24 @@ void	print_cmds(t_cmds cmds)
 void	create_prompt(char **prompt, char **env)
 {
 	char	*af;
+	char	*home;
+	char	*lst;
 	char	pwd[4096];
 
 	af = actual_folder();
+	home = hm_get_value(env, "HOME");
+	lst = hm_get_value(env, "?");
 	if (ft_strcmp(af, "Jordan"))
-		*prompt = add_str("➜ ", af, 2);
-	else if (ft_strcmp(getcwd(pwd, 4096), hm_get_value(env, "HOME")))
-		*prompt = add_str("➜ ", af, 2);
+		*prompt = add_str("<3 ➜ ", af, 2);
+	else if (ft_strcmp(getcwd(pwd, 4096), home))
+		*prompt = add_str("~ ➜ ", af, 2);
+	else if (!ft_strcmp(lst, "0"))
+		*prompt = add_str(":( ➜ ", af, 2);
 	else
-		*prompt = add_str("➜ ", af, 2);
+		*prompt = add_str(":) ➜ ", af, 2);
 	*prompt = add_str(*prompt, " > ", 1);
+	free(home);
+	free(lst);
 }
 
 int	char_in_str(char c, char *str)

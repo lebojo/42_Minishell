@@ -6,13 +6,13 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/25 01:54:54 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:31:43 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../inc/proto.h"
 
-t_cmd	create_cmd(char *name, char *arg, int which_pipe)
+t_cmd	create_cmd(char *name, char *arg, int which_pipe, int fred)
 {
 	t_cmd	res;
 
@@ -26,6 +26,15 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe)
 	else
 		res.arg = NULL;
 	res.which_pipe = which_pipe;
+	if (fred == 1)
+		free(name);
+	if (fred == 2)
+		free(arg);
+	if (fred == 3)
+	{
+		free(name);
+		free(arg);
+	}
 	return (res);
 }
 

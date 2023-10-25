@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 00:29:12 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 03:00:51 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 05:49:30 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,24 +15,24 @@
 char	*hm_get_value(char **map, char *key)
 {
 	char	**split_map;
+	char	*res;
 	int		i;
 
 	i = 0;
+	res = NULL;
 	while (map[i])
 	{
 		split_map = ft_split(map[i], '=');
 		if (ft_strcmp(key, split_map[0]))
 		{
-			free(split_map[0]);
-			return (split_map[1]);
+			res = ft_strdup(split_map[1]);
+			free_tab(split_map);
+			break ;
 		}
-		free(split_map[0]);
-		if (split_map[1])
-			free(split_map[1]);
-		free(split_map);
+		free_tab(split_map);
 		i++;
 	}
-	return (NULL);
+	return (res);
 }
 
 int	hm_set_value(char ***map, char *key, char *new_val)

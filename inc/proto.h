@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 04:04:50 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:33:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ int		main(int ac, char **av, char **envp);
 
 /*	EXPANDER				*/
 char	*expand(char *src, char ***envp);
-t_cmd	create_cmd(char *name, char *arg, int which_pipe);
+t_cmd	create_cmd(char *name, char *arg, int which_pipe, int fred);
 
 /*	FREE					*/
 void	free_cmds(t_cmds *cmds);

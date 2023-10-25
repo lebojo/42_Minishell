@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:02 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/16 15:18:48 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:59:32 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,9 +72,10 @@ char	**empty_env(char *s)
 {
 	char	**res;
 
-	res = malloc(sizeof(char *) * 2);
+	res = malloc(sizeof(char *) * 3);
 	res[0] = ft_strdup(s);
 	res[1] = ft_strdup("''");
+	res[2] = NULL;
 	return (res);
 }
 

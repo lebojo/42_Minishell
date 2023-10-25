@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils_exec.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/21 23:14:48 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/25 04:38:15 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ void	update_last_exit(int status, char ***envp)
 	else
 		i = 127;
 	str = ft_itoa(i);
-	cmd = create_cmd("", add_str("?=", str, 2), 0);
+	cmd = create_cmd("", add_str("?=", str, 2), 0, 2);
 	ft_export(&cmd, envp);
+	free(str);
 }

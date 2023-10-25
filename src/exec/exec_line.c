@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 04:09:05 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 06:23:24 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,16 @@ void	exec_line(t_cmds *cmds, char ***envp)
 	{
 		mid_pipe(cmds, &pipes, i, envp);
 		close_pipe(pipes.fd[i]);
+		free(pipes.fd[i]);
 	}
 	last_pipe(cmds, &pipes, i, envp);
 	close_pipe(pipes.fd[i]);
+	free(pipes.fd[i]);
+	free(pipes.fd);
 	i = -1;
 	while (++i <= cmds->nb_pipe)
 		waitpid(pipes.pid[i], &exit_status, 0);
+	free(pipes.pid);
 	update_last_exit(exit_status, envp);
 }
 
@@ -106,6 +110,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 			update_last_exit(exit_status, envp);
 		}
 	}
+	free(cmds_ip.cmd);
 }
 
 void	exec_sep(t_cmds *cmds, char ***envp)

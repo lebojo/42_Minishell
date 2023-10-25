@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 04:19:00 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:32:15 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,10 +49,10 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
 	if (!char_in_str(split[inc->i][0], "|<>"))
-		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0);
+		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0, 1);
 	else
 	{
-		cmds->cmd[0] = create_cmd(expand(split[++inc->i], envp), NULL, 0);
+		cmds->cmd[0] = create_cmd(expand(split[++inc->i], envp), NULL, 0, 1);
 		inc->i++;
 	}
 	inc->k = 0;

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/21 03:06:32 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/25 04:49:31 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ void	increment_shlvl(char ***env)
 
 	shlvl = hm_get_value(*env, "SHLVL");
 	new_shlvl = ft_itoa(ft_atoi(shlvl) + 1);
-	tmp = create_cmd(NULL, add_str("SHLVL=", new_shlvl, 2), 0);
+	tmp = create_cmd(NULL, add_str("SHLVL=", new_shlvl, 2), 0, 2);
 	free(shlvl);
 	ft_export(&tmp, env);
 }
@@ -52,5 +52,6 @@ void	start(char ***env)
 		signal(SIGQUIT, sig_handler);
 	else
 		signal(SIGQUIT, SIG_IGN);
+	update_last_exit(0, env);
 	g_status = 0;
 }
