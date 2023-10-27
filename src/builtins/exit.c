@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/27 10:03:34 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/27 18:54:16 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void	ft_exit(int status, char ***env)
 	printf("Exiting ");
 	printf(MS);
 	printf("...\n");
-	free_tab((*env));
+	free_tab(*env);
 	exit(status);
 }
 

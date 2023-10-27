@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   hashmap.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/21 00:29:12 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 05:49:30 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:51:29 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,7 @@ int	hm_set_value(char ***map, char *key, char *new_val)
 			free(split_map);
 			return (1);
 		}
-		free(split_map);
+		free_tab(split_map);
 		i++;
 	}
 	return (0);

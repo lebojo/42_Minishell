@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   pipe.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/25 06:29:56 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:46:39 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,10 @@ int	**open_pipes(int nb_pipe)
 	int	**res;
 	int	i;
 
+	if (nb_pipe == 0)
+		return (NULL);
 	res = ft_calloc(nb_pipe, sizeof(int *));
-	if (!res || nb_pipe == 0)
+	if (!res)
 		return (NULL);
 	i = -1;
 	while (++i < nb_pipe)

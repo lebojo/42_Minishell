@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/27 18:31:27 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/27 18:50:35 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,12 @@ void	ft_export(t_cmd *cmd, char ***env)
 
 	s_arg = NULL;
 	if (!cmd->arg)
-		return (print_sorted_env(copy_tab(*env)));
+	{
+		s_arg = copy_tab(*env);
+		print_sorted_env(s_arg);
+		free_tab(s_arg);
+		return ;
+	}
 	if (ft_strchr(cmd->arg, '='))
 		s_arg = ft_split(cmd->arg, '=');
 	else
