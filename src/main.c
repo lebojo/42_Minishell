@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 04:19:04 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:04:06 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,7 @@ static int	process_input(int ac, char *input, char ***envp)
 		if (parse(&cmds, formatted_input, envp))
 			return (1);
 		if (ft_strcmp("exit", cmds.cmd[0].name))
-			ft_exit_cmd(&cmds.cmd[0], envp);
+			ft_exit_cmd(&cmds, &cmds.cmd[0], envp);
 		if (ac > 1)
 			print_cmds(cmds);
 		if (cmds.cmd[0].name)
@@ -69,7 +69,7 @@ int	main(int ac, char **av, char **envp)
 		input = readline(prompt);
 		g_status = 1;
 		if (input == NULL)
-			ft_exit(1, &envp);
+			ft_exit(1, &env);
 		if (process_input(ac, input, &env))
 			printf("Syntax error\n");
 		input = NULL;

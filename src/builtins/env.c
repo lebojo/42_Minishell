@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env.c                                              :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:02 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/25 04:59:32 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:31:19 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,34 +38,18 @@ void	add_env(char **arg, char ***env)
 	int		i;
 	char	**new_env;
 
-	i = 0;
-	while ((*env)[i++])
+	i = -1;
+	while ((*env)[++i])
 		;
 	new_env = malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = ft_strdup((*env)[i]);
-	new_env[i] = add_str(arg[0], "=", 1);
-	new_env[i] = add_str(new_env[i], arg[1], 3);
+	new_env[i] = add_str(arg[0], "=", 0);
+	new_env[i] = add_str(new_env[i], arg[1], 1);
 	new_env[i + 1] = NULL;
-	free(*env);
+	free_tab((*env));
 	*env = new_env;
-}
-
-void	update_env(char *key, char *new_env, char ***env)
-{
-	int		i;
-	char	**s_env;
-
-	i = -1;
-	while ((*env)[++i])
-	{
-		s_env = ft_split((*env)[i], '=');
-		if (ft_strcmp(s_env[0], key))
-			break ;
-	}
-	free(*env);
-	(*env)[i] = ft_strdup(new_env);
 }
 
 char	**empty_env(char *s)

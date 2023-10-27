@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 04:33:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:15:24 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -124,14 +124,13 @@ void	ft_env(char **env);
 
 /*	EXIT			*/
 void	ft_exit(int status, char ***envp);
-void	ft_exit_cmd(t_cmd *cmd, char ***envp);
+void	ft_exit_cmd(t_cmds *cmds, t_cmd *cmd, char ***env);
 
 /*	EXPORT			*/
 int		strdiff(const char *s1, const char *s2);
 char	**copy_tab(char **tab);
 void	print_sorted_env(char **env);
 void	add_env(char **arg, char ***env);
-void	update_env(char *key, char *new_env, char ***env);
 char	**empty_env(char *s);
 void	ft_export(t_cmd *cmd, char ***env);
 

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exit.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:13 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/25 04:26:59 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:03:34 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	ft_exit(int status, char ***env)
 	exit(status);
 }
 
-void	ft_exit_cmd(t_cmd *cmd, char ***env)
+void	ft_exit_cmd(t_cmds *cmds, t_cmd *cmd, char ***env)
 {
 	int		i;
 	int		status;
@@ -41,5 +41,6 @@ void	ft_exit_cmd(t_cmd *cmd, char ***env)
 		}
 		status = ft_atoi(cmd->arg);
 	}
+	free_cmds(cmds);
 	ft_exit(status, env);
 }

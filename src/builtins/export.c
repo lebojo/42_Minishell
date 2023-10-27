@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   export.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/25 07:32:11 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 18:31:27 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**copy_tab(char **tab)
 	i = 0;
 	while (tab[i++])
 		;
-	res = malloc(sizeof(char *) * i);
+	res = malloc(sizeof(char *) * (i + 1));
 	i = -1;
 	while (tab[++i])
 		res[i] = ft_strdup(tab[i]);
@@ -49,6 +49,7 @@ void	ft_export(t_cmd *cmd, char ***env)
 	char	**s_arg;
 	char	*tmp;
 
+	s_arg = NULL;
 	if (!cmd->arg)
 		return (print_sorted_env(copy_tab(*env)));
 	if (ft_strchr(cmd->arg, '='))

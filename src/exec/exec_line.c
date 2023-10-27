@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 07:41:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 10:05:04 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ int	is_builtins(t_cmd *cmd, char ***envp)
 	else if (ft_strcmp("env", cmd->name))
 		ft_env(*envp);
 	else if (ft_strcmp("exit", cmd->name))
-		ft_exit_cmd(cmd, envp);
+		ft_exit_cmd(NULL, cmd, envp); // rajouter le t_cmds pour pouvoir free
 	else if (ft_strcmp("..", cmd->name))
 		ft_cd("..", envp);
 	else
@@ -56,6 +56,17 @@ int	one_cmd(t_cmds *cmds, t_pipe *pipes, char ***envp)
 	return (0);
 }
 
+void free_pipes(t_pipe *pipes, int nb_pipes)
+{
+	int i;
+
+	i = -1;
+	while (++i < nb_pipes && pipes->fd)
+		free(pipes->fd[i]);
+	free(pipes->fd);
+	free(pipes->pid);
+}
+
 void	exec_line(t_cmds *cmds, char ***envp)
 {
 	t_pipe	pipes;
@@ -64,26 +75,23 @@ void	exec_line(t_cmds *cmds, char ***envp)
 
 	init_pipe(&pipes, cmds);
 	if (cmds->nb_cmd <= 0)
-		return ;
+		return (free_pipes(&pipes, cmds->nb_pipe));
 	if (one_cmd(cmds, &pipes, envp))
-		return ;
+		return (free_pipes(&pipes, cmds->nb_pipe));
 	i = -1;
 	first_pipe(cmds, &pipes, envp);
 	while (++i < cmds->nb_pipe - 1)
 	{
 		mid_pipe(cmds, &pipes, i, envp);
 		close_pipe(pipes.fd[i]);
-		free(pipes.fd[i]);
 	}
 	last_pipe(cmds, &pipes, i, envp);
 	close_pipe(pipes.fd[i]);
-	free(pipes.fd[i]);
-	free(pipes.fd);
 	i = -1;
 	while (++i <= cmds->nb_pipe)
 		waitpid(pipes.pid[i], &exit_status, 0);
-	free(pipes.pid);
 	update_last_exit(exit_status, envp);
+	free_pipes(&pipes, cmds->nb_pipe);
 }
 
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
@@ -110,7 +118,6 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 			update_last_exit(exit_status, envp);
 		}
 	}
-	free(pipe->pid);
 	free(cmds_ip.cmd);
 	free(cmds_ip.sep);
 }

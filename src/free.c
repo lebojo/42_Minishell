@@ -25,7 +25,7 @@ void	free_tab(char **tab)
 	int	i;
 
 	i = 0;
-	if (tab == NULL)
+	if (tab == NULL || !tab[0])
 		return ;
 	while (tab[i] != NULL && tab[i][0] != '\0')
 		free(tab[i++]);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_split.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 17:47:27 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/25 04:16:05 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 09:26:53 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,5 @@ char	**ft_split(char const *s, char c)
 	}
 	res[j] = NULL;
 	i = 0;
-	while (res[i] && c == ' ')
-		printf("[%i]%s\n", i, res[i++]);
 	return (res);
 }
