@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/25 06:52:56 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/27 19:08:42 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	}
 	inc->k = 0;
 	quote_parse(cmds, split, inc, envp);
+	while (split[inc->s])
+		inc->s++;
 	return (split);
 }
 
@@ -122,7 +124,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	split = init_parse(cmds, input, envp, &inc);
 	if (!split)
 		return (1);
-	while (ft_strlen(split[inc.i]) > 0)
+	while (inc.i < inc.s)
 	{
 		if (char_in_str('|', split[inc.i]))
 			inc.k++;
