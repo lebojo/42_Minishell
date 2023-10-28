@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/25 07:21:15 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:21:32 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,10 +84,10 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 		tmp = ft_calloc(ft_strlen(src), sizeof(char));
 		while (src[++incr->i] && !char_in_str(src[incr->i], " \t\"$"))
 			tmp[incr->k++] = src[incr->i];
-		var = hm_get_value(*envp, tmp);
+		var = hm_get_value((*envp), tmp);
 		if (var)
 		{
-			(*res) = add_str((*res), var, 3);
+			(*res) = add_str((*res), var, 3); 
 			incr->i--;
 		}
 		free(tmp);

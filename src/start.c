@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/28 06:59:10 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 16:08:12 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,6 @@ void	start(char ***env)
 
 	i = -1;
 	printf("\e[0;32mMinishell 2\e[0m is starting...\n");
-	(void)env;
 	if (!getenv("PWD"))
 		create_envp(env);
 	else

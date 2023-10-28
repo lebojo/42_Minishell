@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:01:23 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/28 06:28:51 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 16:37:22 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,15 @@ char	*ask_quote(enum e_quote q, char *str)
 	return (NULL);
 }
 
+char	*arg_unspace(char *arg, char ***envp)
+{
+	char	*tmp;
+
+	tmp = unspacer(expand(arg, envp));
+	free(arg);
+	return (tmp);
+}
+
 void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp)
 {
 	if (!split[inc->i])
@@ -69,5 +78,5 @@ void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp)
 			add_str_space(&cmds->cmd[inc->j].arg, split[inc->i++]);
 	}
 	if (cmds->cmd[inc->j].arg)
-		cmds->cmd[inc->j].arg = unspacer(expand(cmds->cmd[inc->j].arg, envp));
+		cmds->cmd[inc->j].arg = arg_unspace(cmds->cmd[inc->j].arg, envp);
 }

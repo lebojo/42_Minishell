@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 16:15:52 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/28 07:00:52 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 16:08:38 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,7 +76,7 @@ void	update_last_exit(int status, char ***envp)
 	else
 		i = 127;
 	str = ft_itoa(i);
-	cmd = create_cmd("", add_str("?=", str, 2), 0, 2);
+	cmd = create_cmd(NULL, add_str("?=", str, 2), 0, 2);
 	ft_export(&cmd, envp);
-	free(cmd.arg);
+	free_cmd(&cmd);
 }

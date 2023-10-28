@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   cd.c                                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:29:43 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/25 04:33:22 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/28 16:17:55 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	process_cd(char *pwd, char *new_path, char ***envp)
 	if (new_path[0] == '~')
 	{
 		new_path++;
-		new_path = add_str(hm_get_value(*envp, "HOME"), new_path, 0);
+		new_path = add_str(hm_get_value(*envp, "HOME"), new_path, 1);
 	}
 	if (new_path[0] != '/')
 		new_path = add_str("/", new_path, 0);
@@ -43,18 +43,22 @@ void	process_cd(char *pwd, char *new_path, char ***envp)
 		if (chdir(new_path))
 			printf("Path not found\n");
 	update_pwds(pwd, envp);
+	free(new_path);
 }
 
 void	ft_cd(char *new_path, char ***envp)
 {
-	char	pwd[4096];	
+	char	pwd[4096];
+	char	*home_path;
 
+	home_path = hm_get_value(*envp, "HOME");
 	if (!new_path || ft_strcmp(new_path, "~"))
-		chdir(hm_get_value(*envp, "HOME"));
+		chdir(home_path);
 	else if (getcwd(pwd, 4096))
 	{
 		process_cd(pwd, new_path, envp);
 	}
 	else
 		printf("Unknown error\n");
+	free(home_path);
 }
