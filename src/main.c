@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/27 10:04:06 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 06:55:41 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	main(int ac, char **av, char **envp)
 		input = readline(prompt);
 		g_status = 1;
 		if (input == NULL)
-			ft_exit(1, &env);
+			ft_exit(0, &env);
 		if (process_input(ac, input, &env))
 			printf("Syntax error\n");
 		input = NULL;

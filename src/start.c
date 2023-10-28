@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/27 10:06:02 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 06:59:10 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ void	increment_shlvl(char ***env)
 	tmp = create_cmd(NULL, add_str("SHLVL=", new_shlvl, 2), 0, 2);
 	free(shlvl);
 	ft_export(&tmp, env);
+	free_cmd(&tmp);
 }
 
 void	start(char ***env)
@@ -43,6 +44,7 @@ void	start(char ***env)
 
 	i = -1;
 	printf("\e[0;32mMinishell 2\e[0m is starting...\n");
+	(void)env;
 	if (!getenv("PWD"))
 		create_envp(env);
 	else

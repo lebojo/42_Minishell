@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/25 00:41:44 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/10/28 07:15:04 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,22 +54,22 @@ void	exec_cmd(t_cmd *cmd, char **env)
 
 	path_cmd = create_path_cmd(env);
 	ac_cmd = get_cmd(path_cmd, cmd->name);
+	s_cmd = split_cmd(*cmd);
 	if (!ac_cmd)
 	{
-		s_cmd = split_cmd(*cmd);
 		if (execve(cmd->name, s_cmd, env) == -1)
 		{
 			if (dup2(2, STDOUT_FILENO) == -1)
 				return ;
-			printf("Command not found: %s\n", cmd->name);
+			printf("Command not found: \033[0;31m%s\033[0;0m\n", cmd->name);
 			exit (127);
 		}
 		exit(0);
 	}
-	s_cmd = split_cmd(*cmd);
 	if (execve(ac_cmd, s_cmd, env) == -1)
 	{
-		printf("Error execve\n");
+		printf("Command not found: \033[0;31m%s\033[0;0m:", cmd->name);
+		printf(" it is a file/folder, not a command!\n");
 		exit (127);
 	}
 	exit(0);
