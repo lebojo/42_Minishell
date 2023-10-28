@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 20:01:26 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/27 17:11:22 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 05:59:21 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,11 +26,11 @@ char	*add_str(char *s1, char *s2, int f)
 	while (s2[ii])
 		res[i++] = s2[ii++];
 	res[i] = '\0';
-	if (f == 1)
+	if (f == 1 && s1)
 		free(s1);
-	else if (f == 2)
+	else if (f == 2 && s2)
 		free(s2);
-	else if (f == 3)
+	else if (f == 3 && s1 && s2)
 	{
 		free(s1);
 		free(s2);

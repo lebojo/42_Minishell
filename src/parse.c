@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/27 19:08:42 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/28 06:19:06 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,9 +81,9 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 		if (cmds->cmd[inc->j].arg && cmds->cmd[inc->j].arg[0])
 			cmds->cmd[inc->j].arg = add_str(
 					add_str(cmds->cmd[inc->j].arg, " ", 1),
-					split[inc->i], 3);
+					split[inc->i++], 1);
 		else
-			cmds->cmd[inc->j].arg = split[inc->i];
+			cmds->cmd[inc->j].arg = split[inc->i++];
 		cmds->cmd[inc->j].which_pipe = inc->k;
 	}
 	return (0);
@@ -124,7 +124,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	split = init_parse(cmds, input, envp, &inc);
 	if (!split)
 		return (1);
-	while (inc.i < inc.s)
+	while (inc.i < inc.s && split[inc.i - 1] && split[inc.i])
 	{
 		if (char_in_str('|', split[inc.i]))
 			inc.k++;
@@ -133,7 +133,6 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 			continue ;
 		else if (inc.l == 2)
 			break ;
-		inc.i++;
 	}
 	inc.p = -1;
 	if (input[0] == '<')
