@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/28 06:54:25 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/29 23:28:21 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,10 +15,8 @@
 void	print_cmds(t_cmds cmds)
 {
 	int	i;
-	int	j;
 
 	i = 0;
-	j = 0;
 	printf("\033[1;33m======DEBUG======\033[0m\n");
 	printf("nb_cmd: %i, nb_pipe: %i\n", cmds.nb_cmd, cmds.nb_pipe);
 	while (i < cmds.nb_cmd)

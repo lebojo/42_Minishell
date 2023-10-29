@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/28 16:08:12 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/29 23:27:59 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,6 @@ void	increment_shlvl(char ***env)
 
 void	start(char ***env)
 {
-	int		i;
-
-	i = -1;
 	printf("\e[0;32mMinishell 2\e[0m is starting...\n");
 	if (!getenv("PWD"))
 		create_envp(env);
@@ -53,6 +50,6 @@ void	start(char ***env)
 		signal(SIGQUIT, sig_handler);
 	else
 		signal(SIGQUIT, SIG_IGN);
-	update_last_exit(0, env);
+	update_last_exit(0, env); // <- ONLY LEAKS HERE OMG
 	g_status = 0;
 }
