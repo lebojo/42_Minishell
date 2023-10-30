@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/28 06:19:06 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 07:56:50 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -135,7 +135,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 			break ;
 	}
 	inc.p = -1;
-	if (input[0] == '<')
+	if (input[0] == '<' && input[1] != '<')
 		reverse_cmd(cmds, 0);
 	free_tab(split);
 	while (++inc.p < cmds->nb_cmd)

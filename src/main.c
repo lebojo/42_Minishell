@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/30 06:38:36 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 07:52:06 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,8 @@ static int	process_input(int ac, char *input, char ***envp)
 		else
 			printf("unknown error");
 		free_cmds(&cmds);
+		free(formatted_input);
 	}
-	free(formatted_input);
 	return (0);
 }
 
