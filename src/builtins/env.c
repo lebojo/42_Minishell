@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:02 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/27 18:31:19 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 07:36:42 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,14 +41,13 @@ void	add_env(char **arg, char ***env)
 	i = -1;
 	while ((*env)[++i])
 		;
-	new_env = malloc(sizeof(char *) * (i + 1));
+	new_env = ft_calloc(sizeof(char *), i + 2);
 	i = -1;
 	while ((*env)[++i])
 		new_env[i] = ft_strdup((*env)[i]);
 	new_env[i] = add_str(arg[0], "=", 0);
 	new_env[i] = add_str(new_env[i], arg[1], 1);
-	new_env[i + 1] = NULL;
-	free_tab((*env));
+	free_tab(*env);
 	*env = new_env;
 }
 

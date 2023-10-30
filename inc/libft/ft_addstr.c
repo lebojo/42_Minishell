@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/15 20:01:26 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/28 06:27:30 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 06:37:10 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ char	*add_str(char *s1, char *s2, int f)
 	int		i;
 	int		ii;
 
-	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2), sizeof(char));
+	res = ft_calloc(ft_strlen(s1) + ft_strlen(s2) - 1, sizeof(char));
 	i = -1;
 	ii = 0;
 	while (s1[++i])

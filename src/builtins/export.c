@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/28 16:52:26 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 07:33:40 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ char	**copy_tab(char **tab)
 	i = 0;
 	while (tab[i++])
 		;
-	res = malloc(sizeof(char *) * (i + 1));
+	res = malloc(sizeof(char *) * i);
 	i = -1;
 	while (tab[++i])
 		res[i] = ft_strdup(tab[i]);
@@ -65,7 +65,7 @@ void	ft_export(t_cmd *cmd, char ***env)
 	if (tmp)
 		hm_set_value(env, s_arg[0], s_arg[1]);
 	else
-		add_env(s_arg, env);
+		add_env(s_arg, env); // <- LEAKS HERE
 	free_tab(s_arg);
 	free(tmp);
 }
