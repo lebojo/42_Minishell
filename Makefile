@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
+#    By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/10/24 01:05:07 by jchapell         ###   ########.fr        #
+#    Updated: 2023/10/30 08:01:52 by lebojo           ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,7 +22,7 @@ FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
 			exec/parse_cmds.c \
 			builtins/cd.c builtins/echo.c builtins/env.c builtins/pwd.c \
 			builtins/exit.c builtins/export.c builtins/unset.c \
-			builtins/hashmap.c quote.c\
+			builtins/hashmap.c quote.c builtins/is_builtins.c\
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./src/

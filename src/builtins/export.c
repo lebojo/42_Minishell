@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/12 17:30:15 by arthur            #+#    #+#             */
-/*   Updated: 2023/10/30 07:33:40 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 08:16:38 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	ft_export(t_cmd *cmd, char ***env)
 	if (tmp)
 		hm_set_value(env, s_arg[0], s_arg[1]);
 	else
-		add_env(s_arg, env); // <- LEAKS HERE
+		add_env(s_arg, env);
 	free_tab(s_arg);
 	free(tmp);
 }

@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/30 07:56:50 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 07:58:35 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -140,7 +140,7 @@ int	parse(t_cmds *cmds, char *input, char ***envp)
 	free_tab(split);
 	while (++inc.p < cmds->nb_cmd)
 		if (cmds->cmd[inc.p].name
-			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>")) // <- CA CRASH ICI BG, c'est nb_cmd qui n'est pas justes
+			&& char_in_str(cmds->cmd[inc.p].name[0], "|<>"))
 			return (1);
 	return (0);
 }

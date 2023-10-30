@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/10/30 17:47:27 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/27 09:26:53 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 08:14:34 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,6 @@ char	**ft_split(char const *s, char c)
 			index = -1;
 		}
 	}
-	res[j] = NULL;
 	i = 0;
 	return (res);
 }

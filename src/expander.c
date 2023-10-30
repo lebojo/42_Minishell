@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/28 16:21:32 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/10/30 08:16:20 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,7 @@ int	is_inquote(char *str, int i)
 	return (res);
 }
 
-char *char_to_str(char c)
+char	*char_to_str(char c)
 {
 	char	*res;
 
@@ -87,7 +87,7 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 		var = hm_get_value((*envp), tmp);
 		if (var)
 		{
-			(*res) = add_str((*res), var, 3); 
+			(*res) = add_str((*res), var, 3);
 			incr->i--;
 		}
 		free(tmp);
