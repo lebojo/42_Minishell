@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/30 08:01:32 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:50:06 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,23 +77,19 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
-	if (cmds_ip.nb_cmd > 1)
-		exec_sep(&cmds_ip, envp);
-	else
+	exec_sep(&cmds_ip, envp);
+	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
 	{
-		if (!is_builtins(&cmds_ip.cmd[0], envp))
+		pipe->pid[0] = fork();
+		if (pipe->pid[0] < 0)
+			exit(1);
+		if (pipe->pid[0] == 0)
 		{
-			pipe->pid[0] = fork();
-			if (pipe->pid[0] < 0)
-				exit(1);
-			if (pipe->pid[0] == 0)
-			{
-				exec_cmd(&cmds_ip.cmd[0], *envp);
-				exit(0);
-			}
-			waitpid(pipe->pid[0], &exit_status, 0);
-			update_last_exit(exit_status, envp);
+			exec_cmd(&cmds_ip.cmd[0], *envp);
+			exit(0);
 		}
+		waitpid(pipe->pid[0], &exit_status, 0);
+		update_last_exit(exit_status, envp);
 	}
 	free(cmds_ip.cmd);
 	free(cmds_ip.sep);
@@ -120,4 +116,5 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 			res = heredoc(cmds->cmd[j++].name);
 		i++;
 	}
+	free(res);
 }

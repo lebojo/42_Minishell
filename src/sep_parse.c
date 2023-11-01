@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 04:06:46 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/25 02:36:01 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 15:46:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ void	sep_parse(t_cmds *cmds, char *input)
 	sep_counter(cmds, input);
 	cmds->sep = ft_calloc(cmds->nb_cmd + 1, sizeof(enum e_sep));
 	cmds->sep[0] = None;
-	if (cmds->nb_cmd <= 1 && cmds->nb_pipe < 1)
+	if (cmds->nb_cmd < 1 && cmds->nb_pipe < 1)
 		return ;
 	while (input[++inc.i + 1])
 		process_sep_parse(cmds, input, &inc);

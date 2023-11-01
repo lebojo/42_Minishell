@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/21 23:15:09 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 15:53:39 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ char	*heredoc(char *str)
 	char	*res;
 
 	res = ft_strdup("");
+	line = NULL;
 	signal(SIGINT, ptain);
 	while (g_status != 2)
 	{
@@ -36,10 +37,10 @@ char	*heredoc(char *str)
 			line = ft_strdup("\n");
 		if (ft_strcmp(line, str) == 1)
 			break ;
-		line = ft_strjoin(line, "\n");
-		res = ft_strjoin(res, line);
-		free(line);
+		line = add_str(line, "\n", 1);
+		res = add_str(res, line, 3);
 	}
+	free(line);
 	signal(SIGINT, sig_handler);
 	return (res);
 }
