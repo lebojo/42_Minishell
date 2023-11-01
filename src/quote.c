@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   quote.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/21 01:01:23 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/30 08:17:23 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:07:34 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,8 +47,11 @@ char	*ask_quote(enum e_quote q, char *str)
 char	*arg_unspace(char *arg, char ***envp)
 {
 	char	*tmp;
+	char	*mb;
 
-	tmp = unspacer(expand(arg, envp));
+	mb = expand(arg, envp);
+	tmp = ft_strtrim(mb, " \t");
+	free(mb);
 	free(arg);
 	return (tmp);
 }

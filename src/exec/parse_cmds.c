@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:25:49 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 06:23:03 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:21:47 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,6 +37,7 @@ enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
 	tmp = 0;
 	while (src[i] != None && src[i] != Pipe)
 		res[tmp++] = src[i++];
+	res[tmp] = None;
 	return (res);
 }
 

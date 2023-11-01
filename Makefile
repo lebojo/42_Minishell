@@ -13,7 +13,7 @@
 # Executable Name
 ENAME	=	minishell
 NAME	=	minishell.a
-CFLAGS	=	-g -Wall -Wextra -Werror
+CFLAGS	=	-g -Wall -Wextra -Werror -fsanitize=address
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
 			sep_parse.c spacer.c exec/split_cmd.c \

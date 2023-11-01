@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/10/30 07:58:35 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 17:27:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,6 +45,8 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		return (NULL);
 	inc->i = 0;
 	inc->j = 0;
+	inc->k = 0;
+	inc->s = 0;
 	sep_parse(cmds, input);
 	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
 	if (!char_in_str(split[inc->i][0], "|<>"))
@@ -54,7 +56,6 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 		cmds->cmd[0] = create_cmd(expand(split[++inc->i], envp), NULL, 0, 1);
 		inc->i++;
 	}
-	inc->k = 0;
 	quote_parse(cmds, split, inc, envp);
 	while (split[inc->s])
 		inc->s++;

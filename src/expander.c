@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   expander.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/30 08:16:20 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 16:35:51 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ char	*char_to_str(char c)
 	return (res);
 }
 
-void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
+char	*process_expand(char ***envp, char *src, char *res, t_inc *incr)
 {
 	char	*tmp;
 	char	*var;
@@ -87,14 +87,15 @@ void	process_expand(char ***envp, char *src, char **res, t_inc *incr)
 		var = hm_get_value((*envp), tmp);
 		if (var)
 		{
-			(*res) = add_str((*res), var, 3);
+			res = add_str(res, var, 3);
 			incr->i--;
 		}
 		free(tmp);
 		incr->k = 0;
 	}
 	else
-		(*res) = add_str((*res), char_to_str(src[incr->i]), 3);
+		res = add_str(res, char_to_str(src[incr->i]), 3);
+	return (res);
 }
 
 char	*expand(char *src, char ***envp)
@@ -119,7 +120,7 @@ char	*expand(char *src, char ***envp)
 			continue ;
 		if (quote != none)
 			rev_quote(&quote, src[incr.i]);
-		process_expand(envp, src, &res, &incr);
+		res = process_expand(envp, src, res, &incr);
 	}
 	return (res);
 }

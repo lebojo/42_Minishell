@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/25 07:19:06 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:11:04 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,30 +59,6 @@ char	*format_input_process(t_inc *inc, char *str, char *res, int q)
 	return (res);
 }
 
-char	*unspacer(char *str)
-{
-	t_inc	i;
-	char	*res;
-
-	i.i = -1;
-	i.j = -1;
-	i.k = 0;
-	if (!str)
-		return (NULL);
-	while (str[i.k] && char_in_str(str[i.k], " \t"))
-		i.k++;
-	i.n = ft_strlen(str);
-	while (i.n > 0 && char_in_str(str[i.n], " \t"))
-		--i.n;
-	res = malloc(sizeof(char) * (i.n - i.k + 1));
-	i.i = i.k - 1;
-	while (i.i <= i.n)
-		res[++i.j] = str[++i.i];
-	res[i.j] = '\0';
-	free(str);
-	return (res);
-}
-
 char	*format_input(char *str)
 {
 	t_inc			inc;
@@ -92,9 +68,10 @@ char	*format_input(char *str)
 	inc.i = 0;
 	inc.j = 0;
 	q = none;
-	str = unspacer(str);
-	res = malloc(sizeof(char) * ft_strlen(str));
-	res[ft_strlen(str)] = '\0';
+	res = str;
+	str = ft_strtrim(str, " \t");
+	free(res);
+	res = ft_calloc(ft_strlen(str) + 1, sizeof(char));
 	while (str[inc.i])
 	{
 		rev_quote(&q, str[inc.i]);
