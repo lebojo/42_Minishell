@@ -6,12 +6,12 @@
 #    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 22:49:56 by jchapell          #+#    #+#              #
-#    Updated: 2023/07/18 01:40:11 by jchapell         ###   ########.fr        #
+#    Updated: 2023/11/01 18:40:49 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME	=	libft.a
-CFLAGS	=	-g -fsanitize=address
+CFLAGS	=	-g
 AR		=	ar -rsc
 FILES	=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strlen.c ft_memset.c \
 			ft_bzero.c ft_memcpy.c ft_memmove.c ft_strlcpy.c ft_strlcat.c ft_toupper.c ft_tolower.c \

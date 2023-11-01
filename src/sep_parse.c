@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 04:06:46 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/01 15:46:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:50:47 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,12 +26,12 @@ void	sep_counter(t_cmds *cmds, char *input)
 		rev_quote(&q, input[i]);
 		if (q != none)
 			continue ;
-		if (input[i] == '|' && input[i - 1] != '|')
+		if (input[i] == '|' && (i > 0 && input[i - 1] != '|'))
 			cmds->nb_pipe += 1;
 		if ((input[i] == '|' || input[i] == '<' || input[i] == '>') && i > 0)
 			cmds->nb_cmd += 1;
-		if ((input[i] == '<' && input[i - 1] == '<')
-			|| (input[i] == '>' && input[i - 1] == '>'))
+		if ((input[i] == '<' && (i > 0 && input[i - 1] == '<'))
+			|| (input[i] == '>' && (i > 0 && input[i - 1] == '>')))
 			cmds->nb_cmd -= 1;
 	}
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/01 16:35:51 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 18:56:20 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -121,6 +121,8 @@ char	*expand(char *src, char ***envp)
 		if (quote != none)
 			rev_quote(&quote, src[incr.i]);
 		res = process_expand(envp, src, res, &incr);
+		if (!src[incr.i])
+			break ;
 	}
 	return (res);
 }

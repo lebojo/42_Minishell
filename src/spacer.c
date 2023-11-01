@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/01 17:11:04 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:47:43 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,12 +37,25 @@ int	only_space(char *str)
 	return (1);
 }
 
+int	can_space(int i, char *str, int q)
+{
+	if (i == 0)
+	{
+		if (char_in_str(str[i], "|<>")
+			&& str[i + 1] != ' ' && q == none)
+			return (1);
+	}
+	else if (char_in_str(str[i], "|<>") && (str[i - 1] != ' '
+			|| str[i + 1] != ' ') && q == none)
+		return (1);
+	return (0);
+}
+
 char	*format_input_process(t_inc *inc, char *str, char *res, int q)
 {
-	if (char_in_str(str[inc->i], "|<>") && (str[inc->i - 1] != ' '
-			|| str[inc->i + 1] != ' ') && q == none)
+	if (can_space(inc->i, str, q))
 	{
-		if (!char_in_str(str[inc->i - 1], "|<> ") && inc->i > 0)
+		if (inc->i > 0 && !char_in_str(str[inc->i - 1], "|<> "))
 		{
 			res = re_malloc(res, ft_strlen(res) + 1);
 			res[inc->j++] = ' ';

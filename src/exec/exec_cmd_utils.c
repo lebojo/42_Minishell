@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd_utils.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:15:52 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/04 18:19:33 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 18:44:54 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@ char	*str_extractor(char *s)
 
 int	strlen_to_char(char *s, int i, char c)
 {
+	if (!s)
+		return (0);
+	if (ft_strlen(s) == 1)
+		return (1);
 	while (s[i] && s[i] != c)
 		i++;
 	return (i);

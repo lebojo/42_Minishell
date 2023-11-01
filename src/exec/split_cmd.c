@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   split_cmd.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:17:14 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/21 22:06:14 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/01 18:47:48 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,12 +48,17 @@ char	**split_cmd(t_cmd cmd)
 
 	inc.i = 0;
 	inc.j = 0;
-	inc.k = 0;
 	nb_arg = arg_counter(cmd.arg);
 	res = ft_calloc(nb_arg + 2, sizeof(char *));
 	res[inc.i++] = ft_strdup(cmd.name);
 	if (!cmd.arg)
 		return (res);
+	inc.k = 0;
+	if (nb_arg == 2)
+	{
+		res[inc.i] = ft_strdup(cmd.arg);
+		return (res);
+	}
 	while (--nb_arg)
 	{
 		process_split_cmd(&inc, res, &cmd);
@@ -90,13 +95,19 @@ int	arg_counter(char *s)
 	int	res;
 	int	status;
 
-	i = -1;
+	i = 0;
 	status = 0;
-	if (!s)
+	if (!s || !s[0])
 		return (1);
+	if (ft_strlen(s) == 1)
+		return (2);
 	res = 2;
-	while (s[++i] && status != -1)
+	while (s[i] && status != -1)
+	{
 		status = process_arg_counter(&res, &i, s);
+		if (s[i])
+			i++;
+	}
 	if (status == -1)
 		return (-1);
 	return (res);

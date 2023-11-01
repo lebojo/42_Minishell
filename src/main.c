@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/01 16:55:46 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 17:30:49 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,7 @@ static int	process_input(int ac, char *input, char ***envp)
 	{
 		if (parse(&cmds, formatted_input, envp))
 			return (1);
-		if (ft_strcmp("exit", cmds.cmd[0].name))
+		if (ft_strcmp("exit", cmds.cmd[0].name) && cmds.nb_cmd == 1)
 			ft_exit_cmd(&cmds, &cmds.cmd[0], envp);
 		if (ac > 1)
 			print_cmds(cmds);
