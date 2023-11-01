@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/01 17:47:43 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 19:05:06 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,6 +81,8 @@ char	*format_input(char *str)
 	inc.i = 0;
 	inc.j = 0;
 	q = none;
+	if (ft_strlen(str) == 1)
+		return (str);
 	res = str;
 	str = ft_strtrim(str, " \t");
 	free(res);

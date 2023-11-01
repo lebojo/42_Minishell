@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/24 04:19:20 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/01 18:56:20 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/01 19:48:01 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,23 +44,13 @@ int	is_inquote(char *str, int i)
 
 	res = -1;
 	start = i;
-	while (i >= 0)
-	{
+	while (i >= 0 && res == -1)
 		if (str[i--] == '\'')
-		{
 			res++;
-			break ;
-		}
-	}
 	i = start;
-	while (str[++i])
-	{
+	while (str[++i] && res == 0)
 		if (str[i] == '\'')
-		{
 			res++;
-			break ;
-		}
-	}
 	return (res);
 }
 
