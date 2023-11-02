@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/01 17:05:54 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/02 10:00:03 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
 /*--------------------EXEC-----------------*/
 char	*heredoc(char *str);
 void	read_file(char *name, t_cmd *cmd, char ***env);
-void	write_in_file(char *str, char *name, t_cmd *cmd, char ***env);
+void	write_in_file(char *str, t_cmds *cmd, int x, char ***env);
 void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env);
 void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env);
 int		exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env);
