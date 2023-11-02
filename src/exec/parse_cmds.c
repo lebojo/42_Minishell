@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:25:49 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/01 17:21:47 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/02 02:35:42 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
 	}
 	while (src[i] != None && src[i++] != Pipe)
 		tmp++;
-	res = malloc(sizeof(enum e_sep) * (tmp + 1));
+	res = malloc(sizeof(enum e_sep) * (tmp + 2));
 	i -= tmp;
 	tmp = 0;
 	while (src[i] != None && src[i] != Pipe)

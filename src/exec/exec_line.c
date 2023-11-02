@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/01 17:20:03 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/02 03:16:39 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
-	exec_sep(&cmds_ip, envp);
+	if (cmds_ip.nb_cmd > 1)
+		exec_sep(&cmds_ip, envp);
 	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
 	{
 		pipe->pid[0] = fork();
@@ -107,13 +108,15 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 	while (cmds->sep && cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
 		if (cmds->sep[i] == S_right)
-			write_in_file(res, cmds->cmd[j + 1].name, &cmds->cmd[j], envp);
+			write_in_file(res, cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
 		else if (cmds->sep[i] == D_right)
-			append_to_file(res, cmds->cmd[j + 1].name, &cmds->cmd[j], envp);
+			append_to_file(res, cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
 		else if (cmds->sep[i] == S_left)
-			read_file(cmds->cmd[j + 1].name, &cmds->cmd[j], envp);
+			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
 		else if (cmds->sep[i] == D_left)
 			res = heredoc(cmds->cmd[j++].name);
+		if (cmds->sep[i] != Pipe && cmds->sep[i] != None)
+			j++;
 		i++;
 	}
 	free(res);
