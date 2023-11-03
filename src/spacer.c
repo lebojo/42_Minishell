@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/01 19:05:06 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/03 01:06:47 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,9 @@ char	*re_malloc(char *str, int size)
 
 	i = -1;
 	res = malloc(sizeof(char) * size);
-	res[size] = '\0';
+	if (!res)
+		return (NULL);
+	res[size - 1] = '\0';
 	while (str[++i])
 		res[i] = str[i];
 	free(str);
