@@ -6,7 +6,7 @@
 /*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/10/28 07:15:04 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/03 20:34:12 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,7 @@ char	**create_path_cmd(char **env)
 	path_env = add_str(path_env, ":", 1);
 	path_env = add_str(path_env, hm_get_value(env, "PWD"), 3);
 	path_cmd = ft_split(path_env, ':');
+	free(path_env);
 	return (path_cmd);
 }
 
@@ -62,6 +63,7 @@ void	exec_cmd(t_cmd *cmd, char **env)
 			if (dup2(2, STDOUT_FILENO) == -1)
 				return ;
 			printf("Command not found: \033[0;31m%s\033[0;0m\n", cmd->name);
+			free_tab(path_cmd);
 			exit (127);
 		}
 		exit(0);
