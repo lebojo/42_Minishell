@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/02 10:16:30 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/11/02 18:08:59 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ void	write_in_file(char *str, t_cmds *cmds, int x, char ***env)
 	if (id[1] == -1)
 		return ;
 	if (cmds->sep[x + 1] != Pipe && cmds->sep[x + 1] == S_right)
-		return;
+		return ;
 	if (str)
 	{
 		write(id[1], str, ft_strlen(str));
