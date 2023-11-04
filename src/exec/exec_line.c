@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 19:06:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 21:09:06 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
-	exec_sep(&cmds_ip, envp, pipe);
+	exec_sep(&cmds_ip, envp);
 	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
 	{
 		pipe->pid[0] = fork();
@@ -95,29 +95,27 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	free(cmds_ip.sep);
 }
 
-void	exec_sep(t_cmds *cmds, char ***envp, t_pipe *pipes)
+void	exec_sep(t_cmds *cmds, char ***envp)
 {
 	int		i;
 	int		j;
-	char	*res;
+	int		fd[2];
 
 	i = 0;
 	j = 0;
-	res = NULL;
+	if (pipe(fd) != 0)
+		return ;
 	while (cmds->sep && cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
 		if (cmds->sep[i] == S_right)
-			write_in_file(res, cmds, j, envp);
+			write_in_file(cmds, j, envp);
 		else if (cmds->sep[i] == D_right)
-			append_to_file(res, cmds, j, envp);
+			append_to_file(cmds, j, envp);
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
-		else if (cmds->sep[i] == D_left && cmds->nb_pipe >= 1)
-			res = heredoc(cmds->cmd[j].name, pipes->fd[cmds->nb_pipe - 1][1]);
-		else if (cmds->sep[i] == D_left && cmds->nb_pipe == 0)
-			res = heredoc(cmds->cmd[j].name, -1);
+		else if (cmds->sep[i] == D_left)
+			heredoc(fd, cmds, envp);
 		j++;
 		i++;
 	}
-	free(res);
 }

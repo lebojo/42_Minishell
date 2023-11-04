@@ -6,13 +6,13 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/04 14:43:18 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 19:36:49 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	write_in_file(char *str, t_cmds *cmds, int x, char ***env)
+void	write_in_file(t_cmds *cmds, int x, char ***env)
 {
 	int		id[2];
 
@@ -28,19 +28,13 @@ void	write_in_file(char *str, t_cmds *cmds, int x, char ***env)
 		return ;
 	if (cmds->sep[x + 1] != Pipe && cmds->sep[x + 1] == S_right)
 		return ;
-	if (str)
-	{
-		write(id[1], str, ft_strlen(str));
-		free(str);
-		close(id[1]);
-	}
-	else if (exec_inpipe_builtins(STDOUT_FILENO, id[1], &cmds->cmd[0], env))
+	if (exec_inpipe_builtins(STDOUT_FILENO, id[1], &cmds->cmd[0], env))
 		return ;
 	else
 		exec_in_fork(STDOUT_FILENO, id, &cmds->cmd[0], *env);
 }
 
-void	append_to_file(char *str, t_cmds *c, int x, char ***env)
+void	append_to_file(t_cmds *c, int x, char ***env)
 {
 	int		id[2];
 
@@ -56,13 +50,7 @@ void	append_to_file(char *str, t_cmds *c, int x, char ***env)
 		return ;
 	if (c->sep[x + 1] != Pipe && c->sep[x + 1] == D_right)
 		return ;
-	if (str)
-	{
-		write(id[1], str, ft_strlen(str));
-		free(str);
-		close(id[1]);
-	}
-	else if (exec_inpipe_builtins(STDOUT_FILENO, id[1], &c->cmd[0], env))
+	if (exec_inpipe_builtins(STDOUT_FILENO, id[1], &c->cmd[0], env))
 		return ;
 	else
 		exec_in_fork(STDOUT_FILENO, id, &c->cmd[0], *env);

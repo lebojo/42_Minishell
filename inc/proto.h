@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/04 16:54:10 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 21:09:11 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,10 +80,10 @@ char	*ask_quote(enum e_quote q, char *str);
 void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
 
 /*--------------------EXEC-----------------*/
-char	*heredoc(char *str, int fd);
+void	heredoc(int *fd, t_cmds *cmds, char ***env);
 void	read_file(char *name, t_cmd *cmd, char ***env);
-void	write_in_file(char *str, t_cmds *cmd, int x, char ***env);
-void	append_to_file(char *str, t_cmds *c, int x, char ***env);
+void	write_in_file(t_cmds *cmd, int x, char ***env);
+void	append_to_file(t_cmds *c, int x, char ***env);
 void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env);
 int		exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env);
 
@@ -94,7 +94,7 @@ int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char	*str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
-void	exec_sep(t_cmds *cmds, char ***envp, t_pipe *pipe);
+void	exec_sep(t_cmds *cmds, char ***envp);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
