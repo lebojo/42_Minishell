@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/02 10:00:03 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/11/04 14:38:03 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
 char	*heredoc(char *str);
 void	read_file(char *name, t_cmd *cmd, char ***env);
 void	write_in_file(char *str, t_cmds *cmd, int x, char ***env);
-void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env);
+void	append_to_file(char *str, t_cmds *c, int x, char ***env);
 void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env);
 int		exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env);
 
@@ -109,6 +109,7 @@ void	init_pipe(t_pipe *pipes, t_cmds *cmds);
 
 /*	PARSE_CMDS				*/
 t_cmds	parse_cmds(t_cmds src, int which_pipe);
+int		create_cmds(t_cmds *cmds);
 
 /*---------------------BUILTINS---------------------*/
 

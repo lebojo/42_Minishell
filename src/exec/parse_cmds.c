@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parse_cmds.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:25:49 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/03 20:23:48 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/04 14:31:50 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,21 @@ enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
 	return (res);
 }
 
+int	create_cmds(t_cmds *cmds)
+{
+	int	i;
+
+	i = -1;
+	cmds->cmd = ft_calloc(cmds->nb_cmd + 1, sizeof(t_cmd));
+	while (++i <= cmds->nb_cmd)
+	{
+		cmds->cmd[i].name = NULL;
+		cmds->cmd[i].arg = NULL;
+		cmds->cmd[i].which_pipe = 0;
+	}
+	return (0);
+}
+
 t_cmds	parse_cmds(t_cmds src, int which_pipe)
 {
 	t_cmds	res;
@@ -58,7 +73,7 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe)
 			res.nb_cmd++;
 		i++;
 	}
-	res.cmd = malloc(sizeof(t_cmd) * res.nb_cmd);
+	create_cmds(&res);
 	i = 0;
 	while (i < src.nb_cmd)
 	{

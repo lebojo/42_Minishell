@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/02 18:08:59 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/04 14:42:32 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,13 @@ void	write_in_file(char *str, t_cmds *cmds, int x, char ***env)
 	int		id[2];
 
 	id[0] = 0;
-	id[1] = open(cmds->cmd[x + 1].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if (cmds->cmd[x + 1].name != NULL)
+		id[1] = open(cmds->cmd[x + 1].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else
+	{
+		id[1] = open(cmds->cmd[x].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+		return ;
+	}
 	if (id[1] == -1)
 		return ;
 	if (cmds->sep[x + 1] != Pipe && cmds->sep[x + 1] == S_right)
@@ -34,13 +40,18 @@ void	write_in_file(char *str, t_cmds *cmds, int x, char ***env)
 		exec_in_fork(STDOUT_FILENO, id, &cmds->cmd[0], *env);
 }
 
-void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env)
+void	append_to_file(char *str, t_cmds *c, int x, char ***env)
 {
 	int		id[2];
 
 	id[0] = 0;
-	id[1] = open(name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	if (c->cmd[x + 1].name != NULL)
+		id[1] = open(c->cmd[x + 1].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		id[1] = open(c->cmd[x].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (id[1] == -1)
+		return ;
+	if (c->sep[x + 1] != Pipe && c->sep[x + 1] == D_right)
 		return ;
 	if (str)
 	{
@@ -48,8 +59,8 @@ void	append_to_file(char *str, char *name, t_cmd *cmd, char ***env)
 		free(str);
 		close(id[1]);
 	}
-	else if (exec_inpipe_builtins(STDOUT_FILENO, id[1], cmd, env))
+	else if (exec_inpipe_builtins(STDOUT_FILENO, id[1], &c->cmd[0], env))
 		return ;
 	else
-		exec_in_fork(STDOUT_FILENO, id, cmd, *env);
+		exec_in_fork(STDOUT_FILENO, id, &c->cmd[0], *env);
 }

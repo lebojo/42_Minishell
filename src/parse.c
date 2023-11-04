@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/04 13:50:08 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 14:27:35 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,21 +31,6 @@ char	**split_cleaner(char **split)
 		res[j++] = ft_strdup(split[i]);
 	free_tab(split);
 	return (res);
-}
-
-int	create_cmds(t_cmds *cmds)
-{
-	int	i;
-
-	i = -1;
-	cmds->cmd = ft_calloc(cmds->nb_cmd, sizeof(t_cmd));
-	while (++i < cmds->nb_cmd)
-	{
-		cmds->cmd[i].name = NULL;
-		cmds->cmd[i].arg = NULL;
-		cmds->cmd[i].which_pipe = 0;
-	}
-	return (0);
 }
 
 char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
