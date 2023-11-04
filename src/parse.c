@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/01 17:27:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 13:50:08 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,21 @@ char	**split_cleaner(char **split)
 	return (res);
 }
 
+int	create_cmds(t_cmds *cmds)
+{
+	int	i;
+
+	i = -1;
+	cmds->cmd = ft_calloc(cmds->nb_cmd, sizeof(t_cmd));
+	while (++i < cmds->nb_cmd)
+	{
+		cmds->cmd[i].name = NULL;
+		cmds->cmd[i].arg = NULL;
+		cmds->cmd[i].which_pipe = 0;
+	}
+	return (0);
+}
+
 char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 {
 	char	**split;
@@ -48,7 +63,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	inc->k = 0;
 	inc->s = 0;
 	sep_parse(cmds, input);
-	cmds->cmd = malloc(sizeof(t_cmd) * (cmds->nb_cmd));
+	create_cmds(cmds);
 	if (!char_in_str(split[inc->i][0], "|<>"))
 		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0, 1);
 	else
@@ -69,7 +84,12 @@ int	process_parse(t_cmds *cmds, t_inc *inc, char **split, char ***envp)
 		cmds->cmd[++inc->j].which_pipe = inc->k;
 		if (!split[++inc->i])
 			return (2);
-		cmds->cmd[inc->j].name = expand(split[inc->i], envp);
+		if (char_in_str(split[inc->i][0], "|<>"))
+			inc->i++;
+		if (split[inc->i])
+			cmds->cmd[inc->j].name = expand(split[inc->i], envp);
+		else
+			return (2);
 		cmds->cmd[inc->j].arg = NULL;
 		if (!split[++inc->i])
 			return (2);

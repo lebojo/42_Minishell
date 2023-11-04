@@ -6,13 +6,13 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/01 15:53:39 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 14:17:04 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
 
-void	ptain(int sig)
+void	sig_her(int sig)
 {
 	if (sig == SIGINT)
 	{
@@ -29,7 +29,7 @@ char	*heredoc(char *str)
 
 	res = ft_strdup("");
 	line = NULL;
-	signal(SIGINT, ptain);
+	signal(SIGINT, sig_her);
 	while (g_status != 2)
 	{
 		line = readline("heredoc>");

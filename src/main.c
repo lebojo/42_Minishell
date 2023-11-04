@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/01 19:06:44 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 13:22:03 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ int	check_syntax(char *str)
 
 	i = -1;
 	while (str[++i])
-		if (!char_in_str(str[i], "<>|"))
+		if (!char_in_str(str[i], "<>| \t"))
 			return (0);
 	return (1);
 }

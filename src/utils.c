@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   utils.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/29 23:28:21 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/04 13:15:26 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@ void	print_cmds(t_cmds cmds)
 	{
 		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i,
 			cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
-		if (cmds.nb_cmd > 1)
+		if (cmds.nb_cmd >= 1)
 			printf("sep[%d] = %d\n", i, cmds.sep[i]);
 		i++;
 	}

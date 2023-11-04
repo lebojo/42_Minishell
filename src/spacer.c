@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   spacer.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/03 01:06:47 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/11/04 13:13:40 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,13 +59,13 @@ char	*format_input_process(t_inc *inc, char *str, char *res, int q)
 	{
 		if (inc->i > 0 && !char_in_str(str[inc->i - 1], "|<> "))
 		{
-			res = re_malloc(res, ft_strlen(res) + 1);
+			res = re_malloc(res, ft_strlen(res) + 2);
 			res[inc->j++] = ' ';
 		}
 		res[inc->j++] = str[inc->i++];
 		if (!char_in_str(str[inc->i], "|<> "))
 		{
-			res = re_malloc(res, ft_strlen(res) + 1);
+			res = re_malloc(res, ft_strlen(res) + 3);
 			res[inc->j++] = ' ';
 		}
 	}

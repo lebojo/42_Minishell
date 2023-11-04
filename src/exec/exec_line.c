@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/02 18:18:40 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/04 13:17:33 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
-	if (cmds_ip.nb_cmd > 1)
+	if (cmds_ip.nb_cmd > 1 || cmds_ip.sep[0] == D_left)
 		exec_sep(&cmds_ip, envp);
 	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
 	{
@@ -114,7 +114,7 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
 		else if (cmds->sep[i] == D_left)
-			res = heredoc(cmds->cmd[j++].name);
+			res = heredoc(cmds->cmd[j].name);
 		j++;
 		i++;
 	}
