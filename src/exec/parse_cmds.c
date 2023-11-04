@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:25:49 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 16:33:56 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 17:46:37 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ enum e_sep	*sep_parse_inpipe(enum e_sep *src, int which_pipe)
 		if (cnt == which_pipe)
 			break ;
 	}
+	cnt = i;
 	while (src[i] != None && src[i++] != Pipe)
 		tmp++;
 	res = malloc(sizeof(enum e_sep) * (tmp + 1));
-	i = cnt;
 	tmp = 0;
-	while (src[i] != None && src[i] != Pipe)
-		res[tmp++] = src[i++];
+	while (src[cnt] != None && src[cnt] != Pipe)
+		res[tmp++] = src[cnt++];
 	res[tmp] = None;
 	return (res);
 }
@@ -65,7 +65,7 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe)
 	i = 0;
 	j = 0;
 	res.nb_cmd = 0;
-	res.nb_pipe = 0;
+	res.nb_pipe = src.nb_pipe;
 	res.sep = sep_parse_inpipe(src.sep, which_pipe);
 	while (i < src.nb_cmd)
 	{

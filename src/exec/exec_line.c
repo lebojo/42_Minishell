@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 16:28:07 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 17:49:57 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,8 +112,10 @@ void	exec_sep(t_cmds *cmds, char ***envp, t_pipe *pipes)
 			append_to_file(res, cmds, j, envp);
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
-		else if (cmds->sep[i] == D_left)
-			res = heredoc(cmds->cmd[j].name, pipes->fd[0][1]);
+		else if (cmds->sep[i] == D_left && cmds->nb_pipe >= 1)
+			res = heredoc(cmds->cmd[j].name, pipes->fd[cmds->nb_pipe - 1][1]);
+		else if (cmds->sep[i] == D_left && cmds->nb_pipe == 0)
+			res = heredoc(cmds->cmd[j].name, -1);
 		j++;
 		i++;
 	}

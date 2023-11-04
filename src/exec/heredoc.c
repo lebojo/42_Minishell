@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/04 16:43:53 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 17:49:42 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,8 @@ char	*heredoc(char *str, int fd)
 	res = ft_strdup("");
 	line = NULL;
 	signal(SIGINT, sig_her);
-	dup2(STDOUT_FILENO, 0);
+	if (fd != -1)
+		dup2(STDOUT_FILENO, 0);
 	while (g_status != 2)
 	{
 		line = readline("heredoc>");
@@ -41,7 +42,8 @@ char	*heredoc(char *str, int fd)
 		line = add_str(line, "\n", 1);
 		res = add_str(res, line, 3);
 	}
-	dup2(STDOUT_FILENO, fd);
+	if (fd != -1)
+		dup2(STDOUT_FILENO, fd);
 	if (g_status != 2)
 		free(line);
 	signal(SIGINT, sig_handler);
