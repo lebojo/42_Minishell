@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/04 14:42:32 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 14:43:18 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,10 @@ void	append_to_file(char *str, t_cmds *c, int x, char ***env)
 	if (c->cmd[x + 1].name != NULL)
 		id[1] = open(c->cmd[x + 1].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
+	{
 		id[1] = open(c->cmd[x].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
+		return ;
+	}
 	if (id[1] == -1)
 		return ;
 	if (c->sep[x + 1] != Pipe && c->sep[x + 1] == D_right)
