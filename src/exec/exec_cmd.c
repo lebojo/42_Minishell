@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_cmd.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 14:19:24 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/03 20:34:12 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/04 16:59:03 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,11 +50,10 @@ char	**create_path_cmd(char **env)
 void	exec_cmd(t_cmd *cmd, char **env)
 {
 	char	*ac_cmd;
-	char	**path_cmd;
 	char	**s_cmd;
 
-	path_cmd = create_path_cmd(env);
-	ac_cmd = get_cmd(path_cmd, cmd->name);
+	s_cmd = create_path_cmd(env);
+	ac_cmd = get_cmd(s_cmd, cmd->name);
 	s_cmd = split_cmd(*cmd);
 	if (!ac_cmd)
 	{
@@ -63,7 +62,6 @@ void	exec_cmd(t_cmd *cmd, char **env)
 			if (dup2(2, STDOUT_FILENO) == -1)
 				return ;
 			printf("Command not found: \033[0;31m%s\033[0;0m\n", cmd->name);
-			free_tab(path_cmd);
 			exit (127);
 		}
 		exit(0);
