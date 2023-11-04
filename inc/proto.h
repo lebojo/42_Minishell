@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/04 14:38:03 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 16:26:29 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ char	*ask_quote(enum e_quote q, char *str);
 void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
 
 /*--------------------EXEC-----------------*/
-char	*heredoc(char *str);
+char	*heredoc(char *str, int fd);
 void	read_file(char *name, t_cmd *cmd, char ***env);
 void	write_in_file(char *str, t_cmds *cmd, int x, char ***env);
 void	append_to_file(char *str, t_cmds *c, int x, char ***env);
@@ -89,7 +89,7 @@ int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char	*str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
-void	exec_sep(t_cmds *cmds, char ***envp);
+void	exec_sep(t_cmds *cmds, char ***envp, t_pipe *pipe);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   is_builtins.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/30 08:01:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/10/30 08:01:35 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/04 15:48:43 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,5 +32,6 @@ int	is_builtins(t_cmd *cmd, char ***envp)
 		ft_cd("..", envp);
 	else
 		return (0);
+	update_last_exit(0, envp);
 	return (1);
 }

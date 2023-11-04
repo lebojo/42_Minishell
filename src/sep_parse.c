@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/02 04:06:46 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/01 17:50:47 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:57:55 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,7 @@ void	process_sep_parse(t_cmds *cmds, char *input, t_inc *inc)
 		}
 		else
 			cmds->sep[inc->j++] = S_right;
+		g_status = 3;
 		return ;
 	}
 }

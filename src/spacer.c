@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/07 01:09:19 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 13:13:40 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/04 15:40:12 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,12 +18,15 @@ char	*re_malloc(char *str, int size)
 	char	*res;
 
 	i = -1;
-	res = malloc(sizeof(char) * size);
+	res = malloc(size * sizeof(char));
 	if (!res)
 		return (NULL);
-	res[size - 1] = '\0';
+	while (++i < size - 2)
+		res[i] = 'c';
+	i = -1;
 	while (str[++i])
 		res[i] = str[i];
+	res[i + 1] = '\0';
 	free(str);
 	return (res);
 }
@@ -65,7 +68,7 @@ char	*format_input_process(t_inc *inc, char *str, char *res, int q)
 		res[inc->j++] = str[inc->i++];
 		if (!char_in_str(str[inc->i], "|<> "))
 		{
-			res = re_malloc(res, ft_strlen(res) + 3);
+			res = re_malloc(res, ft_strlen(res) + 2);
 			res[inc->j++] = ' ';
 		}
 	}
@@ -88,14 +91,14 @@ char	*format_input(char *str)
 	res = str;
 	str = ft_strtrim(str, " \t");
 	free(res);
-	res = ft_calloc(ft_strlen(str) + 1, sizeof(char));
+	res = malloc(sizeof(char) * (ft_strlen(str) + 1));
+	res[ft_strlen(str)] = '\0';
 	while (str[inc.i])
 	{
 		rev_quote(&q, str[inc.i]);
 		res = format_input_process(&inc, str, res, q);
 	}
 	free(str);
-	res[inc.j] = '\0';
 	if (q != none)
 		return (ask_quote(q, res));
 	return (res);
