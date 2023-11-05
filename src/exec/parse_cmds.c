@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:25:49 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 17:46:37 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 13:07:30 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -82,4 +82,23 @@ t_cmds	parse_cmds(t_cmds src, int which_pipe)
 		i++;
 	}
 	return (res);
+}
+
+t_cmd	parse_cmd(char *str)
+{
+	t_cmd	rs;
+	char	**sp;
+	int		i;
+
+	i = 0;
+	sp = ft_split(str, ' ');
+	rs = create_cmd(sp[i++], NULL, 0, 0);
+	if (sp[i])
+	{
+		rs.arg = ft_strdup(sp[i++]);
+		while (sp[i])
+			add_str_space(&rs.arg, sp[i++]);
+	}
+	free_tab(sp);
+	return (rs);
 }

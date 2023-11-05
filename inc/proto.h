@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/04 21:09:11 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 12:49:59 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,6 +115,7 @@ void	init_pipe(t_pipe *pipes, t_cmds *cmds);
 /*	PARSE_CMDS				*/
 t_cmds	parse_cmds(t_cmds src, int which_pipe);
 int		create_cmds(t_cmds *cmds);
+t_cmd	parse_cmd(char *str);
 
 /*---------------------BUILTINS---------------------*/
 
