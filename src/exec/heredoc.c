@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/04 21:17:12 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 10:58:21 by lebojo           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,35 +22,53 @@ void	sig_her(int sig)
 	}
 }
 
+static int	sep_counter(t_cmds *cmds)
+{
+	int	i;
+	i = 0;
+	while (cmds->sep[i] != None)
+		i++;
+	return (i);
+}
+
 t_cmds	parse_heredoc(t_cmds *cmds)
 {
 	t_cmds	res;
-	char	**sp;
 	int		i;
 
-	res.nb_cmd = 2;
-	create_cmds(&res);
-	i = 0;
-	if (cmds->nb_cmd == 1)
+	res.nb_cmd = cmds->nb_cmd;
+	/*
+	X cmd parse que:
+	toutes les premières cmd.name -> des heredocs à blanc
+	l'avant derniere cmd.name -> le vrai heredoc
+	la derniere cmd.name -> la cmd à executer
+
+	nb_pipe = nb_sep ;)
+	*/
+	res.nb_pipe = sep_counter(cmds);
+	i = -1;
+	if (res.nb_cmd == res.nb_pipe)
 	{
-		res.nb_cmd = 1;
-		res.cmd[0] = create_cmd(cmds->cmd[0].name, NULL, 0, 0);
-		if (cmds->cmd[0].arg)
+		res.nb_cmd = cmds->nb_cmd + 1;
+		create_cmds(&res);
+		while (++i < res.nb_cmd - 1) // ptetre - 1
 		{
-			res.nb_cmd = 2;
-			sp = ft_split(cmds->cmd[0].arg, ' ');
-			res.cmd[1].name = sp[0];
-			while (sp[++i])
-				add_str_space(&res.cmd[1].arg, sp[i]); // Peut etre ca marche pas parce que arg est a NULL
+			res.cmd[i].name = ft_strdup(cmds->cmd[i].name);
+			res.cmd[i].arg = NULL;
+			if (cmds->cmd[i].arg) //marche pas si plusieurs ont un arg
+				res.cmd[res.nb_cmd - 1].name = ft_strdup(cmds->cmd[i].arg);
 		}
 	}
 	else
 	{
-		res.cmd[0] = create_cmd(cmds->cmd[1].name, NULL, 0, 0);
-		if (cmds->cmd[0].arg)
-			res.cmd[1] = cmds->cmd[0];
-		else
-			res.cmd[1].name = cmds->cmd[0].name;
+		res.nb_cmd = cmds->nb_cmd;
+		create_cmds(&res);
+		res.cmd[res.nb_cmd - 1].name = ft_strdup(cmds->cmd[++i].name);
+		while (++i < res.nb_cmd)
+		{
+			res.cmd[i - 1].name = ft_strdup(cmds->cmd[i].name);
+			res.cmd[i - 1].arg = NULL;
+		}
 	}
 	return (res);
 }
@@ -58,34 +76,62 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 // cat << g;
 // << g cat; 
 // << g;
+// << g << t cat << h -> arg et 3 sep 3 cmd
+// cat << g << t -> pas arg et 2 sep 3 cmd
+// cat << g << t fichier1 << h << fichier 2 -> cat fichier1 et fichier2, osef des heredocs
 
-void	heredoc(int *fd, t_cmds *cmds, char ***env)
+char	*heredoc_process(char *break_str)
 {
-	char	*line;
 	char	*res;
-	t_cmds	p_cmds;
+	char	*line;
+	int		i;
 
+	i = 0;
 	res = ft_strdup("");
 	line = NULL;
-	p_cmds = parse_heredoc(cmds);
-	print_cmds(p_cmds);
 	signal(SIGINT, sig_her);
-	close(fd[0]);
-	dup2(fd[1], STDOUT_FILENO);
-	close(fd[1]);
 	while (g_status != 2)
 	{
 		line = readline("heredoc> ");
 		if (line && line[0] == '\0')
 			line = ft_strdup("\n");
-		if (ft_strcmp(line, p_cmds.cmd[0].name) == 1)
+		if (ft_strcmp(line, break_str) == 1)
 			break ;
 		line = add_str(line, "\n", 1);
 		res = add_str(res, line, 3);
 	}
+	signal(SIGINT, sig_handler); // les signaux -> A TESTER
 	if (g_status != 2)
 		free(line);
-	signal(SIGINT, sig_handler);
+	return (res);
+}
+
+void	heredoc(int *fd, t_cmds *cmds, char ***env)
+{
+	char	*res;
+	int		i;
+	t_cmds	p_cmds;
+
+	res = ft_strdup("");
+	i = 0;
+	p_cmds = parse_heredoc(cmds);
+	
+	/*===DEBUG===*/
+	p_cmds.sep = malloc(sizeof(enum e_sep) * 2);
+	p_cmds.sep[0] = None;
+	p_cmds.sep[1] = None;
+	print_cmds(p_cmds);
+	/*==ENDEBUG==*/
+	
+	close(fd[0]);
+	dup2(fd[1], STDOUT_FILENO);
+	close(fd[1]);
+	
+	while (g_status != 2 && res)
+	{
+		res = heredoc_process(p_cmds.cmd[0].name);
+	}
+		
 	write(fd[1], res, ft_strlen(res));
 	if (p_cmds.cmd[1].arg)
 		exec_in_fork(STDIN_FILENO, fd, &p_cmds.cmd[1], *env);
