@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 21:09:06 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 15:57:25 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,8 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
-	exec_sep(&cmds_ip, envp);
+	if (exec_sep(&cmds_ip, envp))
+		return ;
 	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
 	{
 		pipe->pid[0] = fork();
@@ -95,16 +96,18 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	free(cmds_ip.sep);
 }
 
-void	exec_sep(t_cmds *cmds, char ***envp)
+int	exec_sep(t_cmds *cmds, char ***envp)
 {
 	int		i;
 	int		j;
+	int		res;
 	int		fd[2];
 
 	i = 0;
 	j = 0;
+	res = 0;
 	if (pipe(fd) != 0)
-		return ;
+		return (0);
 	while (cmds->sep && cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
 		if (cmds->sep[i] == S_right)
@@ -114,8 +117,12 @@ void	exec_sep(t_cmds *cmds, char ***envp)
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
 		else if (cmds->sep[i] == D_left)
+		{
 			heredoc(fd, cmds, envp);
+			res = 1;
+		}
 		j++;
 		i++;
 	}
+	return (res);
 }

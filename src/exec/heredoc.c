@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/05 14:12:58 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 16:56:04 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ static int	sep_counter(t_cmds *cmds)
 	int	i;
 
 	i = 0;
-	while (cmds->sep[i] != None)
+	while (cmds->sep[i] == D_left)
 		i++;
 	return (i);
 }
@@ -38,15 +38,8 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	int		i;
 
 	res.nb_cmd = cmds->nb_cmd;
-	/*
-	X cmd parse que:
-	toutes les premières cmd.name -> des heredocs à blanc
-	l'avant derniere cmd.name -> le vrai heredoc
-	la derniere cmd.name -> la cmd à executer
-
-	nb_pipe = nb_sep ;)
-	*/
 	res.nb_pipe = sep_counter(cmds);
+	res.sep = malloc(1);
 	i = -1;
 	if (res.nb_cmd == res.nb_pipe)
 	{
@@ -112,10 +105,10 @@ void	heredoc(int *fd, t_cmds *cmds, char ***env)
 	char			*res;
 	static int		i = 0;
 	static t_cmds	p_cmds;
-
+	
 	res = ft_strdup("");
 	if (i == 0)
-		p_cmds = parse_heredoc(cmds);
+		p_cmds = parse_heredoc(cmds); 
 	res = heredoc_process(p_cmds.cmd[i++].name);
 	if (i == p_cmds.nb_pipe)
 	{
@@ -125,7 +118,10 @@ void	heredoc(int *fd, t_cmds *cmds, char ***env)
 			close(fd[1]);
 			dup2(fd[0], STDIN_FILENO);
 			close(fd[0]);
-			exec_in_fork(STDIN_FILENO, fd, &p_cmds.cmd[i], *env);
+			close(fd[1]);
+			exec_in_fork(STDOUT_FILENO, fd, &p_cmds.cmd[i], *env);
+			close_pipe(fd);
+			dup2(1, STDIN_FILENO);
 		}
 		i = 0;
 		free_cmds(&p_cmds);
