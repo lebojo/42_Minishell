@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/05 13:31:14 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 14:12:58 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,19 +115,8 @@ void	heredoc(int *fd, t_cmds *cmds, char ***env)
 
 	res = ft_strdup("");
 	if (i == 0)
-	{
 		p_cmds = parse_heredoc(cmds);
-		/*===DEBUG===*/
-		p_cmds.sep = malloc(sizeof(enum e_sep) * 2);
-		p_cmds.sep[0] = None;
-		p_cmds.sep[1] = None;
-		print_cmds(p_cmds);
-		/*==ENDEBUG==*/
-	}
-	
 	res = heredoc_process(p_cmds.cmd[i++].name);
-		
-	free(res);
 	if (i == p_cmds.nb_pipe)
 	{
 		if (p_cmds.cmd[i].name)
@@ -140,8 +129,8 @@ void	heredoc(int *fd, t_cmds *cmds, char ***env)
 		}
 		i = 0;
 		free_cmds(&p_cmds);
-		return ;
 	}
+	free(res);
 }
 
 void	read_file(char *name, t_cmd *cmd, char ***env)
