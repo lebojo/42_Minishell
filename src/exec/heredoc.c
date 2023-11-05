@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/05 16:56:04 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/05 17:28:50 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,13 +67,6 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	return (res);
 }
 
-// cat << g;
-// << g cat; 
-// << g;
-// << g << t cat << h -> arg et 3 sep 3 cmd
-// cat << g << t -> pas arg et 2 sep 3 cmd
-// cat << g << t fichier1 << h << fichier 2 -> cat fichier1 et fichier2, osef des heredocs
-
 char	*heredoc_process(char *break_str)
 {
 	char	*res;
@@ -93,8 +86,9 @@ char	*heredoc_process(char *break_str)
 			break ;
 		line = add_str(line, "\n", 1);
 		res = add_str(res, line, 3);
+		line = NULL;
 	}
-	signal(SIGINT, sig_handler); // les signaux -> A TESTER
+	signal(SIGINT, sig_handler);
 	if (g_status != 2)
 		free(line);
 	return (res);
