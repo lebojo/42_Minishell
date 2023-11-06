@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/06 15:58:49 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:45:09 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,48 +25,119 @@ void	sig_her(int sig)
 int	heredoc_counter(t_cmds *cmds)
 {
 	int	i;
+	int	res;
 
-	i = 0;
-	while (cmds->sep[i] == D_left)
-		i++;
-	return (i);
+	i = -1;
+	res = 0;
+	while (cmds->sep[++i] != None)
+		if (cmds->sep[i] == D_left)
+			res++;
+	return (res);
+}
+
+int	sepp_counter(t_cmds *cmds)
+{
+	int	i;
+	int	res;
+
+	i = -1;
+	res = 0;
+	while (cmds->sep[++i] != None)
+		if (cmds->sep[i] == D_left)
+			res++;
+	return (res);
 }
 
 //<< g << t > t <<
 
+int	has_output(enum e_sep *x)
+{
+	int	i;
+
+	i = -1;
+	while (x[++i] != None)
+		if (x[i] == S_right | x[i] == D_right)
+			return (1);
+	return (0);
+}
+
+// t_cmds	parse_heredoc(t_cmds *cmds)
+// {
+// 	t_cmds	res;
+// 	int		i;
+
+// 	res.nb_cmd = cmds->nb_cmd;
+// 	res.nb_pipe = heredoc_counter(cmds);
+// 	res.sep = malloc(1);
+// 	i = -1;
+// 	if (res.nb_cmd == res.nb_pipe)
+// 	{
+// 		res.nb_cmd = cmds->nb_cmd + 1;
+// 		if (has_output(cmds->sep))
+// 			res.nb_cmd++;
+// 		create_cmds(&res);
+// 		while (++i < res.nb_cmd - 1)
+// 		{
+// 			res.cmd[i].name = ft_strdup(cmds->cmd[i].name);
+// 			res.cmd[i].arg = NULL;
+// 			if (cmds->cmd[i].arg) //marche pas si plusieurs ont un arg
+// 				res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[i].arg);
+// 		}
+// 	}
+// 	else if (res.nb_cmd > res.nb_pipe)
+// 	{
+// 		if (has_output(cmds->sep))
+// 			res.nb_cmd++;
+// 		create_cmds(&res);
+// 		res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[++i].name);
+// 		while (++i < res.nb_cmd)
+// 		{
+// 			res.cmd[i - 1].name = ft_strdup(cmds->cmd[i].name);
+// 			res.cmd[i - 1].arg = NULL;
+// 		}
+// 	}
+// 	return (res);
+// }
+
 t_cmds	parse_heredoc(t_cmds *cmds)
 {
 	t_cmds	res;
+	int		nb_cmd;
+	char	**sp;
 	int		i;
+	int		index_cmd;
 
-	res.nb_cmd = cmds->nb_cmd;
-	res.nb_pipe = heredoc_counter(cmds);
-	res.sep = malloc(1);
-	i = -1;
-	if (res.nb_cmd == res.nb_pipe || )
+	i = 0;
+	index_cmd = 0;
+	sp = ft_split(cmds->line, ' ');
+	nb_cmd = 0;
+	while (sp[i])
 	{
-		res.nb_cmd = cmds->nb_cmd + 1;
-		create_cmds(&res);
-		while (++i < res.nb_cmd - 1)
-		{
-			res.cmd[i].name = ft_strdup(cmds->cmd[i].name);
-			res.cmd[i].arg = NULL;
-			if (cmds->cmd[i].arg) //marche pas si plusieurs ont un arg
-				res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[i].arg);
-		}
+		if (ft_strcmp(sp[i], "<<"))
+			nb_cmd++;
+		i++;
 	}
-	else if (res.nb_cmd > res.nb_pipe)
+	res.nb_cmd = nb_cmd + 2;
+	create_cmds(&res);
+	res.line = ft_strdup(cmds->line);
+	i = 0;
+	while (sp[i])
 	{
-		if (sep_comparator(cmds->sep))
-			return ;
-		create_cmds(&res);
-		res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[++i].name);
-		while (++i < res.nb_cmd)
+		printf("sp[%i] = %s\n", i, sp[i]);
+		if (ft_strcmp(sp[i], "<<"))
+			res.cmd[index_cmd++].name = ft_strdup(sp[++i]);
+		else
 		{
-			res.cmd[i - 1].name = ft_strdup(cmds->cmd[i].name);
-			res.cmd[i - 1].arg = NULL;
+			if (i != 0 && i > res.nb_cmd)
+				printf("Syntax error heredoc\n");
+			if (ft_strcmp(sp[i], ">") || ft_strcmp(sp[i], ">>"))
+				res.cmd[res.nb_cmd - 1].name = ft_strdup(sp[++i]);
+			else
+				res.cmd[res.nb_cmd - 2].name = ft_strdup(sp[i]);
 		}
+		i++;
 	}
+	print_cmds(res);
 	return (res);
 }
 
@@ -74,9 +145,7 @@ char	*heredoc_process(char *break_str)
 {
 	char	*res;
 	char	*line;
-	int		i;
 
-	i = 0;
 	res = ft_strdup("");
 	line = NULL;
 	signal(SIGINT, sig_her);
@@ -104,15 +173,16 @@ int	heredoc(int *fd, t_cmds *cmds, char ***env)
 	static t_cmds	p_cmds;
 	
 	res = ft_strdup("");
-	if (i == 0)
-		p_cmds = parse_heredoc(cmds); 
+	//if (i == 0)
+	p_cmds = parse_heredoc(cmds); 
 	res = heredoc_process(p_cmds.cmd[i++].name);
-
-	//===DEBUG===
-	print_cmds(*cmds);
-	printf("===here===\n");
-	print_cmds(p_cmds);
-	//==ENDEBUG==
+	free_cmds(&p_cmds);
+	return (0);
+	// //===DEBUG===
+	// print_cmds(*cmds);
+	// printf("===here===\n");
+	// print_cmds(p_cmds);
+	// //==ENDEBUG==
 	
 	if (i == p_cmds.nb_pipe)
 	{
@@ -123,15 +193,17 @@ int	heredoc(int *fd, t_cmds *cmds, char ***env)
 			dup2(fd[0], STDIN_FILENO);
 			close(fd[0]);
 			close(fd[1]);
-			exec_in_fork(STDOUT_FILENO, fd, &p_cmds.cmd[i], *env);
+			exec_in_fork(STDOUT_FILENO, fd, &p_cmds.cmd[p_cmds.nb_cmd - 1], *env);
 			close_pipe(fd);
 			dup2(1, STDIN_FILENO);
 		}
 		i = 0;
 		free_cmds(&p_cmds);
+		free(res);
+		return (1);
 	}
 	free(res);
-	return (1);
+	return (0);
 }
 
 void	read_file(char *name, t_cmd *cmd, char ***env)

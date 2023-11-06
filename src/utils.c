@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/04 13:15:26 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 19:08:13 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,27 +23,12 @@ void	print_cmds(t_cmds cmds)
 	{
 		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i,
 			cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
-		if (cmds.nb_cmd >= 1)
-			printf("sep[%d] = %d\n", i, cmds.sep[i]);
+		// if (cmds.nb_cmd >= 1)
+		// 	printf("sep[%d] = %d\n", i, cmds.sep[i]);
 		i++;
 	}
 	printf("\033[1;33m=======END=======\033[0m\n");
 }
-
-// void	create_prompt(char **prompt)
-// {
-// 	char	*af;
-// 	char	pwd[4096];
-
-// 	af = actual_folder();
-// 	if (ft_strcmp(af, "Jordan"))
-// 		*prompt = add_str("❤️ \e[0;32m➜ \e[0;36m", af, 2);
-// 	else if (ft_strcmp(getcwd(pwd, 4096), getenv("HOME")))
-// 		*prompt = add_str("🏠 \e[0;32m➜ \e[0;36m", af, 2);
-// 	else
-// 		*prompt = add_str("💻 \e[0;32m➜ \e[0;36m", af, 2);
-// 	*prompt = add_str(*prompt, "\e[0;32m > \e[0m", 1);
-// }
 
 void	create_prompt(char **prompt, char **env)
 {
@@ -55,7 +40,7 @@ void	create_prompt(char **prompt, char **env)
 	af = actual_folder();
 	home = hm_get_value(env, "HOME");
 	lst = hm_get_value(env, "?");
-	if (ft_strcmp(af, "Jordan"))
+	if (ft_strcmp(af, "Jordan") || ft_strcmp(af, "Arthur"))
 		*prompt = add_str("<3 ➜ ", af, 2);
 	else if (ft_strcmp(getcwd(pwd, 4096), home))
 		*prompt = add_str("~ ➜ ", af, 2);

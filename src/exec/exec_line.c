@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/06 14:57:44 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:56:30 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,7 @@ void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
 	int		exit_status;
 
 	cmds_ip = parse_cmds(*cmds, which_pipe);
+	//printf("(%i)line: %s\nline_ip: %s\n\n", which_pipe, cmds->line, cmds_ip.line);
 	if (exec_sep(&cmds_ip, envp))
 		return ;
 	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
@@ -101,17 +102,21 @@ int	exec_sep(t_cmds *cmds, char ***envp)
 	int		i;
 	int		j;
 	int		res;
-	int		fd[2];
+	int		*fd;
 
 	i = 0;
 	j = 0;
 	res = 0;
+	fd = malloc(sizeof(int) * 2);
 	if (pipe(fd) != 0)
 		return (0);
 	while (cmds->sep && cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
-		if (cmds->sep[i] == S_right)
-			write_in_file(cmds, j, envp);
+		printf("sep[%i] = %d, res = %i\n", i, cmds->sep[i], res);
+		if (cmds->sep[i] == S_right && res == 0)
+			write_in_file(cmds, j, envp, STDOUT_FILENO);
+		else if (cmds->sep[i] == S_right)
+			write_in_file_here(cmds, j, fd[1]);
 		else if (cmds->sep[i] == D_right)
 			append_to_file(cmds, j, envp);
 		else if (cmds->sep[i] == S_left)

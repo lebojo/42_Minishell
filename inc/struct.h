@@ -71,6 +71,7 @@ typedef struct s_cmds
 {
 	int			nb_cmd;
 	int			nb_pipe;
+	char		*line;
 	t_cmd		*cmd;
 	enum e_sep	*sep;
 }	t_cmds;

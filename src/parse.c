@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/04 20:03:34 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 18:50:41 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	inc->s = 0;
 	sep_parse(cmds, input);
 	create_cmds(cmds);
+	cmds->line = ft_strdup(input);
 	if (!char_in_str(split[inc->i][0], "|<>"))
 		cmds->cmd[0] = create_cmd(expand(split[inc->i++], envp), NULL, 0, 1);
 	else
