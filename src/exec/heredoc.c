@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/06 14:47:44 by abourgue         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:36:27 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,17 @@ void	sig_her(int sig)
 	}
 }
 
-static int	sep_counter(t_cmds *cmds)
+int	heredoc_counter(t_cmds *cmds)
 {
 	int	i;
+	int	res;
 
 	i = 0;
-	while (cmds->sep[i] == D_left)
-		i++;
-	return (i);
+	res = 0;
+	while (cmds->sep[i] != None)
+		if (cmds->sep[i++] == D_left)
+			res++;
+	return (res);
 }
 
 t_cmds	parse_heredoc(t_cmds *cmds)
@@ -38,7 +41,7 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	int		i;
 
 	res.nb_cmd = cmds->nb_cmd;
-	res.nb_pipe = sep_counter(cmds);
+	res.nb_pipe = heredoc_counter(cmds);
 	res.sep = malloc(1);
 	i = -1;
 	if (res.nb_cmd == res.nb_pipe)
@@ -55,7 +58,8 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	}
 	else
 	{
-		res.nb_cmd = cmds->nb_cmd;
+		if (sep_comparator(cmds->sep))
+			return ;
 		create_cmds(&res);
 		res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[++i].name);
 		while (++i < res.nb_cmd)
@@ -104,6 +108,13 @@ int	heredoc(int *fd, t_cmds *cmds, char ***env)
 	if (i == 0)
 		p_cmds = parse_heredoc(cmds); 
 	res = heredoc_process(p_cmds.cmd[i++].name);
+
+	//===DEBUG===
+	print_cmds(*cmds);
+	printf("===here===\n");
+	print_cmds(p_cmds);
+	//==ENDEBUG==
+	
 	if (i == p_cmds.nb_pipe)
 	{
 		if (p_cmds.cmd[i].name)
