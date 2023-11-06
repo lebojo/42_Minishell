@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/05 15:57:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:57:44 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,10 +117,7 @@ int	exec_sep(t_cmds *cmds, char ***envp)
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
 		else if (cmds->sep[i] == D_left)
-		{
-			heredoc(fd, cmds, envp);
-			res = 1;
-		}
+			res = heredoc(fd, cmds, envp);
 		j++;
 		i++;
 	}

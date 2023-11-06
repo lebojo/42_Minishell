@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   proto.h                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/05 15:41:01 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:48:03 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ char	*ask_quote(enum e_quote q, char *str);
 void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
 
 /*--------------------EXEC-----------------*/
-void	heredoc(int *fd, t_cmds *cmds, char ***env);
+int	heredoc(int *fd, t_cmds *cmds, char ***env);
 void	read_file(char *name, t_cmd *cmd, char ***env);
 void	write_in_file(t_cmds *cmd, int x, char ***env);
 void	append_to_file(t_cmds *c, int x, char ***env);

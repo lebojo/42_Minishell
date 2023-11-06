@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/05 17:28:50 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 14:47:44 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,7 @@ char	*heredoc_process(char *break_str)
 	return (res);
 }
 
-void	heredoc(int *fd, t_cmds *cmds, char ***env)
+int	heredoc(int *fd, t_cmds *cmds, char ***env)
 {
 	char			*res;
 	static int		i = 0;
@@ -121,6 +121,7 @@ void	heredoc(int *fd, t_cmds *cmds, char ***env)
 		free_cmds(&p_cmds);
 	}
 	free(res);
+	return (1);
 }
 
 void	read_file(char *name, t_cmd *cmd, char ***env)
