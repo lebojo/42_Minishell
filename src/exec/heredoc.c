@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/06 15:36:27 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/06 15:58:49 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,15 +25,14 @@ void	sig_her(int sig)
 int	heredoc_counter(t_cmds *cmds)
 {
 	int	i;
-	int	res;
 
 	i = 0;
-	res = 0;
-	while (cmds->sep[i] != None)
-		if (cmds->sep[i++] == D_left)
-			res++;
-	return (res);
+	while (cmds->sep[i] == D_left)
+		i++;
+	return (i);
 }
+
+//<< g << t > t <<
 
 t_cmds	parse_heredoc(t_cmds *cmds)
 {
@@ -44,7 +43,7 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	res.nb_pipe = heredoc_counter(cmds);
 	res.sep = malloc(1);
 	i = -1;
-	if (res.nb_cmd == res.nb_pipe)
+	if (res.nb_cmd == res.nb_pipe || )
 	{
 		res.nb_cmd = cmds->nb_cmd + 1;
 		create_cmds(&res);
@@ -56,7 +55,7 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 				res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[i].arg);
 		}
 	}
-	else
+	else if (res.nb_cmd > res.nb_pipe)
 	{
 		if (sep_comparator(cmds->sep))
 			return ;
