@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/06 19:08:13 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 13:33:43 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	create_prompt(char **prompt, char **env)
 	char	*home;
 	char	*lst;
 	char	pwd[4096];
-
+ 
 	af = actual_folder();
 	home = hm_get_value(env, "HOME");
 	lst = hm_get_value(env, "?");

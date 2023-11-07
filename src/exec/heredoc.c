@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/06 19:45:09 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:20:27 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,83 +21,6 @@ void	sig_her(int sig)
 		rl_on_new_line();
 	}
 }
-
-int	heredoc_counter(t_cmds *cmds)
-{
-	int	i;
-	int	res;
-
-	i = -1;
-	res = 0;
-	while (cmds->sep[++i] != None)
-		if (cmds->sep[i] == D_left)
-			res++;
-	return (res);
-}
-
-int	sepp_counter(t_cmds *cmds)
-{
-	int	i;
-	int	res;
-
-	i = -1;
-	res = 0;
-	while (cmds->sep[++i] != None)
-		if (cmds->sep[i] == D_left)
-			res++;
-	return (res);
-}
-
-//<< g << t > t <<
-
-int	has_output(enum e_sep *x)
-{
-	int	i;
-
-	i = -1;
-	while (x[++i] != None)
-		if (x[i] == S_right | x[i] == D_right)
-			return (1);
-	return (0);
-}
-
-// t_cmds	parse_heredoc(t_cmds *cmds)
-// {
-// 	t_cmds	res;
-// 	int		i;
-
-// 	res.nb_cmd = cmds->nb_cmd;
-// 	res.nb_pipe = heredoc_counter(cmds);
-// 	res.sep = malloc(1);
-// 	i = -1;
-// 	if (res.nb_cmd == res.nb_pipe)
-// 	{
-// 		res.nb_cmd = cmds->nb_cmd + 1;
-// 		if (has_output(cmds->sep))
-// 			res.nb_cmd++;
-// 		create_cmds(&res);
-// 		while (++i < res.nb_cmd - 1)
-// 		{
-// 			res.cmd[i].name = ft_strdup(cmds->cmd[i].name);
-// 			res.cmd[i].arg = NULL;
-// 			if (cmds->cmd[i].arg) //marche pas si plusieurs ont un arg
-// 				res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[i].arg);
-// 		}
-// 	}
-// 	else if (res.nb_cmd > res.nb_pipe)
-// 	{
-// 		if (has_output(cmds->sep))
-// 			res.nb_cmd++;
-// 		create_cmds(&res);
-// 		res.cmd[res.nb_cmd - 1] = parse_cmd(cmds->cmd[++i].name);
-// 		while (++i < res.nb_cmd)
-// 		{
-// 			res.cmd[i - 1].name = ft_strdup(cmds->cmd[i].name);
-// 			res.cmd[i - 1].arg = NULL;
-// 		}
-// 	}
-// 	return (res);
-// }
 
 t_cmds	parse_heredoc(t_cmds *cmds)
 {
@@ -123,21 +46,28 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	i = 0;
 	while (sp[i])
 	{
-		printf("sp[%i] = %s\n", i, sp[i]);
 		if (ft_strcmp(sp[i], "<<"))
+		{
+			res.cmd[index_cmd].arg = ft_strdup("<<");
 			res.cmd[index_cmd++].name = ft_strdup(sp[++i]);
+		}
 		else
 		{
 			if (i != 0 && i > res.nb_cmd)
 				printf("Syntax error heredoc\n");
 			if (ft_strcmp(sp[i], ">") || ft_strcmp(sp[i], ">>"))
+			{
+				res.cmd[res.nb_cmd - 1].arg = ft_strdup(sp[i]);
 				res.cmd[res.nb_cmd - 1].name = ft_strdup(sp[++i]);
+			}
 			else
+			{
 				res.cmd[res.nb_cmd - 2].name = ft_strdup(sp[i]);
+				res.cmd[res.nb_cmd - 2].arg = ft_strdup("cmd");
+			}
 		}
 		i++;
 	}
-	print_cmds(res);
 	return (res);
 }
 
@@ -168,54 +98,26 @@ char	*heredoc_process(char *break_str)
 
 int	heredoc(int *fd, t_cmds *cmds, char ***env)
 {
-	char			*res;
-	static int		i = 0;
-	static t_cmds	p_cmds;
-	
+	char	*res;
+	int		i;
+	t_cmds	p_cmds;
+
+	i = 0;
 	res = ft_strdup("");
-	//if (i == 0)
-	p_cmds = parse_heredoc(cmds); 
-	res = heredoc_process(p_cmds.cmd[i++].name);
-	free_cmds(&p_cmds);
-	return (0);
-	// //===DEBUG===
-	// print_cmds(*cmds);
-	// printf("===here===\n");
-	// print_cmds(p_cmds);
-	// //==ENDEBUG==
-	
-	if (i == p_cmds.nb_pipe)
+	p_cmds = parse_heredoc(cmds);
+	while (i < p_cmds.nb_cmd - 3) // -2 = pas le cmd et pas le >, -3 pas la derniere cmd non plus
 	{
-		if (p_cmds.cmd[i].name)
-		{
-			write(fd[1], res, ft_strlen(res));
-			close(fd[1]);
-			dup2(fd[0], STDIN_FILENO);
-			close(fd[0]);
-			close(fd[1]);
-			exec_in_fork(STDOUT_FILENO, fd, &p_cmds.cmd[p_cmds.nb_cmd - 1], *env);
-			close_pipe(fd);
-			dup2(1, STDIN_FILENO);
-		}
-		i = 0;
-		free_cmds(&p_cmds);
+		res = heredoc_process(p_cmds.cmd[i++].name);
 		free(res);
-		return (1);
+	}
+	res = heredoc_process(p_cmds.cmd[i].name);
+	if (p_cmds.cmd[i + 1].name) // + 1 == cmd, +2 == redirect
+	{
+		if (p_cmds.cmd[i + 2].name)// == ya redirect
+			write_in_here(&p_cmds, i, env);
+		else
+			exec_in_fork(STDIN_FILENO, fd, &cmds->cmd[0], *env);
 	}
 	free(res);
 	return (0);
-}
-
-void	read_file(char *name, t_cmd *cmd, char ***env)
-{
-	int	id[2];
-
-	id[0] = 0;
-	id[1] = open(name, O_RDONLY);
-	if (id[1] == -1)
-		return ;
-	if (exec_inpipe_builtins(STDIN_FILENO, id[1], cmd, env))
-		return ;
-	else
-		exec_in_fork(STDIN_FILENO, id, cmd, *env);
 }

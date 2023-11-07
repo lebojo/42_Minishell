@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/06 18:56:30 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:01:34 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -112,7 +112,6 @@ int	exec_sep(t_cmds *cmds, char ***envp)
 		return (0);
 	while (cmds->sep && cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
-		printf("sep[%i] = %d, res = %i\n", i, cmds->sep[i], res);
 		if (cmds->sep[i] == S_right && res == 0)
 			write_in_file(cmds, j, envp, STDOUT_FILENO);
 		else if (cmds->sep[i] == S_right)
