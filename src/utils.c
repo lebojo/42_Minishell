@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/07/23 17:11:50 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/07 13:33:43 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 14:44:41 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,8 @@ void	print_cmds(t_cmds cmds)
 	{
 		printf("cmd[%d] name = %s, arg = %s, pipe = %i\n", i,
 			cmds.cmd[i].name, cmds.cmd[i].arg, cmds.cmd[i].which_pipe);
-		// if (cmds.nb_cmd >= 1)
-		// 	printf("sep[%d] = %d\n", i, cmds.sep[i]);
+		if (cmds.nb_cmd >= 1)
+			printf("sep[%d] = %d\n", i, cmds.sep[i]);
 		i++;
 	}
 	printf("\033[1;33m=======END=======\033[0m\n");
@@ -36,7 +36,7 @@ void	create_prompt(char **prompt, char **env)
 	char	*home;
 	char	*lst;
 	char	pwd[4096];
- 
+
 	af = actual_folder();
 	home = hm_get_value(env, "HOME");
 	lst = hm_get_value(env, "?");

@@ -51,14 +51,13 @@ void	close_pipe(int *fd)
 	close(fd[1]);
 }
 
-void	free_all(t_cmds *cmds, char ***env)
+void	free_pipes(t_pipe *pipes, int nb_pipes)
 {
 	int	i;
 
-	i = 0;
-	free_cmds(cmds);
-	free(cmds);
-	while ((*env)[i] != NULL)
-		free((*env)[i++]);
-	free(*env);
+	i = -1;
+	while (++i < nb_pipes && pipes->fd)
+		free(pipes->fd[i]);
+	free(pipes->fd);
+	free(pipes->pid);
 }

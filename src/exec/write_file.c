@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 14:19:48 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:53:11 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,69 @@ void	write_in_file(t_cmds *cmds, int x, char ***env, int out)
 		exec_in_fork(out, id, &cmds->cmd[0], *env);
 }
 
-void	write_in_here(t_cmds *cmds, int i, char **env)
+void	exec_herefork(int fd, char *txt, t_cmd *cmd, char **env)
+{
+	pid_t pid;
+	int p[2];
+	if (pipe(p) == -1) {
+		perror("pipe");
+		exit(EXIT_FAILURE);
+	}
+	if ((pid = fork()) == -1) {
+		perror("fork");
+		exit(EXIT_FAILURE);
+	} else if (pid == 0) {
+		close(p[0]);
+		dup2(p[1], STDOUT_FILENO);
+		close(p[1]);
+		int input_pipe[2];
+		if (pipe(input_pipe) == -1) {
+			perror("pipe");
+			exit(EXIT_FAILURE);
+		}
+		write(input_pipe[1], txt, strlen(txt));
+		close(input_pipe[1]);
+		dup2(input_pipe[0], STDIN_FILENO);
+		close(input_pipe[0]);
+		exec_cmd(cmd, env);
+		perror("execlp");
+		exit(EXIT_FAILURE);
+	} else {
+		close(p[1]);
+		char buf[BUFSIZ];
+		ssize_t n;
+		while ((n = read(p[0], buf, BUFSIZ)) > 0) {
+			if (write(fd, buf, n) == -1) {
+				perror("write");
+				exit(EXIT_FAILURE);
+			}
+		}
+		if (n == -1) {
+			perror("read");
+			exit(EXIT_FAILURE);
+		}
+		close(p[0]);
+		int status;
+		if (waitpid(pid, &status, 0) == -1) {
+			perror("waitpid");
+			exit(EXIT_FAILURE);
+		}
+	}
+}
+
+void	write_in_here(t_cmds *cmds, char *str, int i, char **env)
 {
 	int		fd;
 
+	fd = 0;
 	if (ft_strcmp(cmds->cmd[i + 2].arg, ">"))
 		fd = open(cmds->cmd[i + 2].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (ft_strcmp(cmds->cmd[i + 2].arg, ">>"))
 		fd = open(cmds->cmd[i + 2].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return ;
-	if (exec_inpipe_builtins(STDOUT_FILENO, fd, &cmds->cmd[i + 1], env))
-		return ;
-	else
-		exec_in_fork(STDOUT_FILENO, fd, &cmds->cmd[i + 1], *env);
+	// faire pour les builtins
+	exec_herefork(fd, str, &cmds->cmd[i + 1], env);
 }
 
 void	append_to_file(t_cmds *c, int x, char ***env)

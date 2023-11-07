@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   start.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: lebojo <lebojo@student.42.fr>              +#+  +:+       +#+        */
+/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/25 17:00:57 by jchapell          #+#    #+#             */
-/*   Updated: 2023/10/30 08:16:56 by lebojo           ###   ########.fr       */
+/*   Updated: 2023/11/07 14:49:41 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,4 +52,26 @@ void	start(char ***env)
 		signal(SIGQUIT, SIG_IGN);
 	update_last_exit(0, env);
 	g_status = 0;
+}
+
+void	init_inc(t_inc *inc)
+{
+	inc->i = 0;
+	inc->j = 0;
+	inc->k = 0;
+	inc->l = 0;
+	inc->m = 0;
+	inc->n = 0;
+	inc->o = 0;
+	inc->p = 0;
+	inc->q = 0;
+	inc->r = 0;
+	inc->s = 0;
+	inc->t = 0;
+	inc->u = 0;
+	inc->v = 0;
+	inc->w = 0;
+	inc->x = 0;
+	inc->y = 0;
+	inc->z = 0;
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:36:29 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/06 18:50:41 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:17:12 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,10 +43,7 @@ char	**init_parse(t_cmds *cmds, char *input, char ***envp, t_inc *inc)
 	split = split_cleaner(split);
 	if (!split[0])
 		return (NULL);
-	inc->i = 0;
-	inc->j = 0;
-	inc->k = 0;
-	inc->s = 0;
+	init_inc(inc);
 	sep_parse(cmds, input);
 	create_cmds(cmds);
 	cmds->line = ft_strdup(input);

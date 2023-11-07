@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 14:20:27 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:53:15 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,15 +22,39 @@ void	sig_her(int sig)
 	}
 }
 
-t_cmds	parse_heredoc(t_cmds *cmds)
+int	process_parse_heredoc(t_cmds *res, int i, int *index_cmd, char **sp)
+{
+	if (ft_strcmp(sp[i], "<<"))
+	{
+		res->cmd[(*index_cmd)].arg = ft_strdup("<<");
+		res->cmd[(*index_cmd)++].name = ft_strdup(sp[++i]);
+	}
+	else
+	{
+		if (i != 0 && i > res->nb_cmd)
+			printf("Syntax error heredoc\n");
+		if (ft_strcmp(sp[i], ">") || ft_strcmp(sp[i], ">>"))
+		{
+			res->cmd[res->nb_cmd - 1].arg = ft_strdup(sp[i]);
+			res->cmd[res->nb_cmd - 1].name = ft_strdup(sp[++i]);
+		}
+		else
+		{
+			res->cmd[res->nb_cmd - 2].name = ft_strdup(sp[i]);
+			res->cmd[res->nb_cmd - 2].arg = NULL;
+		}
+	}
+	i++;
+	return (i);
+}
+
+t_cmds	parse_heredoc(t_cmds *cmds, int i)
 {
 	t_cmds	res;
-	int		nb_cmd;
 	char	**sp;
-	int		i;
+	int		nb_cmd;
 	int		index_cmd;
 
-	i = 0;
 	index_cmd = 0;
 	sp = ft_split(cmds->line, ' ');
 	nb_cmd = 0;
@@ -45,29 +69,7 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 	res.line = ft_strdup(cmds->line);
 	i = 0;
 	while (sp[i])
-	{
-		if (ft_strcmp(sp[i], "<<"))
-		{
-			res.cmd[index_cmd].arg = ft_strdup("<<");
-			res.cmd[index_cmd++].name = ft_strdup(sp[++i]);
-		}
-		else
-		{
-			if (i != 0 && i > res.nb_cmd)
-				printf("Syntax error heredoc\n");
-			if (ft_strcmp(sp[i], ">") || ft_strcmp(sp[i], ">>"))
-			{
-				res.cmd[res.nb_cmd - 1].arg = ft_strdup(sp[i]);
-				res.cmd[res.nb_cmd - 1].name = ft_strdup(sp[++i]);
-			}
-			else
-			{
-				res.cmd[res.nb_cmd - 2].name = ft_strdup(sp[i]);
-				res.cmd[res.nb_cmd - 2].arg = ft_strdup("cmd");
-			}
-		}
-		i++;
-	}
+		i = process_parse_heredoc(&res, i, &index_cmd, sp);
 	return (res);
 }
 
@@ -96,7 +98,7 @@ char	*heredoc_process(char *break_str)
 	return (res);
 }
 
-int	heredoc(int *fd, t_cmds *cmds, char ***env)
+void	heredoc(t_cmds *cmds, char ***env)
 {
 	char	*res;
 	int		i;
@@ -104,7 +106,7 @@ int	heredoc(int *fd, t_cmds *cmds, char ***env)
 
 	i = 0;
 	res = ft_strdup("");
-	p_cmds = parse_heredoc(cmds);
+	p_cmds = parse_heredoc(cmds, i); // PARSE -> PAS TEST
 	while (i < p_cmds.nb_cmd - 3) // -2 = pas le cmd et pas le >, -3 pas la derniere cmd non plus
 	{
 		res = heredoc_process(p_cmds.cmd[i++].name);
@@ -114,10 +116,9 @@ int	heredoc(int *fd, t_cmds *cmds, char ***env)
 	if (p_cmds.cmd[i + 1].name) // + 1 == cmd, +2 == redirect
 	{
 		if (p_cmds.cmd[i + 2].name)// == ya redirect
-			write_in_here(&p_cmds, i, env);
+			write_in_here(&p_cmds, res, i, *env);
 		else
-			exec_in_fork(STDIN_FILENO, fd, &cmds->cmd[0], *env);
+			exec_herefork(STDOUT_FILENO, res, &p_cmds.cmd[i + 1], *env);
 	}
 	free(res);
-	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 15:21:35 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/06 17:36:36 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 18:53:23 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ t_cmd	create_cmd(char *name, char *arg, int which_pipe, int fred);
 void	free_cmds(t_cmds *cmds);
 void	free_cmd(t_cmd *cmd);
 void	close_pipe(int *fd);
-void	free_all(t_cmds *cmds, char ***env);
 void	free_tab(char **tab);
+void	free_pipes(t_pipe *pipes, int nb_pipes);
 
 /*	PARSE					*/
 int		parse(t_cmds *cmds, char *input, char ***envp);
@@ -66,6 +66,7 @@ int		char_in_str(char c, char *str);
 
 /*	START					*/
 void	start(char ***env);
+void	init_inc(t_inc *inc);
 
 /*	SIGNAL					*/
 void	sig_handler(int sig);
@@ -80,10 +81,11 @@ char	*ask_quote(enum e_quote q, char *str);
 void	quote_parse(t_cmds *cmds, char **split, t_inc *inc, char ***envp);
 
 /*--------------------EXEC-----------------*/
-int		heredoc(int *fd, t_cmds *cmds, char ***env);
+void	heredoc(t_cmds *cmds, char ***env);
 void	read_file(char *name, t_cmd *cmd, char ***env);
 void	write_in_file(t_cmds *cmd, int x, char ***env, int out);
-void	write_in_file_here(t_cmds *cmds, int x, int in);
+void	exec_herefork(int fd, char *txt, t_cmd *cmd, char **env);
+void	write_in_here(t_cmds *cmds, char *str, int i, char **env);
 void	append_to_file(t_cmds *c, int x, char ***env);
 void	exec_in_fork(int entry, int *tab, t_cmd *cmd, char **env);
 int		exec_inpipe_builtins(int entry, int fd, t_cmd *cmd, char ***env);
@@ -95,7 +97,7 @@ int		arg_counter(char *s);
 int		strlen_to_char(char *s, int i, char c);
 char	*str_extractor(char *s);
 void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp);
-int		exec_sep(t_cmds *cmds, char ***envp);
+void	exec_sep(t_cmds *cmds, char ***envp);
 
 /*	UTILS_EXEC				*/
 char	*find_path(char **envp, char *s, int x);
@@ -105,6 +107,7 @@ void	update_last_exit(int status, char ***envp);
 /*	GET_CMD					*/
 int		is_builtins(t_cmd *cmd, char ***envp);
 void	exec_line(t_cmds *cmds, char ***envp);
+int		exec_heredoc(t_cmds *cmds, char ***envp);
 
 /*	PIPE					*/
 void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp);
