@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:39:19 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/07 19:41:33 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:45:10 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,5 +64,5 @@ void	exec_herefork(int fd, char *txt, t_cmd *cmd, char **env)
 	if (pid == 0)
 		exec_here_infork(p, txt, cmd, env);
 	else
-		exec_here_outfork(p, pid, buf, fd, env);
+		exec_here_outfork(p, pid, fd, env);
 }

@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 19:32:59 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:49:38 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ int	process_parse_heredoc(t_cmds *res, int i, int *index_cmd, char **sp)
 		else
 		{
 			res->cmd[res->nb_cmd - 2].name = ft_strdup(sp[i]);
-			res->cmd[res->nb_cmd - 2].arg = NULL;
+			while (sp[i + 1] && !char_in_str(sp[i + 1][0], "<>"))
+				add_str_space(&res->cmd[res->nb_cmd - 2].arg, sp[++i]);
 		}
 	}
 	i++;
