@@ -1,13 +1,13 @@
 /* ************************************************************************** */
-/*                                                                            */
-/*                                                        :::      ::::::::   */
-/*   write_file.c                                       :+:      :+:    :+:   */
-/*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
-/*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 18:53:11 by jchapell         ###   ########.fr       */
-/*                                                                            */
+/*																			*/
+/*														:::	  ::::::::   */
+/*   write_file.c									   :+:	  :+:	:+:   */
+/*													+:+ +:+		 +:+	 */
+/*   By: jchapell <jchapell@student.42.fr>		  +#+  +:+	   +#+		*/
+/*												+#+#+#+#+#+   +#+		   */
+/*   Created: 2023/09/06 10:42:32 by abourgue		  #+#	#+#			 */
+/*   Updated: 2023/11/07 19:19:58 by jchapell		 ###   ########.fr	   */
+/*																			*/
 /* ************************************************************************** */
 
 #include "../../inc/proto.h"
@@ -36,51 +36,48 @@ void	write_in_file(t_cmds *cmds, int x, char ***env, int out)
 
 void	exec_herefork(int fd, char *txt, t_cmd *cmd, char **env)
 {
-	pid_t pid;
-	int p[2];
-	if (pipe(p) == -1) {
-		perror("pipe");
-		exit(EXIT_FAILURE);
-	}
-	if ((pid = fork()) == -1) {
-		perror("fork");
-		exit(EXIT_FAILURE);
-	} else if (pid == 0) {
+	pid_t	pid;
+	int		p[2];
+	int		in[2];
+	char	buf[BUFSIZ];
+	ssize_t	n;
+	int		status;
+
+	if (pipe(p) == -1)
+		return ;
+	pid = fork();
+	if (pid == -1)
+		return ;
+	if (pid == 0)
+	{
 		close(p[0]);
 		dup2(p[1], STDOUT_FILENO);
 		close(p[1]);
-		int input_pipe[2];
-		if (pipe(input_pipe) == -1) {
-			perror("pipe");
-			exit(EXIT_FAILURE);
-		}
-		write(input_pipe[1], txt, strlen(txt));
-		close(input_pipe[1]);
-		dup2(input_pipe[0], STDIN_FILENO);
-		close(input_pipe[0]);
+		if (pipe(in) == -1)
+			exit(printf("Error: heredoc: pipe in\n"));
+		write(in[1], txt, strlen(txt));
+		close(in[1]);
+		dup2(in[0], STDIN_FILENO);
+		close(in[0]);
 		exec_cmd(cmd, env);
 		perror("execlp");
 		exit(EXIT_FAILURE);
-	} else {
+	}
+	else
+	{
 		close(p[1]);
-		char buf[BUFSIZ];
-		ssize_t n;
-		while ((n = read(p[0], buf, BUFSIZ)) > 0) {
-			if (write(fd, buf, n) == -1) {
-				perror("write");
-				exit(EXIT_FAILURE);
-			}
+		n = 1;
+		while (n > 0)
+		{
+			n = read(p[0], buf, BUFSIZ);
+			if (write(fd, buf, n) == -1) 
+				exit(printf("Error: heredoc: write\n"));
 		}
-		if (n == -1) {
-			perror("read");
-			exit(EXIT_FAILURE);
-		}
+		if (n == -1)
+			exit(printf("Error: heredoc: read\n"));
 		close(p[0]);
-		int status;
-		if (waitpid(pid, &status, 0) == -1) {
-			perror("waitpid");
-			exit(EXIT_FAILURE);
-		}
+		waitpid(pid, &status, 0);
+		update_last_exit(status, &env);
 	}
 }
 
