@@ -6,7 +6,7 @@
 #    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/06/07 15:19:36 by jordan            #+#    #+#              #
-#    Updated: 2023/11/06 15:17:09 by jchapell         ###   ########.fr        #
+#    Updated: 2023/11/07 19:39:43 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -16,7 +16,7 @@ NAME	=	minishell.a
 CFLAGS	=	-g -Wall -Wextra -Werror
 AR		=	ar -rsc
 FILES	=	main.c parse.c free.c utils.c expander.c start.c signal.c \
-			sep_parse.c spacer.c exec/split_cmd.c \
+			sep_parse.c spacer.c exec/split_cmd.c exec/exec_herefork.c\
 			exec/exec_cmd.c exec/exec_line.c exec/pipe.c exec/heredoc.c \
 			exec/write_file.c exec/utils_exec.c exec/exec_cmd_utils.c \
 			exec/parse_cmds.c sub_process_parse.c\

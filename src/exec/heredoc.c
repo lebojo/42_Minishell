@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 19:18:50 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:32:59 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,16 +106,16 @@ void	heredoc(t_cmds *cmds, char ***env)
 
 	i = 0;
 	res = ft_strdup("");
-	p_cmds = parse_heredoc(cmds, i); // PARSE -> PAS TEST
-	while (i < p_cmds.nb_cmd - 3) // -2 = pas le cmd et pas le >, -3 pas la derniere cmd non plus
+	p_cmds = parse_heredoc(cmds, i);
+	while (i < p_cmds.nb_cmd - 3)
 	{
 		res = heredoc_process(p_cmds.cmd[i++].name);
 		free(res);
 	}
 	res = heredoc_process(p_cmds.cmd[i].name);
-	if (p_cmds.cmd[i + 1].name) // + 1 == cmd, +2 == redirect
+	if (p_cmds.cmd[i + 1].name)
 	{
-		if (p_cmds.cmd[i + 2].name)// == ya redirect
+		if (p_cmds.cmd[i + 2].name)
 			write_in_here(&p_cmds, res, i, *env);
 		else
 			exec_herefork(STDOUT_FILENO, res, &p_cmds.cmd[i + 1], *env);
