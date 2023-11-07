@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:39:19 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/07 19:39:28 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 19:41:33 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,10 +30,11 @@ void	exec_here_infork(int p[], char *txt, t_cmd *cmd, char **env)
 	exit(1);
 }
 
-void	exec_here_outfork(int p[], pid_t pid, char buf[], int fd, char **env)
+void	exec_here_outfork(int p[], pid_t pid, int fd, char **env)
 {
 	ssize_t	n;
 	int		status;
+	char	buf[BUFSIZ];
 
 	close(p[1]);
 	n = 1;
@@ -54,7 +55,6 @@ void	exec_herefork(int fd, char *txt, t_cmd *cmd, char **env)
 {
 	pid_t	pid;
 	int		p[2];
-	char	buf[BUFSIZ];
 
 	if (pipe(p) == -1)
 		return ;
