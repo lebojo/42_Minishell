@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   write_file.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:42:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 14:19:48 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:41:42 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,20 +34,54 @@ void	write_in_file(t_cmds *cmds, int x, char ***env, int out)
 		exec_in_fork(out, id, &cmds->cmd[0], *env);
 }
 
-void	write_in_here(t_cmds *cmds, int i, char **env)
+void	exec_in_here(int entry, int fd, t_cmd *cmd, char **env)
+{
+	(void)entry;
+		dup2(fd, STDOUT_FILENO);
+		exec_cmd(cmd, env);
+}
+
+void	exec_cmd_heredoc(char *res, t_cmd *cmd, int fd, char ***env)
+{
+	int		*tube;
+	int	pid;
+
+	tube = malloc(sizeof(int) * 2);
+	if (pipe(tube) != 0)
+		return ;
+	pid = fork();
+	if (pid == 0)
+	{
+		if (fd == 0)
+			fd = STDIN_FILENO;
+		close(tube[0]);
+		write(tube[1], res, ft_strlen(res));
+		close(tube[1]);
+		dup2(tube[0], STDIN_FILENO);
+		close(tube[0]);
+		close(tube[1]);
+	
+		close(fd);
+		exec_cmd(cmd, *env);
+		close_pipe(tube);
+		dup2(1, STDIN_FILENO);
+	}
+	waitpid(pid, NULL, 0);
+}
+
+void	write_in_here(t_cmds *cmds, int i, char ***env, char *hereRes)
 {
 	int		fd;
-
+		
+	fd = 0;
 	if (ft_strcmp(cmds->cmd[i + 2].arg, ">"))
 		fd = open(cmds->cmd[i + 2].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (ft_strcmp(cmds->cmd[i + 2].arg, ">>"))
 		fd = open(cmds->cmd[i + 2].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	if (fd == -1)
 		return ;
-	if (exec_inpipe_builtins(STDOUT_FILENO, fd, &cmds->cmd[i + 1], env))
-		return ;
-	else
-		exec_in_fork(STDOUT_FILENO, fd, &cmds->cmd[i + 1], *env);
+	exec_cmd_heredoc(hereRes, &cmds->cmd[i + 1], fd, env);
+	close(fd);
 }
 
 void	append_to_file(t_cmds *c, int x, char ***env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   exec_line.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/07 14:01:34 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 15:11:22 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,26 +102,20 @@ int	exec_sep(t_cmds *cmds, char ***envp)
 	int		i;
 	int		j;
 	int		res;
-	int		*fd;
 
 	i = 0;
 	j = 0;
 	res = 0;
-	fd = malloc(sizeof(int) * 2);
-	if (pipe(fd) != 0)
-		return (0);
 	while (cmds->sep && cmds->sep[i] != None && cmds->sep[i] != Pipe)
 	{
 		if (cmds->sep[i] == S_right && res == 0)
 			write_in_file(cmds, j, envp, STDOUT_FILENO);
-		else if (cmds->sep[i] == S_right)
-			write_in_file_here(cmds, j, fd[1]);
-		else if (cmds->sep[i] == D_right)
+		else if (cmds->sep[i] == D_right && res == 0)
 			append_to_file(cmds, j, envp);
 		else if (cmds->sep[i] == S_left)
 			read_file(cmds->cmd[j + 1].name, &cmds->cmd[0], envp);
-		else if (cmds->sep[i] == D_left)
-			res = heredoc(fd, cmds, envp);
+		else if (cmds->sep[i] == D_left && res == 0)
+			res = heredoc(cmds, envp);
 		j++;
 		i++;
 	}

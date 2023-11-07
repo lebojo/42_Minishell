@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   heredoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
+/*   By: abourgue <abourgue@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 14:20:27 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/07 16:36:34 by abourgue         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,11 +63,12 @@ t_cmds	parse_heredoc(t_cmds *cmds)
 			else
 			{
 				res.cmd[res.nb_cmd - 2].name = ft_strdup(sp[i]);
-				res.cmd[res.nb_cmd - 2].arg = ft_strdup("cmd");
+				res.cmd[res.nb_cmd - 2].arg = NULL;
 			}
 		}
 		i++;
 	}
+	print_cmds(res);
 	return (res);
 }
 
@@ -81,7 +82,7 @@ char	*heredoc_process(char *break_str)
 	signal(SIGINT, sig_her);
 	while (g_status != 2)
 	{
-		line = readline("heredoc> ");
+		line = readline(add_str(break_str, "> ", 0));
 		if (line && line[0] == '\0')
 			line = ft_strdup("\n");
 		if (ft_strcmp(line, break_str) == 1)
@@ -96,7 +97,7 @@ char	*heredoc_process(char *break_str)
 	return (res);
 }
 
-int	heredoc(int *fd, t_cmds *cmds, char ***env)
+int	heredoc(t_cmds *cmds, char ***env)
 {
 	char	*res;
 	int		i;
@@ -114,9 +115,9 @@ int	heredoc(int *fd, t_cmds *cmds, char ***env)
 	if (p_cmds.cmd[i + 1].name) // + 1 == cmd, +2 == redirect
 	{
 		if (p_cmds.cmd[i + 2].name)// == ya redirect
-			write_in_here(&p_cmds, i, env);
+			write_in_here(&p_cmds, i, env, res);
 		else
-			exec_in_fork(STDIN_FILENO, fd, &cmds->cmd[0], *env);
+			exec_cmd_heredoc(res, &cmds->cmd[i + 1], 0, env);
 	}
 	free(res);
 	return (0);
