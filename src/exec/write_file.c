@@ -43,9 +43,8 @@ void	write_in_here(t_cmds *cmds, char *str, int i, char **env)
 		fd = open(cmds->cmd[i + 2].name, O_WRONLY | O_CREAT | O_TRUNC, 0644);
 	else if (ft_strcmp(cmds->cmd[i + 2].arg, ">>"))
 		fd = open(cmds->cmd[i + 2].name, O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if (fd == -1)
+	if (fd == -1 || !cmds->cmd[i + 1].name)
 		return ;
-	// faire pour les builtins
 	exec_herefork(fd, str, &cmds->cmd[i + 1], env);
 }
 

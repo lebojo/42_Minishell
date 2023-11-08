@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/11/07 19:39:19 by jchapell          #+#    #+#             */
-/*   Updated: 2023/11/07 19:45:10 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 15:34:15 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ void	exec_here_infork(int p[], char *txt, t_cmd *cmd, char **env)
 	close(in[1]);
 	dup2(in[0], STDIN_FILENO);
 	close(in[0]);
+	free(txt);
 	exec_cmd(cmd, env);
 	printf("Error: heredoc: exec\n");
 	exit(1);

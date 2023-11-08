@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/07 19:49:38 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:00:14 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,12 @@ t_cmds	parse_heredoc(t_cmds *cmds, int i)
 	}
 	res.nb_cmd = nb_cmd + 2;
 	create_cmds(&res);
+	res.sep = malloc(1);
 	res.line = ft_strdup(cmds->line);
 	i = 0;
 	while (sp[i])
 		i = process_parse_heredoc(&res, i, &index_cmd, sp);
+	free_tab(sp);
 	return (res);
 }
 
@@ -106,7 +108,7 @@ void	heredoc(t_cmds *cmds, char ***env)
 	t_cmds	p_cmds;
 
 	i = 0;
-	res = ft_strdup("");
+	res = NULL;
 	p_cmds = parse_heredoc(cmds, i);
 	while (i < p_cmds.nb_cmd - 3)
 	{
@@ -121,5 +123,8 @@ void	heredoc(t_cmds *cmds, char ***env)
 		else
 			exec_herefork(STDOUT_FILENO, res, &p_cmds.cmd[i + 1], *env);
 	}
+	else if (p_cmds.cmd[i + 2].name)
+		write_in_here(&p_cmds, res, i, *env);
 	free(res);
+	free_cmds(&p_cmds);
 }

@@ -43,6 +43,8 @@ void	free_cmds(t_cmds *cmds)
 		free_cmd(&cmds->cmd[i++]);
 	free(cmds->cmd);
 	free(cmds->sep);
+	if (cmds->line != NULL)
+		free(cmds->line);
 }
 
 void	close_pipe(int *fd)
