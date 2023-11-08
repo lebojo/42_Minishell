@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/08 18:41:57 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:55:19 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,10 +33,10 @@ void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp)
 	t_cmds	cmds_ip;
 
 	cmds_ip = parse_cmds(*cmd, 0);
-	if (exec_heredoc(&cmds_ip, envp, 1))
-		return ;
 	if (pipe(pipes->fd[0]) != 0)
 		exit(1);
+	if (exec_heredoc(&cmds_ip, envp, 1))
+		return ;
 	pipes->pid[0] = fork();
 	if (pipes->pid[0] < 0)
 		exit (1);
@@ -58,10 +58,10 @@ void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
 	t_cmds	cmds_ip;
 
 	cmds_ip = parse_cmds(*cmd, i + 1);
-	if (exec_heredoc(&cmds_ip, envp, 1))
-		return ;
 	if (pipe(pipes->fd[i + 1]) != 0)
 		exit(1);
+	if (exec_heredoc(&cmds_ip, envp, 1))
+		return ;
 	pipes->pid[i] = fork();
 	if (pipes->pid[i] < 0)
 		exit (1);
