@@ -78,8 +78,11 @@ void	read_file(char *name, t_cmd *cmd, char ***env)
 	id[1] = open(name, O_RDONLY);
 	if (id[1] == -1)
 		return ;
-	if (exec_inpipe_builtins(STDIN_FILENO, id[1], cmd, env))
+	if (check_builtins(cmd))
+	{
+		printf("\n");
 		return ;
+	}
 	else
 		exec_in_fork(STDIN_FILENO, id, cmd, *env);
 }
