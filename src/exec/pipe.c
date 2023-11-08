@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/08 17:58:38 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:41:57 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,11 +24,7 @@ int	**open_pipes(int nb_pipe)
 		return (NULL);
 	i = -1;
 	while (++i < nb_pipe)
-	{
 		res[i] = ft_calloc(2, sizeof(int));
-		if (pipe(res[i]) != 0 || !res[i])
-			return (NULL);
-	}
 	return (res);
 }
 
@@ -39,6 +35,8 @@ void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp)
 	cmds_ip = parse_cmds(*cmd, 0);
 	if (exec_heredoc(&cmds_ip, envp, 1))
 		return ;
+	if (pipe(pipes->fd[0]) != 0)
+		exit(1);
 	pipes->pid[0] = fork();
 	if (pipes->pid[0] < 0)
 		exit (1);
@@ -50,7 +48,6 @@ void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp)
 		exec_inpipe(&cmds_ip, pipes, envp);
 		exit(0);
 	}
-	close_pipe(pipes->fd[0]);
 	free(cmds_ip.sep);
 	free(cmds_ip.cmd);
 	free(cmds_ip.line);
@@ -63,6 +60,8 @@ void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
 	cmds_ip = parse_cmds(*cmd, i + 1);
 	if (exec_heredoc(&cmds_ip, envp, 1))
 		return ;
+	if (pipe(pipes->fd[i + 1]) != 0)
+		exit(1);
 	pipes->pid[i] = fork();
 	if (pipes->pid[i] < 0)
 		exit (1);
@@ -74,14 +73,13 @@ void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
 		close(pipes->fd[i + 1][0]);
 		dup2(pipes->fd[i + 1][1], STDOUT_FILENO);
 		close(pipes->fd[i + 1][1]);
-		close_pipe(pipes->fd[i]);
 		exec_inpipe(&cmds_ip, pipes, envp);
 		exit(0);
 	}
-	close_pipe(pipes->fd[i + 1]);
 	free(cmds_ip.sep);
 	free(cmds_ip.cmd);
 	free(cmds_ip.line);
+	close_pipe(pipes->fd[i]);
 }
 
 void	last_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
