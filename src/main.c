@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/06 18:46:42 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:58:34 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ int	main(int ac, char **av, char **envp)
 		create_prompt(&prompt, env);
 		input = readline(prompt);
 		g_status = 1;
+		signal(SIGQUIT, sig_handler);
 		if (input == NULL)
 			ft_exit(0, &env);
 		if (process_input(ac, input, &env))
