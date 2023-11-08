@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/06 10:16:49 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/08 16:00:14 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 19:12:08 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,8 +31,6 @@ int	process_parse_heredoc(t_cmds *res, int i, int *index_cmd, char **sp)
 	}
 	else
 	{
-		if (i != 0 && i > res->nb_cmd)
-			printf("Syntax error heredoc\n");
 		if (ft_strcmp(sp[i], ">") || ft_strcmp(sp[i], ">>"))
 		{
 			res->cmd[res->nb_cmd - 1].arg = ft_strdup(sp[i]);
