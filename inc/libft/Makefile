@@ -6,7 +6,7 @@
 #    By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2022/10/30 22:49:56 by jchapell          #+#    #+#              #
-#    Updated: 2023/11/01 18:40:49 by jchapell         ###   ########.fr        #
+#    Updated: 2023/11/08 19:20:02 by jchapell         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,7 @@ FILES	=	ft_isalpha.c ft_isdigit.c ft_isalnum.c ft_isascii.c ft_isprint.c ft_strl
 
 # Path for .c , .h and .o Files 
 SRC_PATH := ./
-OBJ_PATH := ./
+OBJ_PATH := ./obj/
 
 all : $(NAME)
 
