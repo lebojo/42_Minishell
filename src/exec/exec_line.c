@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/08 16:50:25 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:18:06 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,25 +14,12 @@
 
 int	one_cmd(t_cmds *cmds, t_pipe *pipes, char ***envp)
 {
-	int		i;
-
-	i = -1;
-	while (cmds->sep[++i] != None)
-	{
-		if (cmds->sep[i] == Pipe)
-		{
-			i = -42;
-			break ;
-		}
-	}
-	if (i != -42)
-	{
-		if (exec_heredoc(cmds, envp, 0))
-			return (1);
-		exec_inpipe(cmds, pipes, envp);
+	if (cmds->nb_pipe > 0)
+		return (0);
+	if (exec_heredoc(cmds, envp, 0))
 		return (1);
-	}
-	return (0);
+	exec_inpipe(cmds, pipes, envp);
+	return (1);
 }
 
 void	exec_line(t_cmds *cmds, char ***envp)
