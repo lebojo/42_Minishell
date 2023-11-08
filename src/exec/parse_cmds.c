@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/10/04 18:25:49 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/08 15:52:04 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 18:07:45 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,9 +61,7 @@ char	*parse_line(char *str, int wh_pipe)
 {
 	char	*res;
 	char	**sp;
-	int		i;
 
-	i = -1;
 	sp = ft_split(str, '|');
 	if (!sp[1])
 	{

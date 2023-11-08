@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 19:10:32 by abourgue          #+#    #+#             */
-/*   Updated: 2023/11/08 16:48:49 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:58:38 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,7 @@ void	first_pipe(t_cmds *cmd, t_pipe *pipes, char ***envp)
 		exec_inpipe(&cmds_ip, pipes, envp);
 		exit(0);
 	}
+	close_pipe(pipes->fd[0]);
 	free(cmds_ip.sep);
 	free(cmds_ip.cmd);
 	free(cmds_ip.line);
@@ -73,9 +74,11 @@ void	mid_pipe(t_cmds *cmd, t_pipe *pipes, int i, char ***envp)
 		close(pipes->fd[i + 1][0]);
 		dup2(pipes->fd[i + 1][1], STDOUT_FILENO);
 		close(pipes->fd[i + 1][1]);
+		close_pipe(pipes->fd[i]);
 		exec_inpipe(&cmds_ip, pipes, envp);
 		exit(0);
 	}
+	close_pipe(pipes->fd[i + 1]);
 	free(cmds_ip.sep);
 	free(cmds_ip.cmd);
 	free(cmds_ip.line);

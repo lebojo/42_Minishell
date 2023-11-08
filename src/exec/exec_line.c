@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/08 17:18:06 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 17:56:44 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,7 @@ void	exec_line(t_cmds *cmds, char ***envp)
 		close_pipe(pipes.fd[i]);
 	}
 	last_pipe(cmds, &pipes, i, envp);
+	close_pipe(pipes.fd[i - 1]);
 	close_pipe(pipes.fd[i]);
 	i = -1;
 	while (++i <= cmds->nb_pipe)
