@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/09/05 11:29:02 by lebojo            #+#    #+#             */
-/*   Updated: 2023/11/08 16:35:00 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/08 16:50:25 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,9 @@ int	one_cmd(t_cmds *cmds, t_pipe *pipes, char ***envp)
 	}
 	if (i != -42)
 	{
-		exec_inpipe(cmds, pipes, 0, envp);
+		if (exec_heredoc(cmds, envp, 0))
+			return (1);
+		exec_inpipe(cmds, pipes, envp);
 		return (1);
 	}
 	return (0);
@@ -60,33 +62,27 @@ void	exec_line(t_cmds *cmds, char ***envp)
 	free_pipes(&pipes, cmds->nb_pipe);
 }
 
-void	exec_inpipe(t_cmds *cmds, t_pipe *pipe, int which_pipe, char ***envp)
+void	exec_inpipe(t_cmds *cmds_ip, t_pipe *pipe, char ***envp)
 {
-	t_cmds	cmds_ip;
 	int		exit_status;
 
-	cmds_ip = parse_cmds(*cmds, which_pipe);
-	if (exec_heredoc(&cmds_ip, envp))
-		return ;
-	exec_sep(&cmds_ip, envp);
-	if (!is_builtins(&cmds_ip.cmd[0], envp) && cmds_ip.sep[0] == None)
+	exec_sep(cmds_ip, envp);
+	if (!is_builtins(&cmds_ip->cmd[0], envp) && cmds_ip->sep[0] == None)
 	{
 		pipe->pid[0] = fork();
 		if (pipe->pid[0] < 0)
 			exit(1);
 		if (pipe->pid[0] == 0)
 		{
-			exec_cmd(&cmds_ip.cmd[0], *envp);
+			exec_cmd(&cmds_ip->cmd[0], *envp);
 			exit(0);
 		}
 		waitpid(pipe->pid[0], &exit_status, 0);
 		update_last_exit(exit_status, envp);
 	}
-	free(cmds_ip.sep);
-	free(cmds_ip.cmd);
 }
 
-int	exec_heredoc(t_cmds *cmds, char ***envp)
+int	exec_heredoc(t_cmds *cmds, char ***envp, int fred)
 {
 	int	i;
 
@@ -97,8 +93,12 @@ int	exec_heredoc(t_cmds *cmds, char ***envp)
 	if (cmds->sep[i] == None)
 		return (0);
 	heredoc(cmds, envp);
-	free(cmds->sep);
-	free(cmds->cmd);
+	if (fred)
+	{
+		free(cmds->sep);
+		free(cmds->cmd);
+		free(cmds->line);
+	}
 	return (1);
 }
 
