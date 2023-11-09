@@ -6,7 +6,7 @@
 /*   By: jchapell <jchapell@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/06/07 18:34:19 by jordan            #+#    #+#             */
-/*   Updated: 2023/11/08 19:58:34 by jchapell         ###   ########.fr       */
+/*   Updated: 2023/11/09 11:40:45 by jchapell         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,7 @@ int	main(int ac, char **av, char **envp)
 		input = NULL;
 		free(prompt);
 		g_status = 0;
+		signal(SIGQUIT, SIG_IGN);
 	}
 	return (0);
 }
